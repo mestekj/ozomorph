@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.MainView"
+      prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <HBox >
+            <children>
+                <Label text="Width" />
+                <TextField fx:id="tfWidth" text="5"/>
+                <Label text="Height" />
+                <TextField fx:id="tfHeight" text="5"/>
+                <Button text="Create" onAction="#createMap" />
+                <Button text="Simulate" onAction="#startSimulation" />
+            </children>
+
+        </HBox>
+        <HBox>
+            <children>
+                <ToggleButton text="Erase" onAction="#setNoGroup" selected="true">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="groupsTools"/>
+                    </toggleGroup>
+                </ToggleButton>
+                <ToggleButton fx:id="btPaint" text="Paint" toggleGroup="$groupsTools" onAction="#setGroup">
+                    <graphic>
+                        <ColorPicker fx:id="cpGroupColor" onAction="#groupColorChanged"/>
+                    </graphic>
+                </ToggleButton>
+            </children>
+        </HBox>
+        <HBox>
+            <children>
+                <Pane fx:id="pInitials" prefHeight="500" prefWidth="500" style="-fx-background-color: blue;" />
+                <Pane fx:id="pTargets" prefHeight="500" prefWidth="500" style="-fx-background-color: green;"/>
+            </children>
+        </HBox>
+    </children>
+
+</VBox>
