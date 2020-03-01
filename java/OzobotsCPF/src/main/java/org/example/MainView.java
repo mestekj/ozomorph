@@ -9,6 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 
 public class MainView {
+    Logger logger = LogManager.getLogger(MainView.class);
 
     @FXML
     ColorPicker cpGroupColor;
@@ -53,7 +56,10 @@ public class MainView {
         tfHeight.setTextFormatter(new TextFormatter<>(positiveIntegerFilter));
         tfWidth.setTextFormatter(new TextFormatter<>(positiveIntegerFilter));
 
+        //other things
+        cpGroupColor.setValue(Color.RED);
 
+        logger.info("MainView inited.");
     }
 
     public void createMap(ActionEvent actionEvent) {
@@ -61,6 +67,7 @@ public class MainView {
         width = Integer.parseInt(tfWidth.getCharacters().toString());
         initialsMapController = new MapController( width,height, pInitials);
         targetsMapController = new MapController( width,height, pTargets);
+        logger.info("Initial and target configurations editors created.");
     }
 
 
@@ -87,13 +94,14 @@ public class MainView {
 
     public void  startSimulation(){
         try {
+            logger.info("Simulation window opening...");
             PathFinder pathFinder = new PathFinder();
             ProblemInstance problemInstance = new ProblemInstance(width,height, initialsMapController.getGroups(), targetsMapController.getGroups());
             List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
             openSimulationWindow(agents);
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.error("Cannot run simulation.", e);
         }
     }
 
@@ -101,6 +109,7 @@ public class MainView {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("simulationView.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene((Pane) loader.load()));
+        stage.setTitle("Simulation");
         SimulationController controller = loader.getController();
 
         controller.init(width, height,agents);

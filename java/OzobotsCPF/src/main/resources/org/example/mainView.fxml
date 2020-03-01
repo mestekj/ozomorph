@@ -9,37 +9,34 @@
       fx:controller="org.example.MainView"
       prefHeight="400.0" prefWidth="600.0">
     <children>
-        <HBox >
-            <children>
-                <Label text="Width" />
-                <TextField fx:id="tfWidth" text="5"/>
-                <Label text="Height" />
-                <TextField fx:id="tfHeight" text="5"/>
-                <Button text="Create" onAction="#createMap" />
-                <Button text="Simulate" onAction="#startSimulation" />
-            </children>
+        <HBox>
+            <Label text="Width"/>
+            <TextField fx:id="tfWidth" text="5"/>
+            <Label text="Height"/>
+            <TextField fx:id="tfHeight" text="5"/>
+            <Button text="Create" onAction="#createMap"/>
+            <Button text="Simulate" onAction="#startSimulation"/>
 
         </HBox>
         <HBox>
-            <children>
-                <ToggleButton text="Erase" onAction="#setNoGroup" selected="true">
-                    <toggleGroup>
-                        <ToggleGroup fx:id="groupsTools"/>
-                    </toggleGroup>
-                </ToggleButton>
-                <ToggleButton fx:id="btPaint" text="Paint" toggleGroup="$groupsTools" onAction="#setGroup">
-                    <graphic>
-                        <ColorPicker fx:id="cpGroupColor" onAction="#groupColorChanged"/>
-                    </graphic>
-                </ToggleButton>
-            </children>
+            <ToggleButton text="Erase" onAction="#setNoGroup" selected="true">
+                <toggleGroup>
+                    <ToggleGroup fx:id="groupsTools"/>
+                </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="btPaint" text="Paint" toggleGroup="$groupsTools" onAction="#setGroup">
+                <graphic>
+                    <ColorPicker fx:id="cpGroupColor" onAction="#groupColorChanged" />
+                </graphic>
+            </ToggleButton>
         </HBox>
-        <HBox>
-            <children>
-                <Pane fx:id="pInitials" prefHeight="500" prefWidth="500" style="-fx-background-color: blue;" />
-                <Pane fx:id="pTargets" prefHeight="500" prefWidth="500" style="-fx-background-color: green;"/>
-            </children>
-        </HBox>
+        <GridPane>
+            <Label text="Initial positions:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Pane fx:id="pInitials" GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
+            <Separator GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="2" orientation="VERTICAL"/>
+            <Label text="Initial positions:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <Pane fx:id="pTargets" GridPane.columnIndex="2" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
+        </GridPane>
     </children>
 
 </VBox>

@@ -1,19 +1,27 @@
 package org.example;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PathFinder {
-    ActionFactory actionFactory = new ActionFactory();
+    private ActionFactory actionFactory = new ActionFactory();
+    private static final Logger logger = LogManager.getLogger(PathFinder.class);
 
     public List<AgentMapNode> findPaths(ProblemInstance problemInstance) throws IOException, InterruptedException {
         List<PositionMapNode> agentsLinearOrdering = new ArrayList<>();
         String picatInput = translateToPicatInput(problemInstance, agentsLinearOrdering);
+        logger.info("Instance of problem (Picat): " + picatInput);
 
-        //TODO solve via Picat
+
         File problemInstanceFile = createProblemInstanceFile(picatInput);
+        logger.info("Instance of problem being written to: " + problemInstanceFile.getAbsolutePath());
+
         String picatOutput = runPicat(problemInstanceFile);
+        logger.info("Plans from Picat: " + picatOutput);
 
         return parsePlans(picatOutput,agentsLinearOrdering);
     }
@@ -37,9 +45,12 @@ public class PathFinder {
         String picatMain = "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
         ProcessBuilder builder = new ProcessBuilder("picat", picatMain, problemInstanceFile.getAbsolutePath()); //TODO use relative path
         Process process = builder.start();
+        logger.info("Picat running...");
         process.waitFor();
 
         StringBuilder out = new StringBuilder();
+        String plans = null;
+
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             //debug only
             String line = null;
@@ -50,14 +61,22 @@ public class PathFinder {
 
                 //real code
                 if(line.trim().charAt(0) == '[')
-                    return line;
+                    plans = line;
             }
         } catch (IOException e) {
             throw new IOException("Reading of Picat output failed.", e);
         }
 
-        System.err.print(process.getErrorStream().readAllBytes()); //TODO to log
-        throw new IOException("No list of plans found.");
+        byte[] errOut = process.getErrorStream().readAllBytes();
+        if(errOut != null && errOut.length > 0)
+            logger.warn("Picat error output: \n" + errOut.toString());
+
+        logger.info("Full picat output: \n"+ out.toString());
+
+        if(plans != null)
+            return plans;
+        else
+            throw new NoPlansFoundException();
     }
 
     private String translateToPicatInput(ProblemInstance problemInstance, List<PositionMapNode> agentsLinOrdering){

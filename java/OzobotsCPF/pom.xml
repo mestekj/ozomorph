@@ -20,6 +20,16 @@
             <artifactId>javafx-fxml</artifactId>
             <version>13</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.13.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -37,7 +47,7 @@
                 <version>0.0.1</version>
                 <configuration>
                     <mainClass>org.example.App</mainClass>
-                    <!--otherwise it not work --><executable>"C:\Program Files\Java\jdk-13\bin\java.exe"</executable>
+                    <!--otherwise it not work -->  <executable>"C:\Program Files\Java\jdk-13\bin\java.exe"</executable>
                 </configuration>
             </plugin>
         </plugins>
