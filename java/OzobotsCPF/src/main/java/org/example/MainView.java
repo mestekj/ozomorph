@@ -68,6 +68,7 @@ public class MainView {
         initialsMapController = new MapController( width,height, pInitials);
         targetsMapController = new MapController( width,height, pTargets);
         logger.info("Initial and target configurations editors created.");
+        btPaint.fire();
     }
 
 
