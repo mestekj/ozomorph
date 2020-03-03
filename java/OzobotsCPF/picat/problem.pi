@@ -1,0 +1,74 @@
+% PROBLEM
+% %problem(AgentsCount, [group(FirstAgentNumber,[I1,I2,...],[T1,T2,...]), group(...),...],Width,Height)
+
+vertices_count(Problem) = VC =>
+    $problem(_,_,W,H) = Problem,
+    VC = W*H.
+
+
+agents_count(Problem) = AC =>
+    $problem(AC,_,_,_) = Problem.
+
+groups(Problem) = Gs =>
+    $problem(_,Gs,_,_) = Problem.
+
+
+neighboursDir(Problem,Vertex) = Neighbours =>
+    Neighbours = [],
+    V = vectors(),
+    $problem(_,_,Width,Height) = Problem,
+    X = ((Vertex-1) mod Width) + 1, %+-1 because array indices are 1-based
+    Y = ((Vertex-1) div Width) + 1,
+    foreach (I in 1..len(V))
+        (DX,DY) = V[I],
+        NX = X + DX, 
+        NY = Y + DY,
+        if(between(1, Width, NX) && between(1, Height, NY)) then 
+            CI = I, % local copy
+            N = (NY-1) * Width + (NX-1) +1,
+            Neighbours := [(N,CI) | Neighbours]
+        end,
+    end.
+
+actions(Problem,AgentVertex,AgentDirection,NextVertex,DirectionOfNextVertex) = Actions =>
+    if (AgentVertex != NextVertex) then
+        Turn = (DirectionOfNextVertex - AgentDirection) mod 4,
+        Actions := [goAhead|turnAction(Turn)],
+    else
+        Actions := [wait]
+    end.
+    
+turnAction(0) = [].
+turnAction(1) = [turnRight].
+turnAction(2) = [turnRight,turnRight].
+turnAction(3) = [turnLeft]. 
+
+vectors() = V =>
+    V = {(0,-1),(1,0),(0,1),(-1,0),(0,0)}.
+
+
+% Problem.groups = seznam group(Initials,Targets,FirstAgentNumber,LastAgentNumber) - vsechny tyto "fieldy" udelat ziskatelne jako group.initials, group.targets, ...
+
+firstAgentNumber(Group) = FAN =>
+    $group(FAN,_,_) = Group.
+
+lastAgentNumber(Group) = LAN =>
+    $group(FAN,Initials,_) = Group,
+    LAN = FAN + len(Initials)-1.
+
+agents(Group) = As =>
+    FAN = Group.firstAgentNumber,
+    LAN = Group.lastAgentNumber,
+    As = FAN..LAN.
+
+initialPosition(Group, AgentLinIdx) = I =>
+    Is = Group.initials,
+    AgentGroupIndex = AgentLinIdx - Group.firstAgentNumber + 1,
+    I = Is[AgentGroupIndex].
+
+initials(Group) = Is =>
+    $group(_,Is,_) = Group.
+
+targets(Group) = Ts =>
+    $group(_,_,Ts) = Group.
+

@@ -1,0 +1,2 @@
+getProblemInstance() = PI =>
+    PI = $problem(1,{group(1,{1},{4})},2,2). % [[goAhead,turnLeft,goAhead]]

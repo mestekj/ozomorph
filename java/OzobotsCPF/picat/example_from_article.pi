@@ -1,0 +1,32 @@
+import sat.
+path(N,As) => % N pocet vrcholu, As seznam agentu (dvojic start-cil)
+    K = len(As), % K pocet agentu
+    lower_upper_bounds(As,LB,UB),
+    between(LB,UB,M), % M delka planu
+    B = new_array(M+1,K,N), %[cas,agent,vrchol]
+    B :: 0..1,
+    % Initialize the first and last states
+    foreach (A in 1..K)
+        (V,FV) = As[A],
+        B[1,A,V] = 1,
+        B[M+1,A,FV] = 1
+    end,
+    % Each agent occupies exactly one vertex
+    foreach (T in 1..M+1, A in 1..K)
+        sum([B[T,A,V] : V in 1..N]) #= 1
+    end,
+    % No two agents occupy the same vertex
+    foreach (T in 1..M+1, V in 1..N)
+        sum([B[T,A,V] : A in 1..K]) #=< 1
+    end,
+    % Every transition is valid
+    foreach (T in 1..M, A in 1..K, V in 1..N)
+        neibs(V,Neibs),
+        B[T,A,V] #=>
+        sum([B[T+1,A,U] : U in Neibs]) #>= 1
+    end,
+    solve(B),
+    output_plan(B).
+
+sah(Name)=>
+    writeln(Name

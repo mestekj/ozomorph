@@ -1,0 +1,8 @@
+import problem.
+import my_model.
+
+main([ProblemInstanceFile]) =>
+    load(ProblemInstanceFile),
+    ProblemInstance =  getProblemInstance(),
+    Plans = find_plans(ProblemInstance),
+    print(Plans).
