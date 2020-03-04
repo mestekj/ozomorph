@@ -48,6 +48,10 @@ public class PathFinder {
         logger.info("Picat running...");
         process.waitFor();
 
+        byte[] errOut = process.getErrorStream().readAllBytes();
+        if(errOut != null && errOut.length > 0)
+            logger.warn("Picat error output: \n" + new String(errOut));
+
         StringBuilder out = new StringBuilder();
         String plans = null;
 
@@ -67,9 +71,7 @@ public class PathFinder {
             throw new IOException("Reading of Picat output failed.", e);
         }
 
-        byte[] errOut = process.getErrorStream().readAllBytes();
-        if(errOut != null && errOut.length > 0)
-            logger.warn("Picat error output: \n" + errOut.toString());
+
 
         logger.info("Full picat output: \n"+ out.toString());
 
