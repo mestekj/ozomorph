@@ -9,12 +9,13 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.SimulationController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-padding: 10 10 10 10" >
     <center>
-        <Pane fx:id="pMap"/>
+        <Pane fx:id="pMap" style="-fx-padding: 10 10 10 10"/>
     </center>
     <bottom>
-        <HBox>
+        <HBox spacing="5">
             <ToggleButton fx:id="tbRun" text="Run" onAction="#handleRunToggle" />
             <Button text="Reset" onAction="#handleReset" />
         </HBox>
