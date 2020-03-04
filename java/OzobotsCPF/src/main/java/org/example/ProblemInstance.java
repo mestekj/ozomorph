@@ -50,7 +50,7 @@ public class ProblemInstance {
             var group = entry.getKey();
             var targetsNumber = entry.getValue().size();
             var initialsNumber = initialPositions.getOrDefault(group, new HashSet<>()).size();
-            if(initialsNumber < targetsNumber){
+            if(initialsNumber != targetsNumber){
                 missingNumber.put(group,targetsNumber-initialsNumber);
             }
         }
