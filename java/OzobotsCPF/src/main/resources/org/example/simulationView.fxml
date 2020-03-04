@@ -9,7 +9,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.SimulationController"
-            prefHeight="400.0" prefWidth="600.0"
+            prefHeight="600.0" prefWidth="800.0"
             style="-fx-padding: 10 10 10 10" >
     <center>
         <Pane fx:id="pMap" style="-fx-padding: 10 10 10 10"/>
