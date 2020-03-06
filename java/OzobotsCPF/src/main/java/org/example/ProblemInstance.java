@@ -9,7 +9,7 @@ public class ProblemInstance {
     private Map<Group, Set<PositionMapNode>> initialPositions, targetPositions;
     private int width,height;
 
-    public ProblemInstance(int width, int height, Map<Group, Set<PositionMapNode>> initialPositions, Map<Group, Set<PositionMapNode>> targetPositions) {
+    public ProblemInstance(int width, int height, Map<Group, Set<PositionMapNode>> initialPositions, Map<Group, Set<PositionMapNode>> targetPositions) throws NotEnoughInitialsException {
 
         removeEmptyGroups(initialPositions);
         removeEmptyGroups(targetPositions);
@@ -46,9 +46,11 @@ public class ProblemInstance {
 
     private Map<Group,Integer> validateInput(Map<Group, Set<PositionMapNode>> initialPositions, Map<Group, Set<PositionMapNode>> targetPositions){
         Map<Group,Integer> missingNumber = new HashMap<>();
-        for (Map.Entry<Group, Set<PositionMapNode>> entry : targetPositions.entrySet()) {
-            var group = entry.getKey();
-            var targetsNumber = entry.getValue().size();
+        Set<Group> usedGroups = new HashSet<>(initialPositions.keySet());
+        usedGroups.addAll(targetPositions.keySet());
+
+        for (Group group : usedGroups) {
+            var targetsNumber = targetPositions.getOrDefault(group, new HashSet<>()).size();
             var initialsNumber = initialPositions.getOrDefault(group, new HashSet<>()).size();
             if(initialsNumber != targetsNumber){
                 missingNumber.put(group,targetsNumber-initialsNumber);
