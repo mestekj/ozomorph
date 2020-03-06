@@ -5,9 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -97,13 +99,50 @@ public class MainView {
         try {
             logger.info("Simulation window opening...");
             PathFinder pathFinder = new PathFinder();
-            ProblemInstance problemInstance = new ProblemInstance(width,height, initialsMapController.getGroups(), targetsMapController.getGroups());
+            ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
             openSimulationWindow(agents);
+        }catch (NotEnoughInitialsException e){
+            logger.error("Number of agents mismatch.", e);
+            showDifferentAgentNumbersError(e.getNumberOfMissings());
+        } catch (InterruptedException e) {
+            logger.error("Picat thread interrupted.", e);
+            showError("No plans found because solver thread was interrupted.");
+        } catch (IOException e) {
+            logger.error("Plan finding failed.",e);
+            showError("No plans found due to an error, check logs for details.");
         }
-        catch (Exception e){
-            logger.error("Cannot run simulation.", e);
+    }
+
+    private void showError(String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showDifferentAgentNumbersError(Map<Group, Integer> differencies){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Numbers of agents in groups are different.");
+        GridPane table = createAgentNumberDifferenciesGrid(differencies);
+        alert.getDialogPane().setContent(table);
+        alert.showAndWait();
+    }
+
+    private GridPane createAgentNumberDifferenciesGrid(Map<Group, Integer> differencies){
+        GridPane pane = new GridPane();
+        pane.add(new Label("Group: "),0,0);
+        pane.add(new Label("Number of lacking in initials: "),1,0);
+        int row = 0;
+        for (Map.Entry<Group, Integer> entry : differencies.entrySet()) {
+            row++;
+            var r = new Rectangle(10,10);
+            r.setFill(entry.getKey().getColor());
+            pane.add(r,0,row);
+            pane.add(new Label(entry.getValue().toString()), 1, row);
         }
+        return pane;
     }
 
     private Stage openSimulationWindow(List<AgentMapNode> agents) throws IOException {
