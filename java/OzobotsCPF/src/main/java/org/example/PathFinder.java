@@ -1,7 +1,9 @@
 package org.example;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -9,7 +11,7 @@ import java.util.*;
 
 public class PathFinder {
     private ActionFactory actionFactory = new ActionFactory();
-    private static final Logger logger = LogManager.getLogger(PathFinder.class);
+    private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
 
     public List<AgentMapNode> findPaths(ProblemInstance problemInstance) throws IOException, InterruptedException {
         List<PositionMapNode> agentsLinearOrdering = new ArrayList<>();

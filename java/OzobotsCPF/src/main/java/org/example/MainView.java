@@ -11,8 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 
 public class MainView {
-    Logger logger = LogManager.getLogger(MainView.class);
+    Logger logger = LoggerFactory.getLogger(MainView.class);
 
     @FXML
     ColorPicker cpGroupColor;
