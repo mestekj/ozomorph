@@ -47,7 +47,7 @@ public class PathFinder {
         String picatMain = "./picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
         ProcessBuilder builder = new ProcessBuilder("picat", picatMain, problemInstanceFile.getAbsolutePath()); //TODO use relative path
         Process process = builder.start();
-        logger.info("Picat running...");
+        logger.info("Starting picat with: " );
         process.waitFor();
 
         byte[] errOut = process.getErrorStream().readAllBytes();
