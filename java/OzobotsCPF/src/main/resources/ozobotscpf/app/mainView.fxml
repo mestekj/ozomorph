@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ozobotscpf.app.MainView"
+      prefHeight="600.0" prefWidth="800.0"
+      style="-fx-padding: 10 10 10 10" spacing="10"
+>
+    <children>
+        <HBox spacing="5">
+            <Label text="Width:"/>
+            <TextField fx:id="tfWidth" text="5"/>
+            <Label text="Height:"/>
+            <TextField fx:id="tfHeight" text="5"/>
+            <Button text="Create" onAction="#createMap"/>
+            <Button text="Simulate" onAction="#startSimulation"/>
+
+        </HBox>
+        <Separator orientation="HORIZONTAL" />
+        <HBox spacing="5">
+            <Label text="Tools:"/>
+            <ToggleButton text="Erase" onAction="#setNoGroup" selected="true">
+                <toggleGroup>
+                    <ToggleGroup fx:id="groupsTools"/>
+                </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="btPaint" text="Paint" toggleGroup="$groupsTools" onAction="#setGroup">
+                <graphic>
+                    <ColorPicker fx:id="cpGroupColor" onAction="#groupColorChanged" />
+                </graphic>
+            </ToggleButton>
+        </HBox>
+        <GridPane hgap="10" vgap="10">
+            <Label text="Initial positions:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Pane fx:id="pInitials" GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
+            <Separator GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="2" orientation="VERTICAL"/>
+            <Label text="Target positions:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <Pane fx:id="pTargets" GridPane.columnIndex="2" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
+        </GridPane>
+    </children>
+
+</VBox>

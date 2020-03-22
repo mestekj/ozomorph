@@ -2,3 +2,4 @@
 /workdir/
 /logs/
 /.gradle/
+/build/
