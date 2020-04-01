@@ -16,8 +16,8 @@ public class SimulationMapController extends MapControllerBase {
     private Map<AgentMapNode, Node> agentsGuiNodes;
     private double agentRadius;
 
-    public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius) {
-        super(width, height, pane, gridTick);
+    public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth) {
+        super(width, height, pane, gridTick, gridLineWidth);
         this.agentRadius = agentRadius;
 
         generateAgentsGuiNodes(agents);

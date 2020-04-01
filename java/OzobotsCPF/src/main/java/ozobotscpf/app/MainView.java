@@ -156,9 +156,11 @@ public class MainView {
         stage.setTitle("Simulation");
         SimulationController controller = loader.getController();
 
-        controller.init(width, height,agents);
 
         stage.show();
+        controller.init(width, height,agents);
+
+
         return stage;
     }
 }

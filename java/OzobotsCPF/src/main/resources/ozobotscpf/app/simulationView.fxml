@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import ozobotscpf.app.FunctionalSlider?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ozobotscpf.app.SimulationController"
@@ -18,6 +19,10 @@
         <HBox spacing="5">
             <ToggleButton fx:id="tbRun" text="Run" onAction="#handleRunToggle" />
             <Button text="Reset" onAction="#handleReset" />
+            <Label text="Scale:"/>
+            <FunctionalSlider fx:id="slScale" min="-4" max="4" value="0" majorTickUnit="1" minorTickCount="1" showTickMarks="true" showTickLabels="true" snapToTicks="true" />
+            <Label text="Speed:" />
+            <FunctionalSlider fx:id="slSpeed" min="-2" max="4" value="0" majorTickUnit="1" minorTickCount="1" showTickMarks="true" showTickLabels="true" snapToTicks="true" />
         </HBox>
     </bottom>
 </BorderPane>
