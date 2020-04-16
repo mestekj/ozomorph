@@ -13,6 +13,7 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.3.0-alpha4'
     implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
     implementation 'org.jdom:jdom2:2.0.5'
+    implementation 'jaxen:jaxen:1.2.0'
 }
 
 javafx {

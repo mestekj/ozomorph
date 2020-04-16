@@ -9,13 +9,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import org.jdom2.JDOMException;
 import ozobotscpf.nodes.AgentMapNode;
+import ozobotscpf.ozocodegenerator.OzocodeGenerator;
 
+import java.io.IOException;
 import java.util.List;
 
 public class SimulationController {
@@ -23,6 +27,7 @@ public class SimulationController {
     public Pane pMap;
     public FunctionalSlider slScale;
     public FunctionalSlider slSpeed;
+    public ToggleButton tbOnScreen;
 
 
     private SimulationMapController simulationMapController;
@@ -65,7 +70,6 @@ public class SimulationController {
             handleRunToggle(new ActionEvent());
         });
     }
-
 
     private double getGridTickPx(){
         return gridTickCm * getDPcm() * scale;
@@ -113,5 +117,36 @@ public class SimulationController {
         for(AgentMapNode agent : agents)
             agent.move(simulationSpeed * simulationStep);
         simulationMapController.updateGuiNodesPositions();
+    }
+
+    public void handleGenerateOzocodes(ActionEvent actionEvent) {
+        try{
+            OzocodeGenerator generator = new OzocodeGenerator();
+            generator.generateOzocodes(agents);
+        } catch (JDOMException e) {
+            showError("Error while generating ozocodes.");
+        } catch (IOException e) {
+            showError("Error while generating ozocodes.");
+        }
+
+    }
+
+    public void handleOnScreenToggle(ActionEvent actionEvent) {
+        if(tbOnScreen.isSelected()){
+            scale = 1;
+            initMap(); //TODO whiten circles
+        }
+        else{
+            initMap();
+        }
+    }
+
+
+    private void showError(String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

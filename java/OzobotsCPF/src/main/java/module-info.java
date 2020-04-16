@@ -6,6 +6,7 @@ module ozobotscpf {
     requires ch.qos.logback.classic;
 
     requires jdom2;
+    requires java.xml;
 
     opens ozobotscpf.app to javafx.fxml;
     exports ozobotscpf.app;

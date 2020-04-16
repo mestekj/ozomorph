@@ -23,6 +23,8 @@
             <FunctionalSlider fx:id="slScale" min="-4" max="4" value="0" majorTickUnit="1" minorTickCount="1" showTickMarks="true" showTickLabels="true" snapToTicks="true" />
             <Label text="Speed:" />
             <FunctionalSlider fx:id="slSpeed" min="-2" max="4" value="0" majorTickUnit="1" minorTickCount="1" showTickMarks="true" showTickLabels="true" snapToTicks="true" />
+            <Button text="Generate" onAction="#handleGenerateOzocodes" />
+            <ToggleButton fx:id="tbOnScreen" text="OnScreen mode" onAction="#handleOnScreenToggle"/>
         </HBox>
     </bottom>
 </BorderPane>

@@ -6,6 +6,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ozobotscpf.actions.Action;
 import ozobotscpf.nodes.AgentMapNode;
 
@@ -15,41 +17,55 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.jdom2.*;
+import ozobotscpf.pathfinder.PathFinder;
 
 public class OzocodeGenerator {
+    private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
+
     private String ozocodesDir = "./ozocodes"; //TODO set properly
-    private String template = "";
+    private String template = "./ozocode_templates/template.ozocode";
 
     public void generateOzocodes(List<AgentMapNode> agents) throws JDOMException, IOException {
-        //load and parse template
-        Document template = loadTemplate();
-        Element executeActionsDefinition = getProcedureDefinition(template,"executeActions");
+        try {
+            //load and parse template
+            Document template = loadTemplate();
+            Element executeActionsDefinition = getProcedureDefinition(template, "executeActions");
 
-        //initialize outputter
-        XMLOutputter outputter = new XMLOutputter();
-        outputter.setFormat(Format.getPrettyFormat());
+            //initialize outputter
+            XMLOutputter outputter = new XMLOutputter();
+            outputter.setFormat(Format.getPrettyFormat());
 
-        //process agents
-        for (AgentMapNode agent : agents) {
-            //clean template
-            executeActionsDefinition.removeContent();
+            File ozoDir = new File(ozocodesDir);
+            ozoDir.mkdirs();
 
-            //inject action procedure calls
-            var plan = agent.getPlan();
-            if(!plan.isEmpty()){
-                var calls = generateCalls(plan);
-                executeActionsDefinition.addContent(calls);
+
+            //process agents
+            for (AgentMapNode agent : agents) {
+                //clean template
+                executeActionsDefinition.removeContent();
+
+                //inject action procedure calls
+                var plan = agent.getPlan();
+                if (!plan.isEmpty()) {
+                    var calls = generateCalls(plan);
+                    executeActionsDefinition.addContent(calls);
+                }
+
+                //output Ozocode
+                FileWriter writer = new FileWriter(ozocodesDir + "/" + "agent_" + agent.getId() + ".ozocode", StandardCharsets.UTF_8);
+                outputter.output(template, writer);
             }
-
-            //output Ozocode
-            FileWriter writer = new FileWriter(ozocodesDir +"/" + "agent_" + agent.getId() + ".ozocode", StandardCharsets.UTF_8);
-            outputter.output(template,writer);
+        }
+        catch (Exception e){
+            //just log it
+            logger.error("Error while generating ozocodes.",e);
+            throw e;
         }
     }
 
     private Document loadTemplate() throws JDOMException, IOException {
         File templateXmlFile = new File(template);
-        SAXBuilder saxBuilder = new SAXBuilder();
+        SAXBuilder saxBuilder = JdomHelper.getSAXBuilder(); //SAXBuilder that ignores namespaces
         Document template = saxBuilder.build(templateXmlFile);
         return template;
     }
@@ -59,6 +75,7 @@ public class OzocodeGenerator {
     private Element getProcedureDefinition(Document template, String procedureName){
         String query = "/xml/block[@type='procedures_defnoreturn' and field[@name='NAME']='executeActions']/statement[@name='STACK']";
         XPathExpression<Element> xpe = XPathFactory.instance().compile(query, Filters.element());
+
         Element statement_stack = xpe.evaluateFirst(template); //Assuming that there is exactly one such element
         return statement_stack;
     }
