@@ -90,12 +90,12 @@ public class SimulationController {
     }
 
     private double getScaleToFit() {
-        return Math.min(getScaleToFit1D(width,pMap.getWidth()), getScaleToFit1D(height,pMap.getHeight()));
+        return Math.min(getScaleToFit1D(width, pMap.getWidth()), getScaleToFit1D(height, pMap.getHeight()));
     }
 
-    private double getScaleToFit1D(int nodes, double pixels){
-        double pixelsUnscaled = (nodes+1) * gridTickCm * getDPcm();
-        return pixels/pixelsUnscaled;
+    private double getScaleToFit1D(int nodes, double pixels) {
+        double pixelsUnscaled = (nodes + 1) * gridTickCm * getDPcm();
+        return pixels / pixelsUnscaled;
     }
 
     ///pixels per centimetre
@@ -124,7 +124,7 @@ public class SimulationController {
             positionsReseted = false;
             timeline.play();
         } else {
-            if(timeline != null)
+            if (timeline != null)
                 timeline.stop();
         }
     }
