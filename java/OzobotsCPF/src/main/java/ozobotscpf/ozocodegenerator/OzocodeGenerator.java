@@ -16,7 +16,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.jdom2.*;
 import ozobotscpf.pathfinder.PathFinder;
 
@@ -31,6 +35,7 @@ public class OzocodeGenerator {
             //load and parse template
             Document template = loadTemplate();
             Element executeActionsDefinition = getProcedureDefinition(template, "executeActions");
+            Element setColorDefinition = getProcedureDefinition(template,"setColor");
 
             //initialize outputter
             XMLOutputter outputter = new XMLOutputter();
@@ -44,6 +49,13 @@ public class OzocodeGenerator {
             for (AgentMapNode agent : agents) {
                 //clean template
                 executeActionsDefinition.removeContent();
+                setColorDefinition.removeContent();
+
+                //set agent's color
+                var color = agent.getGroup().getColor();
+                var rgbSet = generateSetRGBVars(color.getRed(),color.getGreen(),color.getBlue());
+                setColorDefinition.addContent(rgbSet);
+
 
                 //inject action procedure calls
                 var plan = agent.getPlan();
@@ -94,16 +106,58 @@ public class OzocodeGenerator {
             throw new IllegalArgumentException("No actions to generate calls.");
 
         ProcedureCallFactory pcf = new ProcedureCallFactory();
-        Element root = pcf.createCall(actions.get(0));
+        List<Element> actionCalls = actions.stream().map(pcf::createCall).collect(Collectors.toList());
+        Element root = generateSequence(actionCalls);
+        return root;
+    }
+
+    private Element generateSetRGBVars(double red, double green, double blue) {
+        List<Element> varsSets = new ArrayList<>();
+        varsSets.add(generateSetVariable("r",(byte)Math.round(red*127)));
+        varsSets.add(generateSetVariable("g",(byte)Math.round(green*127)));
+        varsSets.add(generateSetVariable("b",(byte)Math.round(blue*127)));
+
+        Element sequenceRoot = generateSequence(varsSets);
+        return sequenceRoot;
+    }
+
+    private Element generateSequence(List<Element> blocks){
+        if(blocks.isEmpty())
+            throw new IllegalArgumentException("No blocks to generate sequence.");
+
+        Element root = blocks.get(0);
         Element previous = root;
 
-        for (int i = 1; i < actions.size(); i++) {
+        for (int i = 1; i < blocks.size(); i++) {
             Element next = new Element("next");
-            Element block = pcf.createCall(actions.get(i));
+            Element block = blocks.get(i);
             next.addContent(block);
             previous.addContent(next);
             previous = block;
         }
         return root;
+    }
+
+    private Element generateSetVariable(String variableName, byte value) {
+        Element block = new Element("block")
+                .setAttribute("type", "variables_set")
+                .addContent(
+                        new Element("field", variableName)
+                                .setAttribute("name", "VAR")
+                                .setAttribute("variabletype", "")
+
+                ).addContent(
+                        new Element("value")
+                                .setAttribute("name", "VALUE")
+                                .addContent(
+                                        new Element("block")
+                                                .setAttribute("type", "math_number")
+                                                .addContent(
+                                                        new Element("field", String.valueOf(value))
+                                                                .setAttribute("name", "NUM")
+                                                )
+                                )
+                );
+        return block;
     }
 }
