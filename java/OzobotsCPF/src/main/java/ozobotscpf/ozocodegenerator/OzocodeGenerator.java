@@ -1,5 +1,6 @@
 package ozobotscpf.ozocodegenerator;
 
+import org.jdom2.filter.ElementFilter;
 import org.jdom2.filter.Filters;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -20,7 +21,7 @@ import org.jdom2.*;
 import ozobotscpf.pathfinder.PathFinder;
 
 public class OzocodeGenerator {
-    private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
+    private static final Logger logger = LoggerFactory.getLogger(OzocodeGenerator.class);
 
     private String ozocodesDir = "./ozocodes"; //TODO set properly
     private String template = "./ozocode_templates/template.ozocode";
@@ -73,10 +74,18 @@ public class OzocodeGenerator {
     //returns element "<statement name="STACK">
     //returns definition, not declaration! i.e. the element whose value is the actual sequence of function calls
     private Element getProcedureDefinition(Document template, String procedureName){
-        String query = "/xml/block[@type='procedures_defnoreturn' and field[@name='NAME']='executeActions']/statement[@name='STACK']";
+        String query = "/xml/block[@type='procedures_defnoreturn' and field[@name='NAME']='executeActions']";
         XPathExpression<Element> xpe = XPathFactory.instance().compile(query, Filters.element());
+        Element procedure_def = xpe.evaluateFirst(template); //Assuming that there is exactly one such element
 
-        Element statement_stack = xpe.evaluateFirst(template); //Assuming that there is exactly one such element
+        //remove definition (if exists)
+        procedure_def.removeContent(new ElementFilter("statement"));
+
+        //add new STACK and return them
+        Element statement_stack = new Element("statement");
+        statement_stack.setAttribute("name","STACK");
+        procedure_def.addContent(statement_stack);
+
         return statement_stack;
     }
 
