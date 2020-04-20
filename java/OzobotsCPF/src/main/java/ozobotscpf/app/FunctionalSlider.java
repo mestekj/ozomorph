@@ -47,4 +47,8 @@ public class FunctionalSlider extends Slider {
     public ReadOnlyDoubleProperty functionValueProperty() {
         return functionValue.getReadOnlyProperty();
     }
+
+    public void setFuctionalValue(double functionalValue){
+        this.setValue(Math.log(functionalValue)/Math.log(2));
+    }
 }

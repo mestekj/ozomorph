@@ -3,16 +3,16 @@ package ozobotscpf.app;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Window;
@@ -37,11 +37,11 @@ public class SimulationController {
     private int width;
     private int height; //size of grid
     private double simulationSpeed = 1.0; //modified via slider
-    private double simulationStep = 1.0 / 60;
+    private final double simulationStep = 1.0 / 60;
 
-    private double gridTickCm = 5;
-    private double agentRadiusCm = 1.5;
-    private double gridLineWidthCm = 0.5;
+    private final double gridTickCm = 5;
+    private final double agentRadiusCm = 1.5;
+    private final double gridLineWidthCm = 0.5;
     private double scale = 1.0; //modified via slider
     private boolean onScreenMode = false; //modified via togle button
     private boolean positionsReseted = true;
@@ -53,6 +53,7 @@ public class SimulationController {
         this.agents = agents;
         this.width = width;
         this.height = height;
+        this.setScale(getScaleToFit());
         initMap();
     }
 
@@ -63,12 +64,12 @@ public class SimulationController {
     @FXML
     public void initialize() {
         slScale.functionValueProperty().addListener((observableValue, number, t1) -> {
-            scale = slScale.getFunctionValue();
+            setScale(slScale.getFunctionValue());
             initMap();
         });
 
         slSpeed.functionValueProperty().addListener((observableValue, number, t1) -> {
-            simulationSpeed = slSpeed.getFunctionValue();
+            setSimulationSpeed(slSpeed.getFunctionValue());
             //re-run simulation (now with new speed value)
             if (timeline != null)
                 timeline.stop();
@@ -77,15 +78,24 @@ public class SimulationController {
     }
 
     private double getGridTickPx() {
-        return gridTickCm * getDPcm() * scale;
+        return gridTickCm * getDPcm() * getScale();
     }
 
     private double getAgentRadiusPx() {
-        return agentRadiusCm * getDPcm() * scale;
+        return agentRadiusCm * getDPcm() * getScale();
     }
 
     private double getGridLineWidthPx() {
-        return gridLineWidthCm * getDPcm() * scale;
+        return gridLineWidthCm * getDPcm() * getScale();
+    }
+
+    private double getScaleToFit() {
+        return Math.min(getScaleToFit1D(width,pMap.getWidth()), getScaleToFit1D(height,pMap.getHeight()));
+    }
+
+    private double getScaleToFit1D(int nodes, double pixels){
+        double pixelsUnscaled = (nodes+1) * gridTickCm * getDPcm();
+        return pixels/pixelsUnscaled;
     }
 
     ///pixels per centimetre
@@ -114,7 +124,8 @@ public class SimulationController {
             positionsReseted = false;
             timeline.play();
         } else {
-            timeline.stop();
+            if(timeline != null)
+                timeline.stop();
         }
     }
 
@@ -148,7 +159,7 @@ public class SimulationController {
 
     private void timerTick() {
         for (AgentMapNode agent : agents)
-            agent.move(simulationSpeed * simulationStep);
+            agent.move(getSimulationSpeed() * simulationStep);
         simulationMapController.updateGuiNodesPositions();
     }
 
@@ -166,7 +177,7 @@ public class SimulationController {
 
     public void handleOnScreenToggle(ActionEvent actionEvent) {
         if (tbOnScreen.isSelected()) {
-            scale = 1;
+            setScale(1);
             onScreenMode = true;
             initMap();
         } else {
@@ -182,5 +193,23 @@ public class SimulationController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    protected double getSimulationSpeed() {
+        return simulationSpeed;
+    }
+
+    protected void setSimulationSpeed(double simulationSpeed) {
+        this.simulationSpeed = simulationSpeed;
+        slSpeed.setFuctionalValue(simulationSpeed);
+    }
+
+    protected double getScale() {
+        return scale;
+    }
+
+    protected void setScale(double scale) {
+        this.scale = scale;
+        slScale.setFuctionalValue(scale);
     }
 }
