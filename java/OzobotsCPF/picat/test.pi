@@ -1,5 +1,10 @@
 
+import problem.
+import model_split.
+import example_problem_instance.
+
+
 main =>
-    load("./a/t.pi"),
-    X = get(),
-    print(X).
+    ProblemInstance =  getProblemInstance(),
+    Plans = find_plans(ProblemInstance),
+    print(Plans).

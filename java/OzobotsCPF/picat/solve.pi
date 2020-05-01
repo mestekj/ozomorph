@@ -1,5 +1,5 @@
 import problem.
-import my_model.
+import model_split.
 
 main([ProblemInstanceFile]) =>
     load(ProblemInstanceFile),
