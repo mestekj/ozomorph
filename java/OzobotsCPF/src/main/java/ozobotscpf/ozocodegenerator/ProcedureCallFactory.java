@@ -15,7 +15,7 @@ public class ProcedureCallFactory {
         else if (action instanceof MoveAction)
             return createCallNoArg("moveForward");
         else if (action instanceof WaitAction)
-            return createCallOneIntArg("wait", "time_100ms", (byte) (action.getDuration() * 100));
+            return createCallOneIntArg("wait", "time_100ms", (byte) (action.getDuration() * 10));
         else
             throw new UnsupportedOperationException("Unknown Action type: " + action.getClass().getTypeName());
     }
@@ -47,18 +47,19 @@ public class ProcedureCallFactory {
                                 .setAttribute("name", procedureName)
                                 .addContent(new Element("arg")
                                         .setAttribute("name", argumentName)
-                                ).addContent(
-                                new Element("value")
-                                        .setAttribute("name", "ARG0")
-                                        .addContent(
-                                                new Element("block")
-                                                        .setAttribute("type", "math_number")
-                                                        .addContent(
-                                                                new Element("field", String.valueOf(argumentValue))
-                                                                        .setAttribute("name", "NUM")
-                                                        )
-                                        )
-                        )
+                                ))
+                .addContent(
+                        new Element("value")
+                                .setAttribute("name", "ARG0")
+                                .addContent(
+                                        new Element("block")
+                                                .setAttribute("type", "math_number")
+                                                .addContent(
+                                                        new Element("field")
+                                                                .setAttribute("name", "NUM")
+                                                                .setText(String.valueOf(argumentValue))
+                                                )
+                                )
                 );
         return block;
     }

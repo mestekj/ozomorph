@@ -86,7 +86,7 @@ public class OzocodeGenerator {
     //returns element "<statement name="STACK">
     //returns definition, not declaration! i.e. the element whose value is the actual sequence of function calls
     private Element getProcedureDefinition(Document template, String procedureName){
-        String query = "/xml/block[@type='procedures_defnoreturn' and field[@name='NAME']='executeActions']";
+        String query = "/xml/block[@type='procedures_defnoreturn' and field[@name='NAME']='" + procedureName +"']";
         XPathExpression<Element> xpe = XPathFactory.instance().compile(query, Filters.element());
         Element procedure_def = xpe.evaluateFirst(template); //Assuming that there is exactly one such element
 
@@ -142,7 +142,8 @@ public class OzocodeGenerator {
         Element block = new Element("block")
                 .setAttribute("type", "variables_set")
                 .addContent(
-                        new Element("field", variableName)
+                        new Element("field")
+                                .setText(variableName)
                                 .setAttribute("name", "VAR")
                                 .setAttribute("variabletype", "")
 
@@ -153,7 +154,8 @@ public class OzocodeGenerator {
                                         new Element("block")
                                                 .setAttribute("type", "math_number")
                                                 .addContent(
-                                                        new Element("field", String.valueOf(value))
+                                                        new Element("field")
+                                                                .setText(String.valueOf(value))
                                                                 .setAttribute("name", "NUM")
                                                 )
                                 )
