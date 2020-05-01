@@ -30,6 +30,20 @@ neighboursDir(Problem,Vertex) = Neighbours =>
         end,
     end.
 
+neighbour(Problem,Vertex,Direction) = Neighbour =>
+    V = vectors(),
+    $problem(_,_,Width,Height) = Problem,
+    X = ((Vertex-1) mod Width) + 1, %+-1 because array indices are 1-based
+    Y = ((Vertex-1) div Width) + 1,
+    (DX,DY) = V[Direction],
+    NX = X + DX, 
+    NY = Y + DY,
+    if(between(1, Width, NX) && between(1, Height, NY)) then 
+        Neighbour = (NY-1) * Width + (NX-1) +1
+    else
+        Neighbour = 0
+    end.
+
 actions(Problem,AgentVertex,AgentDirection,NextVertex,DirectionOfNextVertex) = Actions =>
     if (AgentVertex != NextVertex) then
         Turn = (DirectionOfNextVertex - AgentDirection) mod 4,
@@ -37,7 +51,16 @@ actions(Problem,AgentVertex,AgentDirection,NextVertex,DirectionOfNextVertex) = A
     else
         Actions := [wait]
     end.
+
+actions(Problem,Turn) = Actions =>
+    if(Turn =:= 0) then
+        Actions = [wait],
+    else
+        Actions = turnAction(Turn),
+    end.
     
+goAhead(Problem) = [goAhead].
+
 turnAction(0) = [].
 turnAction(1) = [turnRight].
 turnAction(2) = [turnRight,turnRight].
