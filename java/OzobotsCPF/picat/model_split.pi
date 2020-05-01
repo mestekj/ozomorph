@@ -51,7 +51,6 @@ find_plans(Problem) = Plans =>
                 sum([B[Time,A,V,D] : A in 1..AgentsNumber, A != Agent, D in 1..4]) #= 0,
     end,
     solve(B),
-    print(B),
     Plans = output_plan(B,Problem,Makespan).
 
 
