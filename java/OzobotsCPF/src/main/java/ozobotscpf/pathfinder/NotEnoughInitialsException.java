@@ -10,6 +10,7 @@ public class NotEnoughInitialsException extends IllegalArgumentException {
     }
 
     public NotEnoughInitialsException(Map<Group, Integer> numberOfMissings) {
+        super("Number of agents difers.");
         this.numberOfMissings = numberOfMissings;
     }
 

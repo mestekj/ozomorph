@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ozobotscpf.nodes.AgentMapNode;
 import ozobotscpf.nodes.Group;
+import ozobotscpf.pathfinder.NoInitialsException;
 import ozobotscpf.pathfinder.NotEnoughInitialsException;
 import ozobotscpf.pathfinder.PathFinder;
 import ozobotscpf.pathfinder.ProblemInstance;
@@ -77,7 +78,6 @@ public class MainView {
         btPaint.fire();
     }
 
-
     public void setNoGroup(ActionEvent actionEvent) {
         setSelectedGroup(null);
     }
@@ -109,6 +109,9 @@ public class MainView {
         }catch (NotEnoughInitialsException e){
             logger.error("Number of agents mismatch.", e);
             showDifferentAgentNumbersError(e.getNumberOfMissings());
+        } catch (NoInitialsException e){
+            logger.error("No initial agents.", e);
+            showError("No agents.");
         } catch (InterruptedException e) {
             logger.error("Picat thread interrupted.", e);
             showError("No plans found because solver thread was interrupted.");
@@ -126,20 +129,20 @@ public class MainView {
         alert.showAndWait();
     }
 
-    private void showDifferentAgentNumbersError(Map<Group, Integer> differencies){
+    private void showDifferentAgentNumbersError(Map<Group, Integer> differences){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("Numbers of agents in groups are different.");
-        GridPane table = createAgentNumberDifferenciesGrid(differencies);
+        GridPane table = createAgentNumberDifferencesGrid(differences);
         alert.getDialogPane().setContent(table);
         alert.showAndWait();
     }
 
-    private GridPane createAgentNumberDifferenciesGrid(Map<Group, Integer> differencies){
+    private GridPane createAgentNumberDifferencesGrid(Map<Group, Integer> differences){
         GridPane pane = new GridPane();
         pane.add(new Label("Group: "),0,0);
         pane.add(new Label("Number of lacking in initials: "),1,0);
         int row = 0;
-        for (Map.Entry<Group, Integer> entry : differencies.entrySet()) {
+        for (Map.Entry<Group, Integer> entry : differences.entrySet()) {
             row++;
             var r = new Rectangle(10,10);
             r.setFill(entry.getKey().getColor());
@@ -156,10 +159,8 @@ public class MainView {
         stage.setTitle("Simulation");
         SimulationController controller = loader.getController();
 
-
         stage.show();
         controller.init(width, height,agents);
-
 
         return stage;
     }

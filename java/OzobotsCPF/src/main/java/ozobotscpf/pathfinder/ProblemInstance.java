@@ -25,6 +25,9 @@ public class ProblemInstance {
         this.targetPositions = targetPositions;
         this.height = height;
         this.width = width;
+
+        if(getAgentsCount() == 0)
+            throw new NoInitialsException();
     }
 
     public Map<Group, Set<PositionMapNode>> getInitialPositions() {

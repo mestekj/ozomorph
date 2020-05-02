@@ -28,15 +28,6 @@ public class ProcedureCallFactory {
                                 .setAttribute("name", procedureName)
                 );
         return block;
-
-        /**
-         *         Element block = new Element("block");
-         *         block.setAttribute("type", "procedures_callnoreturn");
-         *         Element mutation = new Element("mutation");
-         *         mutation.setAttribute("name","moveForward");
-         *         block.addContent(mutation);
-         *         return block;
-         */
     }
 
     private Element createCallOneIntArg(String procedureName, String argumentName, byte argumentValue) {
