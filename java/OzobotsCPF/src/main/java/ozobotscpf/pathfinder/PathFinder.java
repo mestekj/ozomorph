@@ -37,7 +37,7 @@ public class PathFinder {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
 
-        File file = new File("./workdir/" + formatter.format(date)  + ".pi");
+        File file = new File("../workdir/" + formatter.format(date)  + ".pi");
         file.getParentFile().mkdirs();
         file.createNewFile();
         FileWriter fileWriter = new FileWriter(file);
@@ -49,7 +49,7 @@ public class PathFinder {
     }
 
     private String runPicat(File problemInstanceFile) throws IOException, InterruptedException {
-        String picatMain = "./picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
+        String picatMain = "../picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
         ProcessBuilder builder = new ProcessBuilder("picat", picatMain, problemInstanceFile.getAbsolutePath()); //TODO use relative path
         Process process = builder.start();
         logger.info("Starting picat with: " );

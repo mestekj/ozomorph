@@ -27,8 +27,8 @@ import ozobotscpf.pathfinder.PathFinder;
 public class OzocodeGenerator {
     private static final Logger logger = LoggerFactory.getLogger(OzocodeGenerator.class);
 
-    private String ozocodesDir = "./ozocodes"; //TODO set properly
-    private String template = "./ozocode_templates/template.ozocode";
+    private String ozocodesDir = "../ozocodes"; //TODO set properly
+    private String template = "../ozocode_templates/template.ozocode";
 
     public void generateOzocodes(List<AgentMapNode> agents) throws JDOMException, IOException {
         try {
