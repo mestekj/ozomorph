@@ -17,12 +17,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.jdom2.*;
-import ozobotscpf.pathfinder.PathFinder;
 
 public class OzocodeGenerator {
     private static final Logger logger = LoggerFactory.getLogger(OzocodeGenerator.class);
@@ -34,7 +32,7 @@ public class OzocodeGenerator {
             //load and parse template
             Document template = loadTemplate(templateFile);
             Element executeActionsDefinition = getProcedureDefinition(template, "executeActions");
-            Element setColorDefinition = getProcedureDefinition(template,"setColor");
+            Element setColorDefinition = getProcedureDefinition(template,"setVariables");
 
             //initialize outputter
             XMLOutputter outputter = new XMLOutputter();
@@ -52,7 +50,7 @@ public class OzocodeGenerator {
 
                 //set agent's color
                 var color = agent.getGroup().getColor();
-                var rgbSet = generateSetRGBVars(color.getRed(),color.getGreen(),color.getBlue());
+                var rgbSet = generateSetVariables(color.getRed(),color.getGreen(),color.getBlue(),agent.getId(),agents.size());
                 setColorDefinition.addContent(rgbSet);
 
 
@@ -109,11 +107,13 @@ public class OzocodeGenerator {
         return root;
     }
 
-    private Element generateSetRGBVars(double red, double green, double blue) {
+    private Element generateSetVariables(double red, double green, double blue, int id, int agentsCount) {
         List<Element> varsSets = new ArrayList<>();
         varsSets.add(generateSetVariable("r",(byte)Math.round(red*127)));
         varsSets.add(generateSetVariable("g",(byte)Math.round(green*127)));
         varsSets.add(generateSetVariable("b",(byte)Math.round(blue*127)));
+        varsSets.add(generateSetVariable("id",(byte)id));
+        varsSets.add(generateSetVariable("agentsCount",(byte)agentsCount));
 
         Element sequenceRoot = generateSequence(varsSets);
         return sequenceRoot;
