@@ -27,13 +27,12 @@ import ozobotscpf.pathfinder.PathFinder;
 public class OzocodeGenerator {
     private static final Logger logger = LoggerFactory.getLogger(OzocodeGenerator.class);
 
-    private String ozocodesDir = "../ozocodes"; //TODO set properly
-    private String template = "../ozocode_templates/template.ozocode";
+    private String ozocodesDir = "../ozocodes";
 
-    public void generateOzocodes(List<AgentMapNode> agents) throws JDOMException, IOException {
+    public void generateOzocodes(List<AgentMapNode> agents, File templateFile) throws JDOMException, IOException {
         try {
             //load and parse template
-            Document template = loadTemplate();
+            Document template = loadTemplate(templateFile);
             Element executeActionsDefinition = getProcedureDefinition(template, "executeActions");
             Element setColorDefinition = getProcedureDefinition(template,"setColor");
 
@@ -76,10 +75,9 @@ public class OzocodeGenerator {
         }
     }
 
-    private Document loadTemplate() throws JDOMException, IOException {
-        File templateXmlFile = new File(template);
+    private Document loadTemplate(File templateFile) throws JDOMException, IOException {
         SAXBuilder saxBuilder = JdomHelper.getSAXBuilder(); //SAXBuilder that ignores namespaces
-        Document template = saxBuilder.build(templateXmlFile);
+        Document template = saxBuilder.build(templateFile);
         return template;
     }
 

@@ -24,7 +24,12 @@
             <Label text="Speed:" />
             <FunctionalSlider fx:id="slSpeed" min="-2" max="4" value="0" majorTickUnit="1" minorTickCount="1" showTickMarks="true" showTickLabels="true" snapToTicks="true" />
             <Button text="Generate" onAction="#handleGenerateOzocodes" />
-            <ToggleButton fx:id="tbOnScreen" text="OnScreen mode" onAction="#handleOnScreenToggle"/>
+            <ToggleButton fx:id="tbOnScreen" text="OnScreen mode">
+                <toggleGroup>
+                    <ToggleGroup fx:id="groupModes"/>
+                </toggleGroup>
+            </ToggleButton>
+            <ToggleButton fx:id="tbOnBoard" text="OnBoard mode" toggleGroup="$groupModes"/>
         </HBox>
     </bottom>
 </BorderPane>

@@ -9,6 +9,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import ozobotscpf.nodes.AgentMapNode;
 
@@ -58,5 +59,9 @@ public class SimulationMapController extends MapControllerBase {
             guiNode.getTransforms().addAll(new Translate((agent.getX() +0.5) * gridTick, (agent.getY()+0.5) * gridTick),new Rotate(agent.getOrientation() * 360,0,0));
             
         }
+    }
+
+    Transform getGuiNodePosition(AgentMapNode agent){
+        return agentsGuiNodes.get(agent).getTransforms().get(0);
     }
 }
