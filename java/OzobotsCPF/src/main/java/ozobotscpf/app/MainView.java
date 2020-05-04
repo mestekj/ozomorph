@@ -164,4 +164,11 @@ public class MainView {
 
         return stage;
     }
+
+    public void printMap(ActionEvent actionEvent) {
+        PrintController pc = new PrintController(pInitials.getScene().getWindow(), MapSettings.getSettings(), width,height);
+        pc.print();
+
+        //TODO
+    }
 }

@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -34,14 +35,12 @@ public class SimulationController {
 
     SimulationMapController simulationMapController;
     private List<AgentMapNode> agents;
+    private MapSettings settings;
     private int width;
     private int height; //size of grid
     private double simulationSpeed = 1.0; //modified via slider
     private final double simulationStep = 1.0 / 60;
 
-    private final double gridTickCm = 5;
-    private final double agentRadiusCm = 1.5;
-    private final double gridLineWidthCm = 0.5;
     private double scale = 1.0; //modified via slider
     private boolean positionsReseted = true;
 
@@ -78,16 +77,14 @@ public class SimulationController {
         groupModes.selectedToggleProperty().addListener(h -> handleModeTogle());
     }
 
-    private double getGridTickPx() {
-        return gridTickCm * getDPcm() * getScale();
-    }
+    private double getGridTickPx() { return settings.getGridTickCm() * getDPcm() * getScale(); }
 
     private double getAgentRadiusPx() {
-        return agentRadiusCm * getDPcm() * getScale();
+        return settings.getAgentRadiusCm() * getDPcm() * getScale();
     }
 
     private double getGridLineWidthPx() {
-        return gridLineWidthCm * getDPcm() * getScale();
+        return settings.getGridLineWidthCm() * getDPcm() * getScale();
     }
 
     private double getScaleToFit() {
@@ -95,7 +92,7 @@ public class SimulationController {
     }
 
     private double getScaleToFit1D(int nodes, double pixels) {
-        double pixelsUnscaled = (nodes + 1) * gridTickCm * getDPcm();
+        double pixelsUnscaled = (nodes + 1) * settings.getGridTickCm() * getDPcm();
         return pixels / pixelsUnscaled;
     }
 

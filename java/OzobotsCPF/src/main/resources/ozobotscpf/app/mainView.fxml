@@ -18,7 +18,7 @@
             <TextField fx:id="tfHeight" text="5"/>
             <Button text="Create" onAction="#createMap"/>
             <Button text="Simulate" onAction="#startSimulation"/>
-
+            <Button text="Print" onAction="#printMap"/>
         </HBox>
         <Separator orientation="HORIZONTAL" />
         <HBox spacing="5">
