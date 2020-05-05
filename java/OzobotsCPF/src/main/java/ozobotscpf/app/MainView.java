@@ -160,7 +160,7 @@ public class MainView {
         SimulationController controller = loader.getController();
 
         stage.show();
-        controller.init(width, height,agents);
+        controller.init(width, height,agents, MapSettings.getSettings());
 
         return stage;
     }

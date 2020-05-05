@@ -45,12 +45,14 @@ public class SimulationController {
     private boolean positionsReseted = true;
 
     private Timeline timeline;
-    private Mode mode; //modified via togle button
+    private Mode mode = Mode.SIMULATION; //modified via toggle button
 
-    public void init(int width, int height, List<AgentMapNode> agents) {
+
+    public void init(int width, int height, List<AgentMapNode> agents, MapSettings settings) {
         this.agents = agents;
         this.width = width;
         this.height = height;
+        this.settings = settings;
         this.setScale(getScaleToFit());
         initMap();
     }
@@ -101,7 +103,7 @@ public class SimulationController {
         Window w = pMap.getScene().getWindow();
         Rectangle2D windowCentre = new Rectangle2D((w.getX() + w.getWidth()) / 2, (w.getY() + w.getHeight()) / 2, 1, 1);
         Screen screen = Screen.getScreensForRectangle(windowCentre).get(0);
-        double dpi = screen.getDpi(); //TODO scaling?
+        double dpi = screen.getDpi();
 
         return dpi / 2.54;
     }
