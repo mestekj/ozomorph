@@ -34,14 +34,14 @@ def JLINK_DIR = "$buildDir/image"
 
 tasks.jlink.doLast {
     copy {
-        from("/picat") {
+        from("../picat") {
             include "*.pi"
             exclude "example_problem_instance.pi"
         }
         into JLINK_DIR + "/picat"
     }
     copy {
-        from("/ozocode_templates") {
+        from("../ozocode_templates") {
             include "*.ozocode"
         }
         into JLINK_DIR + "/ozocode_templates"
