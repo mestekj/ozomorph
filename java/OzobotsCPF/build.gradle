@@ -32,29 +32,34 @@ jlink {
         name = 'Ozobots'
     }
 
-    targetPlatform("win") {
-        jdkHome = jmodsDir + "jdk/win"
-        addExtraModulePath(jmodsDir + "javafx/win")
-    }
     targetPlatform("linux") {
         jdkHome = jmodsDir + "jdk/linux"
         addExtraModulePath(jmodsDir + "javafx/linux")
     }
+
+    targetPlatform("win") {
+        jdkHome = jmodsDir + "jdk/win"
+        addExtraModulePath(jmodsDir + "javafx/win")
+    }
+
     targetPlatform("mac") {
         jdkHome = jmodsDir + "jdk/mac"
         addExtraModulePath(jmodsDir + "javafx/mac")
     }
+
+
 }
 
 def JLINK_DIR = "$buildDir/image"
 
 tasks.jlink.doLast {
-    ["win","linux"].each { platform ->
+    ["win","linux","mac"].each { platform ->
 
     copy {
         from("../picat") {
             include "*.pi"
             exclude "example_problem_instance.pi"
+            exclude "test.pi"
         }
         into JLINK_DIR + "/Ozobots-" + platform + "/picat"
     }

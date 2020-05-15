@@ -1,4 +1,4 @@
-import cp.
+import sat.
 
 % Split+robustness
 find_plans(Problem) = Plans =>
