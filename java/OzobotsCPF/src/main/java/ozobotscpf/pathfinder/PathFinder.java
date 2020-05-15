@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ozobotscpf.actions.Action;
 import ozobotscpf.actions.ActionFactory;
+import ozobotscpf.actions.ActionSettings;
 import ozobotscpf.nodes.AgentMapNode;
 import ozobotscpf.nodes.Group;
 import ozobotscpf.nodes.PositionMapNode;
@@ -15,8 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PathFinder {
-    private ActionFactory actionFactory = new ActionFactory();
+    private ActionFactory actionFactory;
     private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
+
+    public PathFinder(ActionSettings settings) {
+        actionFactory = new ActionFactory(settings);
+    }
 
     public List<AgentMapNode> findPaths(ProblemInstance problemInstance) throws IOException, InterruptedException {
         List<PositionMapNode> agentsLinearOrdering = new ArrayList<>();
@@ -52,7 +57,7 @@ public class PathFinder {
         String picatMain = "../picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
         ProcessBuilder builder = new ProcessBuilder("picat", picatMain, problemInstanceFile.getAbsolutePath()); //TODO use relative path
         Process process = builder.start();
-        logger.info("Starting picat with: " );
+        logger.info("Starting picat..." );
         process.waitFor();
 
         byte[] errOut = process.getErrorStream().readAllBytes();

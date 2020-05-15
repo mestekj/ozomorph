@@ -20,6 +20,16 @@
             <Button text="Simulate" onAction="#startSimulation"/>
             <Button text="Print" onAction="#printMap"/>
         </HBox>
+        <Separator orientation="HORIZONTAL"/>
+        <HBox spacing="5">
+            <Label text="Duration of actions: "/>
+            <Label text="forward: "/>
+            <TextField fx:id="tfForwardDuration"/>
+            <Label text="turn: "/>
+            <TextField fx:id="tfTurnDuration"/>
+            <Label text="wait: "/>
+            <TextField fx:id="tfWaitDuration"/>
+        </HBox>
         <Separator orientation="HORIZONTAL" />
         <HBox spacing="5">
             <Label text="Tools:"/>

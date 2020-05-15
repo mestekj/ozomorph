@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ozobotscpf.actions.ActionSettings;
 import ozobotscpf.nodes.AgentMapNode;
 import ozobotscpf.nodes.Group;
 import ozobotscpf.pathfinder.NoInitialsException;
@@ -37,7 +38,7 @@ public class MainView {
     @FXML
     Pane pInitials, pTargets;
     @FXML
-    TextField tfHeight,tfWidth;
+    TextField tfHeight,tfWidth, tfForwardDuration, tfTurnDuration, tfWaitDuration;
 
     MapController initialsMapController;
     MapController targetsMapController;
@@ -54,6 +55,8 @@ public class MainView {
         //text fields allows only numbers
         UnaryOperator<TextFormatter.Change> positiveIntegerFilter = change -> {
             String newText = change.getControlNewText();
+            if(newText.isEmpty())
+                return change;
             if (newText.matches("[1-9][0-9]*")) {
                 return change;
             }
@@ -63,6 +66,26 @@ public class MainView {
         tfHeight.setTextFormatter(new TextFormatter<>(positiveIntegerFilter));
         tfWidth.setTextFormatter(new TextFormatter<>(positiveIntegerFilter));
 
+        UnaryOperator<TextFormatter.Change> positiveFloatFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.isEmpty())
+                return change;
+            if (newText.matches("([1-9][0-9]*|0)(\\.[0-9]*)?")) {
+                return change;
+            }
+            return null;
+        };
+
+        tfForwardDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
+        //tfWaitDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
+        tfTurnDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
+
+        //set initial durations
+        ActionSettings defaultDurations = new ActionSettings();
+        tfForwardDuration.setText(String.valueOf(defaultDurations.getForwardDuration()));
+        tfWaitDuration.setText(String.valueOf(defaultDurations.getWaitDuration()));
+        tfTurnDuration.setText(String.valueOf(defaultDurations.getTurnDuration()));
+
         //other things
         cpGroupColor.setValue(Color.RED);
 
@@ -70,12 +93,18 @@ public class MainView {
     }
 
     public void createMap(ActionEvent actionEvent) {
-        height = Integer.parseInt(tfHeight.getCharacters().toString());
-        width = Integer.parseInt(tfWidth.getCharacters().toString());
-        initialsMapController = new MapController( width,height, pInitials);
-        targetsMapController = new MapController( width,height, pTargets);
-        logger.info("Initial and target configurations editors created.");
-        btPaint.fire();
+        try {
+            height = Integer.parseInt(tfHeight.getCharacters().toString());
+            width = Integer.parseInt(tfWidth.getCharacters().toString());
+            initialsMapController = new MapController(width, height, pInitials);
+            targetsMapController = new MapController(width, height, pTargets);
+            logger.info("Initial and target configurations editors created.");
+            btPaint.fire();
+        }
+        catch (NumberFormatException e){
+            logger.error("Width or height is not valid integer (probably empty string).");
+            showError("Enter valid width and height (should be positive integers).");
+        }
     }
 
     public void setNoGroup(ActionEvent actionEvent) {
@@ -102,7 +131,12 @@ public class MainView {
     public void  startSimulation(){
         try {
             logger.info("Simulation window opening...");
-            PathFinder pathFinder = new PathFinder();
+            ActionSettings actionDurations = new ActionSettings(
+                    Double.parseDouble(tfForwardDuration.getCharacters().toString()),
+                    Double.parseDouble(tfTurnDuration.getCharacters().toString()),
+                    Double.parseDouble(tfWaitDuration.getCharacters().toString())
+            );
+            PathFinder pathFinder = new PathFinder(actionDurations);
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
             openSimulationWindow(agents);
@@ -118,6 +152,10 @@ public class MainView {
         } catch (IOException e) {
             logger.error("Plan finding failed.",e);
             showError("No plans found due to an error, check logs for details.");
+        }
+        catch (NumberFormatException e){
+            logger.error("Duration of an action is not double format (probably empty string).");
+            showError("Enter valid durations of actions.");
         }
     }
 
