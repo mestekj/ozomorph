@@ -65,6 +65,12 @@ turnAction(0) = [].
 turnAction(1) = [turnRight].
 turnAction(2) = [turnRight,turnRight].
 turnAction(3) = [turnLeft]. 
+turnAction(N) = A =>
+    if (N<0) then 
+        A = turnAction(N+4)
+    elseif (N>=4) then
+    A = turnAction(N-4)
+    end.
 
 vectors() = V =>
     V = {(0,-1),(1,0),(0,1),(-1,0),(0,0)}.
