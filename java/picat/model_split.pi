@@ -1,4 +1,4 @@
-import sat.
+import cp.
 
 % Split+robustness
 find_plans(Problem) = Plans =>
@@ -41,15 +41,21 @@ find_plans(Problem) = Plans =>
         NV = Problem.neighbour(V,D),
         if(NV !== 0) then
             B[Time,Agent,V,D] #=>
-                (B[Time+1,Agent,NV,D] + sum([B[Time+1,Agent,V,((D-1+R) mod 4)+1] : R in -1..1])) #= 1,
+                (B[Time+1,Agent,NV,D] + sum([B[Time+1,Agent,V,((D-1+R) mod 4)+1] : R in -1..1])) #= 1
         else
             B[Time,Agent,V,D] #=>
-                sum([B[Time+1,Agent,V,((D-1+R) mod 4)+1] : R in -1..1]) #= 1,
+                sum([B[Time+1,Agent,V,((D-1+R) mod 4)+1] : R in -1..1]) #= 1
         end,
-        % ROBUSTNESS: For each position of each agent at each time, there was not another agent in time-1
-        B[Time+1,Agent,V,D] #=>
-                sum([B[Time,A,V,D] : A in 1..AgentsNumber, A != Agent, D in 1..4]) #= 0,
+        
     end,
+    
+    % ROBUSTNESS: For each position of each agent at each time, there was not another agent in time-1
+    K = 1, %robustness constant
+    foreach (Time in (1+K)..Makespan+1, Agent in 1..AgentsNumber, V in 1..Problem.vertices_count(), D in 1..4)
+        B[Time,Agent,V,D] #=>
+                sum([B[Time-I,A,V,DN] : I in 1..K, A in 1..AgentsNumber, A != Agent, DN in 1..4]) #= 0,
+    end,
+    
     solve(B),
     Plans = output_plan(B,Problem,Makespan).
 
