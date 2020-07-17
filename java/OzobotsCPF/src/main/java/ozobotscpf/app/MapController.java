@@ -51,8 +51,6 @@ public class MapController extends MapControllerBase {
         generateNodes();
     }
 
-
-
     private static double computeGridTick(int gridWidth, int gridHeight, double paneWidth, double paneHeight){
         double xRad = paneWidth / (gridWidth);
         double yRad = paneHeight / (gridHeight);
@@ -98,4 +96,6 @@ public class MapController extends MapControllerBase {
         guiNode.setOnMousePressed(handler);
         return guiNode;
     }
+
+
 }

@@ -47,9 +47,14 @@
         <GridPane hgap="10" vgap="10">
             <Label text="Initial positions:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
             <Pane fx:id="pInitials" GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
-            <Separator GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="2" orientation="VERTICAL"/>
-            <Label text="Target positions:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-            <Pane fx:id="pTargets" GridPane.columnIndex="2" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
+            <Separator GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="3" orientation="VERTICAL"/>
+            <Label text="Number of agents:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <GridPane fx:id="pDifferencies" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            </GridPane>
+            <Button text="Morph" onAction="#startSimulation" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <Separator GridPane.rowIndex="0" GridPane.columnIndex="3" GridPane.rowSpan="3" orientation="VERTICAL"/>
+            <Label text="Target positions:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+            <Pane fx:id="pTargets" GridPane.columnIndex="4" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
         </GridPane>
     </children>
 

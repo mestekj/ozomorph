@@ -17,10 +17,12 @@ import java.util.*;
 
 public class PathFinder {
     private ActionFactory actionFactory;
+    private GetPathCallback getPicatExec;
     private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
 
-    public PathFinder(ActionSettings settings) {
+    public PathFinder(ActionSettings settings, GetPathCallback getPicatExec) {
         actionFactory = new ActionFactory(settings);
+        this.getPicatExec = getPicatExec;
     }
 
     public List<AgentMapNode> findPaths(ProblemInstance problemInstance) throws IOException, InterruptedException {
@@ -32,8 +34,15 @@ public class PathFinder {
         File problemInstanceFile = createProblemInstanceFile(picatInput);
         logger.info("Instance of problem being written to: " + problemInstanceFile.getAbsolutePath());
 
-        String picatOutput = runPicat(problemInstanceFile);
-        logger.info("Plans from Picat: " + picatOutput);
+        String picatOutput;
+        try{
+            picatOutput = runPicat(problemInstanceFile,"picat");
+            logger.info("Plans from Picat: " + picatOutput);
+        } catch(PicatNotFoundException e){
+            logger.warn("Cannot get picat executable from PATH, trying getting the path from user.");
+            picatOutput = runPicat(problemInstanceFile, getPicatExec.getPath());
+            logger.info("Plans from Picat: " + picatOutput);
+        }
 
         return parsePlans(picatOutput,agentsLinearOrdering);
     }
@@ -53,12 +62,20 @@ public class PathFinder {
         return file;
     }
 
-    private String runPicat(File problemInstanceFile) throws IOException, InterruptedException {
+    private String runPicat(File problemInstanceFile, String picatExecPath) throws IOException, InterruptedException {
         String picatMain = "../picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
-        ProcessBuilder builder = new ProcessBuilder("picat", picatMain, problemInstanceFile.getAbsolutePath()); //TODO use relative path
-        builder.command();
-        logger.info("Starting picat as: " + String.join(" ",builder.command()));
-        Process process = builder.start();
+        ProcessBuilder builder = new ProcessBuilder(picatExecPath, picatMain, problemInstanceFile.getCanonicalPath());
+        builder.directory(new File(".").getParentFile());
+
+        logger.info("Starting picat as: " + String.join(" ",builder.command()) + "\nPicat process working directory is: " + builder.directory().getCanonicalPath());
+        Process process;
+
+        try{
+            process  = builder.start();
+        } catch (IOException e){
+            throw new PicatNotFoundException(e);
+        }
+
         process.waitFor();
 
         byte[] errOut = process.getErrorStream().readAllBytes();

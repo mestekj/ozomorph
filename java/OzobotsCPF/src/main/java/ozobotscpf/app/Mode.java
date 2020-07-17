@@ -79,7 +79,7 @@ public enum Mode {
             }));
 
             //countdown to press
-            for (int i = 0; i < 100; i++) {
+            for (int i = 100; i > 0; i--) {
                 final int finalI = i;
                 t +=50;
                 kfs.add(new KeyFrame(Duration.millis(t), ae ->

@@ -9,17 +9,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ozobotscpf.actions.ActionSettings;
 import ozobotscpf.nodes.AgentMapNode;
 import ozobotscpf.nodes.Group;
-import ozobotscpf.pathfinder.NoInitialsException;
-import ozobotscpf.pathfinder.NotEnoughInitialsException;
-import ozobotscpf.pathfinder.PathFinder;
-import ozobotscpf.pathfinder.ProblemInstance;
+import ozobotscpf.ozocodegenerator.OzocodeGenerator;
+import ozobotscpf.pathfinder.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 
 public class MainView {
+
     Logger logger = LoggerFactory.getLogger(MainView.class);
 
     @FXML
@@ -39,6 +40,8 @@ public class MainView {
     Pane pInitials, pTargets;
     @FXML
     TextField tfHeight,tfWidth, tfForwardDuration, tfTurnDuration, tfWaitDuration;
+    @FXML
+    GridPane pDifferencies;
 
     MapController initialsMapController;
     MapController targetsMapController;
@@ -136,10 +139,13 @@ public class MainView {
                     Double.parseDouble(tfTurnDuration.getCharacters().toString()),
                     Double.parseDouble(tfWaitDuration.getCharacters().toString())
             );
-            PathFinder pathFinder = new PathFinder(actionDurations);
+            PathFinder pathFinder = new PathFinder(actionDurations, ()->askForPicatExec());
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
             openSimulationWindow(agents);
+        }catch (PicatNotFoundException e) {
+            logger.error("Picat executable not found.",e);
+            showError("Picat executable has not been found. Try adding the directory containing picat executable to the system variable PATH, or running the app from terminal.");
         }catch (NotEnoughInitialsException e){
             logger.error("Number of agents mismatch.", e);
             showDifferentAgentNumbersError(e.getNumberOfMissings());
@@ -157,6 +163,24 @@ public class MainView {
             logger.error("Duration of an action is not double format (probably empty string).");
             showError("Enter valid durations of actions.");
         }
+    }
+
+    private String askForPicatExec(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText("Picat executable not found, please find it manually.");
+        alert.showAndWait();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Picat executable");
+        File picatExec = fileChooser.showOpenDialog(pInitials.getScene().getWindow());
+        String picatExecPath = "";
+        if (picatExec != null) {
+            try {
+                picatExecPath =  picatExec.getCanonicalPath();
+            }
+            catch(IOException e){}
+        }
+        return picatExecPath;
     }
 
     private void showError(String message){
@@ -206,7 +230,5 @@ public class MainView {
     public void printMap(ActionEvent actionEvent) {
         PrintController pc = new PrintController(pInitials.getScene().getWindow(), MapSettings.getSettings(), width,height);
         pc.print();
-
-        //TODO
     }
 }

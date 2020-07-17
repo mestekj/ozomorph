@@ -23,6 +23,12 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Ozobots GroupMAPF");
         stage.show();
+
+        var f = new java.io.File(".");
+        var f2 = new java.io.File(App.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        System.out.println(f.getAbsolutePath());
+        System.out.println(f2.getAbsolutePath());
+        System.out.println(System.getProperty("user.dir"));
     }
 
     static void setRoot(String fxml) throws IOException {

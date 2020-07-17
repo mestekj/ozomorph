@@ -30,6 +30,7 @@ jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         name = 'Ozobots'
+        //jvmArgs = ['-Duser.dir={{BIN_DIR}}']
     }
 
     targetPlatform("linux") {
