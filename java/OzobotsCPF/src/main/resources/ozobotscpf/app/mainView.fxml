@@ -17,9 +17,9 @@
             <Label text="Height:"/>
             <TextField fx:id="tfHeight" text="5"/>
             <Button text="Create" onAction="#createMap"/>
-            <Button text="Save" onAction="#saveMap"/>
+            <Button fx:id="btSave" text="Save" onAction="#saveMap"/>
             <Button text="Load" onAction="#loadMap"/>
-            <Button text="Print" onAction="#printMap"/>
+            <Button fx:id="btPrint" text="Print" onAction="#printMap"/>
         </HBox>
         <Separator orientation="HORIZONTAL"/>
         <HBox spacing="5">

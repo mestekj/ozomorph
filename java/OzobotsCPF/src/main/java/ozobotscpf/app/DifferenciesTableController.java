@@ -56,10 +56,12 @@ public class DifferenciesTableController {
         usedGroups.addAll(targets.groups.keySet());
 
         boolean areDifferencies = false;
+        int agentsCount = 0;
         int row = 1;
         for (Group group : usedGroups) {
             var targetsNumber = initials.groups.getOrDefault(group, new HashSet<>()).size();
             var initialsNumber = targets.groups.getOrDefault(group, new HashSet<>()).size();
+            agentsCount += targetsNumber + initialsNumber;
 
             if(targetsNumber == 0 && initialsNumber == 0)
                 continue;
@@ -81,6 +83,9 @@ public class DifferenciesTableController {
             gridPane.addRow(row, item);
             row++;
         }
-        areDifferenciesProperty.setValue(areDifferencies);
+        if(agentsCount > 0)
+            areDifferenciesProperty.setValue(areDifferencies);
+        else
+            areDifferenciesProperty.setValue(true);
     }
 }

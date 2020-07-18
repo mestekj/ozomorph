@@ -1,5 +1,7 @@
 package ozobotscpf.app;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +44,7 @@ public class MainView {
     @FXML
     GridPane pDifferencies;
     @FXML
-    Button btMorph;
+    Button btMorph, btSave, btPrint;
 
     MapController initialsMapController;
     MapController targetsMapController;
@@ -51,8 +53,11 @@ public class MainView {
 
     int width,height;
 
+    BooleanProperty isMapNotLoaded;
+
     public MainView() {
         groupsColors = new HashMap<>();
+        isMapNotLoaded = new SimpleBooleanProperty(true);
     }
 
     @FXML
@@ -95,14 +100,21 @@ public class MainView {
         cpGroupColor.setValue(Color.RED);
         btMorph.setDisable(true);
 
+        btSave.disableProperty().bindBidirectional(isMapNotLoaded);
+        btPrint.disableProperty().bindBidirectional(isMapNotLoaded);
+
         logger.info("MainView inited.");
     }
 
     public void createMap(ActionEvent actionEvent) {
+        if(!isMapNotLoaded.getValue() && !confirmMapReload())
+            return;
+        //map not loaded or reload confirmed
         try {
             height = Integer.parseInt(tfHeight.getCharacters().toString());
             width = Integer.parseInt(tfWidth.getCharacters().toString());
             createMap(width,height);
+            isMapNotLoaded.setValue(false);
         }
         catch (NumberFormatException e){
             logger.error("Width or height is not valid integer (probably empty string).");
@@ -113,7 +125,6 @@ public class MainView {
     private void createMap(int width, int height){
         initialsMapController = new MapController(width, height, pInitials);
         targetsMapController = new MapController(width, height, pTargets);
-        logger.info("Initial and target configurations editors created.");
         differenciesTableController = new DifferenciesTableController(pDifferencies,initialsMapController,targetsMapController, (group)-> {
             {
                 cpGroupColor.setValue(group.getColor()); setGroup(null);
@@ -121,6 +132,7 @@ public class MainView {
         });
         btMorph.disableProperty().bindBidirectional(differenciesTableController.areDifferenciesProperty);
         btPaint.fire();
+        logger.info("New blank map loaded.");
     }
 
     public void setNoGroup(ActionEvent actionEvent) {
@@ -247,6 +259,9 @@ public class MainView {
     }
 
     public void loadMap(ActionEvent actionEvent) {
+        if(!isMapNotLoaded.getValue() && !confirmMapReload())
+            return;
+        //map not loaded or reload confirmed
         //Show open file dialog
         FileChooser fileChooser = createMapFileChooser();
         File file = fileChooser.showOpenDialog(pInitials.getScene().getWindow());
@@ -261,6 +276,7 @@ public class MainView {
                     //load maps
                     createMap(problemInstance.getWidth(),problemInstance.getHeight());
                     loadSavedMap(problemInstance);
+                    isMapNotLoaded.setValue(false);
                 }
             }
             catch (Exception e){
@@ -283,6 +299,10 @@ public class MainView {
     }
 
     public void saveMap(ActionEvent actionEvent) {
+        saveMap();
+    }
+
+    private boolean saveMap(){
         ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
         FileChooser fileChooser = createMapFileChooser();
 
@@ -293,6 +313,8 @@ public class MainView {
             try (FileOutputStream stream = new FileOutputStream(file)) {
                 try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
                     out.writeObject(problemInstance);
+                    logger.info("Map saved to " + file.getCanonicalPath());
+                    return true;
                 }
             }
             catch (IOException e){
@@ -300,6 +322,7 @@ public class MainView {
                 showError("Error while saving the map.");
             }
         }
+        return false;
     }
 
     private FileChooser createMapFileChooser(){
@@ -307,5 +330,21 @@ public class MainView {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("OzoMorph map (*.ommap)", "*.ommap");
         fileChooser.getExtensionFilters().add(extFilter);
         return fileChooser;
+    }
+
+    private boolean confirmMapReload(){
+        ButtonType saveBtn = new ButtonType("Save");
+        Alert alert = new Alert(Alert.AlertType.WARNING,"Current map will be lost.",ButtonType.OK,saveBtn,ButtonType.CANCEL);
+        var result = alert.showAndWait();
+
+        if(result.isPresent()){
+            var buttonType = result.get();
+            if(buttonType == ButtonType.OK)
+                return true;
+            if(buttonType == saveBtn){
+                return saveMap();
+            }
+        }
+        return false;
     }
 }
