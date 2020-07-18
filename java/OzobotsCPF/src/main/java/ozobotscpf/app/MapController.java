@@ -1,5 +1,7 @@
 package ozobotscpf.app;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,7 +15,9 @@ import ozobotscpf.nodes.PositionMapNode;
 
 import java.util.*;
 
-public class MapController extends MapControllerBase {
+public class MapController extends MapControllerBase implements Observable {
+    private List<InvalidationListener> listeners = new ArrayList<>();
+
     PositionMapNode[][] nodes;
 
     public Map<Group, Set<PositionMapNode>> getGroups() {
@@ -29,6 +33,8 @@ public class MapController extends MapControllerBase {
     Group selectedGroup;
 
     Paint noGroupColor;
+
+    Map<PositionMapNode,Shape> guiNodes;
 
     public MapController(int width, int height, Pane pane) {
         super(width, height, pane, computeGridTick(width,height, pane.getWidth(), pane.getHeight()));
@@ -59,35 +65,26 @@ public class MapController extends MapControllerBase {
 
     private void generateNodes(){
         nodes = new PositionMapNode[width][height];
+        guiNodes = new HashMap<>();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 nodes[x][y] = new PositionMapNode(x,y);
-                Node guiNode = getGuiNode(nodes[x][y]);
+                Shape guiNode = getGuiNode(nodes[x][y]);
+                guiNodes.put(nodes[x][y],guiNode);
                 pane.getChildren().add(guiNode);
             }
         }
     }
 
-    private Node getGuiNode(PositionMapNode positionMapNode){
+    private Shape getGuiNode(PositionMapNode positionMapNode){
         Shape guiNode = new Circle((positionMapNode.getGridX() +0.5) * gridTick, (positionMapNode.getGridY()+0.5) * gridTick, gridTick/3, noGroupColor);
 
         EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.isPrimaryButtonDown()){
-                    //update groups
-                    Group old = positionMapNode.getGroup();
-                    if(old != null)
-                        groups.get(old).remove(positionMapNode);
-                    positionMapNode.setGroup(selectedGroup);
-                    if(selectedGroup != null)
-                        groups.computeIfAbsent(selectedGroup,s -> new HashSet<>()).add(positionMapNode);
-
-                    //update view
-                    if(selectedGroup == null)
-                        guiNode.setFill(noGroupColor);
-                    else
-                        guiNode.setFill(selectedGroup.getColor());
+                    updateGroup(positionMapNode,guiNode, selectedGroup);
+                    notifyGroupChanged();
                 }
             }
         };
@@ -97,5 +94,47 @@ public class MapController extends MapControllerBase {
         return guiNode;
     }
 
+    private void updateGroup(PositionMapNode positionMapNode, Shape guiNode, Group newGroup){
+        //update groups
+        Group old = positionMapNode.getGroup();
+        if(old != null)
+            groups.get(old).remove(positionMapNode);
+        positionMapNode.setGroup(newGroup);
+        if(newGroup != null)
+            groups.computeIfAbsent(newGroup,s -> new HashSet<>()).add(positionMapNode);
 
+        //update view
+        if(newGroup == null)
+            guiNode.setFill(noGroupColor);
+        else
+            guiNode.setFill(newGroup.getColor());
+    }
+
+
+    private void notifyGroupChanged(){
+        for (InvalidationListener listener : listeners) {
+            listener.invalidated(this);
+        }
+    }
+
+    @Override
+    public void addListener(InvalidationListener invalidationListener) {
+        listeners.add(invalidationListener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener invalidationListener) {
+        listeners.remove(invalidationListener);
+    }
+
+    public void load(Map<Group, Set<PositionMapNode>> initialPositions) {
+        for (Map.Entry<Group, Set<PositionMapNode>> entry : initialPositions.entrySet()) {
+            Group group = entry.getKey();
+            for (PositionMapNode savedNode : entry.getValue()) {
+                PositionMapNode corespondingNode = nodes[savedNode.getGridX()][savedNode.getGridY()];
+                updateGroup(corespondingNode, guiNodes.get(corespondingNode),group);
+            }
+        }
+        notifyGroupChanged();
+    }
 }

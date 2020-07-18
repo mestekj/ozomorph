@@ -65,7 +65,7 @@ public class PathFinder {
     private String runPicat(File problemInstanceFile, String picatExecPath) throws IOException, InterruptedException {
         String picatMain = "../picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
         ProcessBuilder builder = new ProcessBuilder(picatExecPath, picatMain, problemInstanceFile.getCanonicalPath());
-        builder.directory(new File(".").getParentFile());
+        builder.directory(new File("."));
 
         logger.info("Starting picat as: " + String.join(" ",builder.command()) + "\nPicat process working directory is: " + builder.directory().getCanonicalPath());
         Process process;

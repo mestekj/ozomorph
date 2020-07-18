@@ -7,7 +7,7 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="ozobotscpf.app.MainView"
-      prefHeight="600.0" prefWidth="800.0"
+      prefHeight="600.0" prefWidth="1000.0"
       style="-fx-padding: 10 10 10 10" spacing="10"
 >
     <children>
@@ -17,7 +17,8 @@
             <Label text="Height:"/>
             <TextField fx:id="tfHeight" text="5"/>
             <Button text="Create" onAction="#createMap"/>
-            <Button text="Simulate" onAction="#startSimulation"/>
+            <Button text="Save" onAction="#saveMap"/>
+            <Button text="Load" onAction="#loadMap"/>
             <Button text="Print" onAction="#printMap"/>
         </HBox>
         <Separator orientation="HORIZONTAL"/>
@@ -46,15 +47,16 @@
         </HBox>
         <GridPane hgap="10" vgap="10">
             <Label text="Initial positions:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Pane fx:id="pInitials" GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
+            <Pane fx:id="pInitials" GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="400" prefWidth="400"/>
             <Separator GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="3" orientation="VERTICAL"/>
             <Label text="Number of agents:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-            <GridPane fx:id="pDifferencies" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <GridPane fx:id="pDifferencies" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.fillWidth="true">
+
             </GridPane>
-            <Button text="Morph" onAction="#startSimulation" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <Button fx:id="btMorph" text="Morph" onAction="#startSimulation" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
             <Separator GridPane.rowIndex="0" GridPane.columnIndex="3" GridPane.rowSpan="3" orientation="VERTICAL"/>
             <Label text="Target positions:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-            <Pane fx:id="pTargets" GridPane.columnIndex="4" GridPane.rowIndex="1" prefHeight="500" prefWidth="500"/>
+            <Pane fx:id="pTargets" GridPane.columnIndex="4" GridPane.rowIndex="1" prefHeight="400" prefWidth="400"/>
         </GridPane>
     </children>
 

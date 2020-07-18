@@ -16,17 +16,16 @@ import org.slf4j.LoggerFactory;
 import ozobotscpf.actions.ActionSettings;
 import ozobotscpf.nodes.AgentMapNode;
 import ozobotscpf.nodes.Group;
-import ozobotscpf.ozocodegenerator.OzocodeGenerator;
 import ozobotscpf.pathfinder.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.UnaryOperator;
 
 public class MainView {
+
 
     Logger logger = LoggerFactory.getLogger(MainView.class);
 
@@ -42,9 +41,12 @@ public class MainView {
     TextField tfHeight,tfWidth, tfForwardDuration, tfTurnDuration, tfWaitDuration;
     @FXML
     GridPane pDifferencies;
+    @FXML
+    Button btMorph;
 
     MapController initialsMapController;
     MapController targetsMapController;
+    DifferenciesTableController differenciesTableController;
     Map<Color, Group> groupsColors;
 
     int width,height;
@@ -91,6 +93,7 @@ public class MainView {
 
         //other things
         cpGroupColor.setValue(Color.RED);
+        btMorph.setDisable(true);
 
         logger.info("MainView inited.");
     }
@@ -99,15 +102,25 @@ public class MainView {
         try {
             height = Integer.parseInt(tfHeight.getCharacters().toString());
             width = Integer.parseInt(tfWidth.getCharacters().toString());
-            initialsMapController = new MapController(width, height, pInitials);
-            targetsMapController = new MapController(width, height, pTargets);
-            logger.info("Initial and target configurations editors created.");
-            btPaint.fire();
+            createMap(width,height);
         }
         catch (NumberFormatException e){
             logger.error("Width or height is not valid integer (probably empty string).");
             showError("Enter valid width and height (should be positive integers).");
         }
+    }
+
+    private void createMap(int width, int height){
+        initialsMapController = new MapController(width, height, pInitials);
+        targetsMapController = new MapController(width, height, pTargets);
+        logger.info("Initial and target configurations editors created.");
+        differenciesTableController = new DifferenciesTableController(pDifferencies,initialsMapController,targetsMapController, (group)-> {
+            {
+                cpGroupColor.setValue(group.getColor()); setGroup(null);
+            }
+        });
+        btMorph.disableProperty().bindBidirectional(differenciesTableController.areDifferenciesProperty);
+        btPaint.fire();
     }
 
     public void setNoGroup(ActionEvent actionEvent) {
@@ -141,6 +154,7 @@ public class MainView {
             );
             PathFinder pathFinder = new PathFinder(actionDurations, ()->askForPicatExec());
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
+            problemInstance.validate();
             List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
             openSimulationWindow(agents);
         }catch (PicatNotFoundException e) {
@@ -230,5 +244,68 @@ public class MainView {
     public void printMap(ActionEvent actionEvent) {
         PrintController pc = new PrintController(pInitials.getScene().getWindow(), MapSettings.getSettings(), width,height);
         pc.print();
+    }
+
+    public void loadMap(ActionEvent actionEvent) {
+        //Show open file dialog
+        FileChooser fileChooser = createMapFileChooser();
+        File file = fileChooser.showOpenDialog(pInitials.getScene().getWindow());
+
+        if(file != null){
+            //load problemInstance
+            ProblemInstance problemInstance = null;
+            try (FileInputStream stream = new FileInputStream(file)) {
+                try (ObjectInputStream in = new ObjectInputStream(stream)) {
+                    problemInstance = (ProblemInstance) in.readObject();
+
+                    //load maps
+                    createMap(problemInstance.getWidth(),problemInstance.getHeight());
+                    loadSavedMap(problemInstance);
+                }
+            }
+            catch (Exception e){
+                logger.error("Error while loading map.", e);
+                showError("Error while loading selected map.");
+            }
+        }
+    }
+
+    private void loadSavedMap(ProblemInstance problemInstance) {
+        for (Group group : problemInstance.getInitialPositions().keySet()) {
+            groupsColors.put(group.getColor(),group);
+        }
+        for (Group group : problemInstance.getTargetPositions().keySet()) {
+            groupsColors.putIfAbsent(group.getColor(),group);
+        }
+
+        initialsMapController.load(problemInstance.getInitialPositions());
+        targetsMapController.load(problemInstance.getTargetPositions());
+    }
+
+    public void saveMap(ActionEvent actionEvent) {
+        ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
+        FileChooser fileChooser = createMapFileChooser();
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(pInitials.getScene().getWindow());
+        if(file != null){
+            //save problemInstance
+            try (FileOutputStream stream = new FileOutputStream(file)) {
+                try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
+                    out.writeObject(problemInstance);
+                }
+            }
+            catch (IOException e){
+                logger.error("Error while saving map.", e);
+                showError("Error while saving the map.");
+            }
+        }
+    }
+
+    private FileChooser createMapFileChooser(){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("OzoMorph map (*.ommap)", "*.ommap");
+        fileChooser.getExtensionFilters().add(extFilter);
+        return fileChooser;
     }
 }

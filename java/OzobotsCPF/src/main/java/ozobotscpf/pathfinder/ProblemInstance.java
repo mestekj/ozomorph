@@ -3,31 +3,29 @@ package ozobotscpf.pathfinder;
 import ozobotscpf.nodes.Group;
 import ozobotscpf.nodes.PositionMapNode;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ProblemInstance {
+public class ProblemInstance implements Serializable {
+    private static final long serialVersionUID = 10000001L;
+
     private Map<Group, Set<PositionMapNode>> initialPositions, targetPositions;
     private int width,height;
 
-    public ProblemInstance(int width, int height, Map<Group, Set<PositionMapNode>> initialPositions, Map<Group, Set<PositionMapNode>> targetPositions) throws NotEnoughInitialsException {
+    public ProblemInstance(int width, int height, Map<Group, Set<PositionMapNode>> initialPositions, Map<Group, Set<PositionMapNode>> targetPositions){
 
         removeEmptyGroups(initialPositions);
         removeEmptyGroups(targetPositions);
-
-        var missing = validateInput(initialPositions,targetPositions);
-        if(!missing.isEmpty())
-            throw new NotEnoughInitialsException(missing);
 
         this.initialPositions = initialPositions;
         this.targetPositions = targetPositions;
         this.height = height;
         this.width = width;
 
-        if(getAgentsCount() == 0)
-            throw new NoInitialsException();
+
     }
 
     public Map<Group, Set<PositionMapNode>> getInitialPositions() {
@@ -48,6 +46,15 @@ public class ProblemInstance {
 
     public int getHeight() {
         return height;
+    }
+
+    public void validate() throws NotEnoughInitialsException,NoInitialsException{
+        var missing = validateInput(initialPositions,targetPositions);
+        if(!missing.isEmpty())
+            throw new NotEnoughInitialsException(missing);
+
+        if(getAgentsCount() == 0)
+            throw new NoInitialsException();
     }
 
     private Map<Group,Integer> validateInput(Map<Group, Set<PositionMapNode>> initialPositions, Map<Group, Set<PositionMapNode>> targetPositions){

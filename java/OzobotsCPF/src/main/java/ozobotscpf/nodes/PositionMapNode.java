@@ -1,6 +1,8 @@
 package ozobotscpf.nodes;
 
-public class PositionMapNode implements MapNode {
+import java.io.Serializable;
+
+public class PositionMapNode implements MapNode, Serializable {
     public int getGridX() {
         return gridX;
     }
