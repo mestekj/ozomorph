@@ -1,5 +1,6 @@
 package ozobotscpf.app;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -168,27 +169,48 @@ public class MainView {
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             problemInstance.validate();
 
+            Alert picatRuning = new Alert(Alert.AlertType.INFORMATION,"Finding plans... \nClick Cancel to abort.", ButtonType.CANCEL);
 
-            List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
-            openSimulationWindow(agents);
+            Thread t = new Thread(()->{
+                try {
+                    List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
+                    Platform.runLater(() -> {
+                        picatRuning.close();
+                        try {
+                            openSimulationWindow(agents);
+                        } catch (IOException e) {
+                            logger.error("Showing of simulation window failed.", e);
+                            showError("Simulation window cannot be shown due to an error, check logs for details.");
+                        }
+                    });
+                }catch(NoPlansFoundException e){
+                    logger.error("No plans found.");
+                    showError("No plans found.");
+                }catch (PicatNotFoundException e) {
+                    logger.error("Picat executable not found.",e);
+                    showError("Picat executable has not been found. Try adding the directory containing picat executable to the system variable PATH, or running the app from terminal.");
+                }catch (InterruptedException e) {
+                    logger.error("Picat thread interrupted.", e);
+                    showError("No plans found because solver thread was interrupted.");
+                } catch (IOException e) {
+                    logger.error("Plan finding failed.",e);
+                    showError("No plans found due to an error, check logs for details.");
+                }
+            });
+            t.start();
+            var res = picatRuning.showAndWait();
+            if(res.isPresent()){
+                logger.info("Aborting pathFinder.");
+                pathFinder.stop();
+            }
 
-        }catch (PicatNotFoundException e) {
-            logger.error("Picat executable not found.",e);
-            showError("Picat executable has not been found. Try adding the directory containing picat executable to the system variable PATH, or running the app from terminal.");
-        }catch (NotEnoughInitialsException e){
+        } catch (NotEnoughInitialsException e){
             logger.error("Number of agents mismatch.", e);
             showDifferentAgentNumbersError(e.getNumberOfMissings());
-        } catch (NoInitialsException e){
+        } catch (NoInitialsException e) {
             logger.error("No initial agents.", e);
             showError("No agents.");
-        } catch (InterruptedException e) {
-            logger.error("Picat thread interrupted.", e);
-            showError("No plans found because solver thread was interrupted.");
-        } catch (IOException e) {
-            logger.error("Plan finding failed.",e);
-            showError("No plans found due to an error, check logs for details.");
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e){
             logger.error("Duration of an action is not double format (probably empty string).");
             showError("Enter valid durations of actions.");
         }

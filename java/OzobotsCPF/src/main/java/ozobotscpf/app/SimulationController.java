@@ -76,8 +76,8 @@ public class SimulationController {
         });
 
         cbMode.getItems().setAll(Mode.values());
-        cbMode.getSelectionModel().selectedItemProperty().addListener(  (observableValue, oldValue, newValue) -> handleModeTogle(newValue));
         cbMode.setValue(Mode.SIMULATION);
+        cbMode.getSelectionModel().selectedItemProperty().addListener(  (observableValue, oldValue, newValue) -> handleModeTogle(newValue));
     }
 
     private double getGridTickPx() { return settings.getGridTickCm() * getDPcm() * getScale(); }

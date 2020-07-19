@@ -16,9 +16,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class PathFinder {
+    private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
     private ActionFactory actionFactory;
     private GetPathCallback getPicatExec;
-    private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
+    private boolean isPicatRunning;
+    private Process picatProcess;
 
     public PathFinder(ActionSettings settings, GetPathCallback getPicatExec) {
         actionFactory = new ActionFactory(settings);
@@ -68,24 +70,25 @@ public class PathFinder {
         builder.directory(new File("."));
 
         logger.info("Starting picat as: " + String.join(" ",builder.command()) + "\nPicat process working directory is: " + builder.directory().getCanonicalPath());
-        Process process;
 
         try{
-            process  = builder.start();
+            picatProcess  = builder.start();
+            isPicatRunning = true;
         } catch (IOException e){
             throw new PicatNotFoundException(e);
         }
 
-        process.waitFor();
+        picatProcess.waitFor();
+        isPicatRunning = false;
 
-        byte[] errOut = process.getErrorStream().readAllBytes();
+        byte[] errOut = picatProcess.getErrorStream().readAllBytes();
         if(errOut != null && errOut.length > 0)
             logger.warn("Picat error output: \n" + new String(errOut));
 
         StringBuilder out = new StringBuilder();
         String plans = null;
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(picatProcess.getInputStream()))) {
             //debug only
             String line = null;
             while ((line = reader.readLine()) != null) {
@@ -192,5 +195,10 @@ public class PathFinder {
             parsedPlan.add(actionFactory.createAction(picatAction));
         }
         return parsedPlan;
+    }
+
+    public void stop() {
+        if(isPicatRunning)
+            picatProcess.destroy();
     }
 }
