@@ -167,8 +167,11 @@ public class MainView {
             PathFinder pathFinder = new PathFinder(actionDurations, ()->askForPicatExec());
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             problemInstance.validate();
+
+
             List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
             openSimulationWindow(agents);
+
         }catch (PicatNotFoundException e) {
             logger.error("Picat executable not found.",e);
             showError("Picat executable has not been found. Try adding the directory containing picat executable to the system variable PATH, or running the app from terminal.");

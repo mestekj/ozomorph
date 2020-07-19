@@ -20,13 +20,13 @@ import ozobotscpf.nodes.AgentMapNode;
 import java.util.ArrayList;
 
 public enum Mode {
-    SIMULATION {
+    SIMULATION ("Simulation") {
         @Override
         public Timeline getActivationSequence(Pane pane, SimulationController sc) {
             return new Timeline();
         }
     },
-    ONSCREEN {
+    ONSCREEN ("OnScreen"){
         @Override
         public Timeline getActivationSequence(Pane pane, SimulationController sc) {
             // red for 300 ms
@@ -39,7 +39,7 @@ public enum Mode {
             return activationSequence;
         }
     },
-    ONBOARD {
+    ONBOARD ("OnBoard"){
         @Override
         public Timeline getActivationSequence(Pane pane, SimulationController sc) {
             // To press countdown for each agent
@@ -90,5 +90,14 @@ public enum Mode {
         }
     };
 
+    private String label;
+    Mode(String label){
+        this.label = label;
+    }
     public abstract Timeline getActivationSequence(Pane pane, SimulationController sc);
+
+    @Override
+    public String toString() {
+        return label;
+    }
 }

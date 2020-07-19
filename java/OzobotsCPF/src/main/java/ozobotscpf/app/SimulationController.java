@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
@@ -28,9 +29,7 @@ public class SimulationController {
     public Pane pMap;
     public FunctionalSlider slScale;
     public FunctionalSlider slSpeed;
-    public ToggleButton tbOnScreen;
-    public ToggleButton tbOnBoard;
-    public ToggleGroup groupModes;
+    public ChoiceBox<Mode> cbMode;
 
 
     SimulationMapController simulationMapController;
@@ -76,7 +75,9 @@ public class SimulationController {
             handleRunToggle(new ActionEvent());
         });
 
-        groupModes.selectedToggleProperty().addListener(h -> handleModeTogle());
+        cbMode.getItems().setAll(Mode.values());
+        cbMode.getSelectionModel().selectedItemProperty().addListener(  (observableValue, oldValue, newValue) -> handleModeTogle(newValue));
+        cbMode.setValue(Mode.SIMULATION);
     }
 
     private double getGridTickPx() { return settings.getGridTickCm() * getDPcm() * getScale(); }
@@ -179,16 +180,17 @@ public class SimulationController {
         }
     }
 
-    private void handleModeTogle() {
-        if (tbOnScreen.isSelected()) {
-            setScale(1);
-            mode = Mode.ONSCREEN;
-        } else if (tbOnBoard.isSelected()) {
-            setScale(getScaleToFit());
-            mode = Mode.ONBOARD;
-        } else {
-            mode = Mode.SIMULATION;
+    private void handleModeTogle(Mode newMode) {
+        switch (newMode){
+            case ONBOARD:
+                setScale(getScaleToFit());
+                break;
+            case ONSCREEN:
+                setScale(1);
+                break;
+            default:break;
         }
+        mode = newMode;
         initMap();
     }
 
