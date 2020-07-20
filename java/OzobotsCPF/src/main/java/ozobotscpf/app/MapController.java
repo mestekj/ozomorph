@@ -95,19 +95,18 @@ public class MapController extends MapControllerBase implements Observable {
     }
 
     private void updateGroup(PositionMapNode positionMapNode, Shape guiNode, Group newGroup){
-        //update groups
         Group old = positionMapNode.getGroup();
-        if(old != null)
+        if(old != null){
+            //erase
             groups.get(old).remove(positionMapNode);
-        positionMapNode.setGroup(newGroup);
-        if(newGroup != null)
-            groups.computeIfAbsent(newGroup,s -> new HashSet<>()).add(positionMapNode);
-
-        //update view
-        if(newGroup == null)
+            positionMapNode.setGroup(null);
             guiNode.setFill(noGroupColor);
-        else
+        }
+        else{
+            positionMapNode.setGroup(newGroup);
+            groups.computeIfAbsent(newGroup,s -> new HashSet<>()).add(positionMapNode);
             guiNode.setFill(newGroup.getColor());
+        }
     }
 
 

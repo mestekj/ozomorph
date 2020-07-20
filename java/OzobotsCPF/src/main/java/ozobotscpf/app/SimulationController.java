@@ -17,6 +17,8 @@ import javafx.stage.Screen;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import org.jdom2.JDOMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ozobotscpf.nodes.AgentMapNode;
 import ozobotscpf.ozocodegenerator.OzocodeGenerator;
 
@@ -25,6 +27,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class SimulationController {
+    private static Logger logger = LoggerFactory.getLogger(SimulationMapController.class);
+
     public ToggleButton tbRun;
     public Pane pMap;
     public FunctionalSlider slScale;
@@ -58,6 +62,7 @@ public class SimulationController {
 
     private void initMap() {
         simulationMapController = new SimulationMapController(width, height, pMap, agents, getGridTickPx(), getAgentRadiusPx(), getGridLineWidthPx(), mode == Mode.ONSCREEN);
+        logger.info("Simulation map controller inited.");
     }
 
     @FXML
@@ -78,6 +83,7 @@ public class SimulationController {
         cbMode.getItems().setAll(Mode.values());
         cbMode.setValue(Mode.SIMULATION);
         cbMode.getSelectionModel().selectedItemProperty().addListener(  (observableValue, oldValue, newValue) -> handleModeTogle(newValue));
+        logger.info("Simulation window opened.");
     }
 
     private double getGridTickPx() { return settings.getGridTickCm() * getDPcm() * getScale(); }
@@ -174,8 +180,10 @@ public class SimulationController {
 
 
         } catch (JDOMException e) {
+            logger.error("Ozocodes not generated.", e);
             showError("Error while generating ozocodes.");
         } catch (IOException e) {
+            logger.error("Ozocodes not generated.", e);
             showError("Error while generating ozocodes.");
         }
     }
@@ -192,6 +200,7 @@ public class SimulationController {
         }
         mode = newMode;
         initMap();
+        logger.info("Mode changed to "+ mode.toString());
     }
 
     private void showError(String message) {

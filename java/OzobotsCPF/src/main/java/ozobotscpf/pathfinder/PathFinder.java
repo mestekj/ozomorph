@@ -34,7 +34,7 @@ public class PathFinder {
 
 
         File problemInstanceFile = createProblemInstanceFile(picatInput);
-        logger.info("Instance of problem being written to: " + problemInstanceFile.getAbsolutePath());
+        logger.info("Instance of problem being written to: " + problemInstanceFile.getCanonicalPath());
 
         String picatOutput;
         try{
@@ -66,6 +66,7 @@ public class PathFinder {
 
     private String runPicat(File problemInstanceFile, String picatExecPath) throws IOException, InterruptedException {
         String picatMain = "../picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
+
         ProcessBuilder builder = new ProcessBuilder(picatExecPath, picatMain, problemInstanceFile.getCanonicalPath());
         builder.directory(new File("."));
 

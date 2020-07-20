@@ -25,6 +25,9 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.function.UnaryOperator;
 
 public class MainView {
@@ -34,10 +37,6 @@ public class MainView {
 
     @FXML
     ColorPicker cpGroupColor;
-    @FXML
-    ToggleGroup groupsTools;
-    @FXML
-    ToggleButton btPaint;
     @FXML
     Pane pInitials, pTargets;
     @FXML
@@ -128,34 +127,28 @@ public class MainView {
         targetsMapController = new MapController(width, height, pTargets);
         differenciesTableController = new DifferenciesTableController(pDifferencies,initialsMapController,targetsMapController, (group)-> {
             {
-                cpGroupColor.setValue(group.getColor()); setGroup(null);
+                cpGroupColor.setValue(group.getColor());
+                groupColorChanged(null);
             }
         });
         btMorph.disableProperty().bindBidirectional(differenciesTableController.areDifferenciesProperty);
-        btPaint.fire();
+        groupColorChanged(null);
         logger.info("New blank map loaded.");
     }
 
-    public void setNoGroup(ActionEvent actionEvent) {
-        setSelectedGroup(null);
+    private void setSelectedGroup(Group group){
+        if(initialsMapController != null)
+            initialsMapController.setSelectedGroup(group);
+        if(targetsMapController != null)
+            targetsMapController.setSelectedGroup(group);
     }
 
-    public void setGroup(ActionEvent actionEvent) {
+    public void groupColorChanged(ActionEvent actionEvent)
+    {
         Color color = cpGroupColor.getValue();
         Group selectedGroup =  groupsColors.computeIfAbsent(color, c-> new Group(color));
         setSelectedGroup(selectedGroup);
     }
-
-    private void setSelectedGroup(Group group){
-        initialsMapController.setSelectedGroup(group);
-        targetsMapController.setSelectedGroup(group);
-    }
-
-    public void groupColorChanged(ActionEvent actionEvent) {
-        btPaint.fire();
-    }
-
-
 
     public void  startSimulation(){
         try {
@@ -175,7 +168,7 @@ public class MainView {
                 try {
                     List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
                     Platform.runLater(() -> {
-                        picatRuning.close();
+                        //picatRuning.close();
                         try {
                             openSimulationWindow(agents);
                         } catch (IOException e) {
@@ -195,6 +188,8 @@ public class MainView {
                 } catch (IOException e) {
                     logger.error("Plan finding failed.",e);
                     showError("No plans found due to an error, check logs for details.");
+                } finally {
+                    Platform.runLater(()-> picatRuning.close());
                 }
             });
             t.start();
@@ -216,7 +211,7 @@ public class MainView {
         }
     }
 
-    private String askForPicatExec(){
+    private String askForPicatExecFromUIThread(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setContentText("Picat executable not found, please find it manually.");
@@ -234,12 +229,34 @@ public class MainView {
         return picatExecPath;
     }
 
-    private void showError(String message){
+    private String askForPicatExec(){
+        final FutureTask<String> query = new FutureTask<>(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return askForPicatExecFromUIThread();
+            }
+        });
+        Platform.runLater(query);
+        try {
+            return query.get();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void showErrorUIThread(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void showError(String message){
+        if(Platform.isFxApplicationThread())
+            showErrorUIThread(message);
+        else
+            Platform.runLater(()->{showErrorUIThread(message);});
     }
 
     private void showDifferentAgentNumbersError(Map<Group, Integer> differences){
@@ -321,6 +338,8 @@ public class MainView {
 
         initialsMapController.load(problemInstance.getInitialPositions());
         targetsMapController.load(problemInstance.getTargetPositions());
+        //set selected color
+        groupColorChanged(null);
     }
 
     public void saveMap(ActionEvent actionEvent) {
