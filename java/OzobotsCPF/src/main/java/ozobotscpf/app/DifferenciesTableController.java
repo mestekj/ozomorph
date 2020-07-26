@@ -44,7 +44,7 @@ public class DifferenciesTableController {
 
         ColumnConstraints outerCol = new ColumnConstraints();
         outerCol.setPercentWidth(100);
-        gridPane.getColumnConstraints().add(outerCol);
+        gridPane.getColumnConstraints().setAll(outerCol);
         gridPane.setHgap(5);
 
         updateTable();

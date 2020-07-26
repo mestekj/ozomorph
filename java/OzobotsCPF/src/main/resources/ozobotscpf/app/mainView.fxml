@@ -46,7 +46,7 @@
             <Pane fx:id="pInitials" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" prefWidth="400"/>
             <Separator GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="3" orientation="VERTICAL"/>
             <Label text="Number of agents:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-            <GridPane fx:id="pDifferencies" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.fillWidth="true">
+            <GridPane fx:id="pDifferencies" GridPane.columnIndex="2" GridPane.rowIndex="1">
 
             </GridPane>
             <Button fx:id="btMorph" GridPane.halignment="CENTER" text="--->&#10;Morph" textAlignment="CENTER" onAction="#startSimulation" GridPane.columnIndex="2" GridPane.rowIndex="2"/>

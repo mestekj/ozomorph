@@ -122,6 +122,8 @@ public class MainController {
     }
 
     private void createMap(int width, int height){
+        this.width = width;
+        this.height = height;
         initialsMapController = new MapController(width, height, pInitials);
         targetsMapController = new MapController(width, height, pTargets);
         differenciesTableController = new DifferenciesTableController(pDifferencies,initialsMapController,targetsMapController, (group)-> {
