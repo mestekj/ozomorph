@@ -59,8 +59,8 @@ public class DifferenciesTableController {
         int agentsCount = 0;
         int row = 1;
         for (Group group : usedGroups) {
-            var targetsNumber = initials.groups.getOrDefault(group, new HashSet<>()).size();
-            var initialsNumber = targets.groups.getOrDefault(group, new HashSet<>()).size();
+            var initialsNumber = initials.groups.getOrDefault(group, new HashSet<>()).size();
+            var targetsNumber = targets.groups.getOrDefault(group, new HashSet<>()).size();
             agentsCount += targetsNumber + initialsNumber;
 
             if(targetsNumber == 0 && initialsNumber == 0)

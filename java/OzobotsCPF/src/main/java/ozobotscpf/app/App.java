@@ -27,7 +27,7 @@ public class App extends Application {
 
         scene = new Scene(loadFXML("mainView"));
         stage.setScene(scene);
-        stage.setTitle("Ozobots GroupMAPF");
+        stage.setTitle("OzoMorph");
         stage.show();
     }
 

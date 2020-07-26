@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ozobotscpf.app.MainView"
+      fx:controller="ozobotscpf.app.MainController"
       prefHeight="700.0" prefWidth="1000.0"
       style="-fx-padding: 10 10 10 10" spacing="10"
 >
@@ -23,7 +23,7 @@
         </HBox>
         <Separator orientation="HORIZONTAL"/>
         <HBox spacing="5">
-            <Label text="Duration of actions: "/>
+            <Label text="Duration of actions [seconds]: "/>
             <Label text="forward: "/>
             <TextField fx:id="tfForwardDuration"/>
             <Label text="turn: "/>

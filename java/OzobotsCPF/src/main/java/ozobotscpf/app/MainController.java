@@ -26,14 +26,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.function.UnaryOperator;
 
-public class MainView {
+public class MainController {
 
 
-    Logger logger = LoggerFactory.getLogger(MainView.class);
+    Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @FXML
     ColorPicker cpGroupColor;
@@ -55,7 +54,7 @@ public class MainView {
 
     BooleanProperty isMapNotLoaded;
 
-    public MainView() {
+    public MainController() {
         groupsColors = new HashMap<>();
         isMapNotLoaded = new SimpleBooleanProperty(true);
     }
