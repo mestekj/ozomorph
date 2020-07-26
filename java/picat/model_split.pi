@@ -1,4 +1,4 @@
-import cp.
+import sat.
 
 % Split+robustness
 find_plans(Problem) = Plans =>
@@ -67,7 +67,7 @@ output_plan(B,Problem, Makespan)=Plans =>
         foreach (Agent in Group.agents)
             Position = Group.initialPosition(Agent),
             Plan = [],
-            LastDir = 1, %direction (index in vectors()) of agent at start, TODO property of problem
+            LastDir = 1,
             foreach (T in 2..Makespan+1)
                 NV = Problem.neighbour(Position,LastDir),
                 if(NV !== 0 && B[T,Agent,NV,LastDir] =:= 1) then
