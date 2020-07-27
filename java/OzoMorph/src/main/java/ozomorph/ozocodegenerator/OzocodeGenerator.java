@@ -27,7 +27,7 @@ public class OzocodeGenerator {
 
     private String ozocodesDir = "../ozocodes";
 
-    public void generateOzocodes(List<AgentMapNode> agents, File templateFile) throws JDOMException, IOException {
+    public void generateOzocodes(List<AgentMapNode> agents, File templateFile) throws JDOMException, IOException, MissingDeclarationException {
         try {
             //load and parse template
             Document template = loadTemplate(templateFile);
@@ -81,10 +81,14 @@ public class OzocodeGenerator {
 
     //returns element "<statement name="STACK">
     //returns definition, not declaration! i.e. the element whose value is the actual sequence of function calls
-    private Element getProcedureDefinition(Document template, String procedureName){
+    private Element getProcedureDefinition(Document template, String procedureName) throws MissingDeclarationException {
         String query = "/xml/block[@type='procedures_defnoreturn' and field[@name='NAME']='" + procedureName +"']";
         XPathExpression<Element> xpe = XPathFactory.instance().compile(query, Filters.element());
+
         Element procedure_def = xpe.evaluateFirst(template); //Assuming that there is exactly one such element
+
+        if(procedure_def == null)
+            throw new MissingDeclarationException(procedureName);
 
         //remove definition (if exists)
         procedure_def.removeContent(new ElementFilter("statement"));

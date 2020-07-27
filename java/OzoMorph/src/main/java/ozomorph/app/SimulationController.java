@@ -18,6 +18,7 @@ import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ozomorph.nodes.AgentMapNode;
+import ozomorph.ozocodegenerator.MissingDeclarationException;
 import ozomorph.ozocodegenerator.OzocodeGenerator;
 
 import java.io.File;
@@ -170,13 +171,14 @@ public class SimulationController {
             );
             File templateFile = fileChooser.showOpenDialog(pMap.getScene().getWindow());
             if (templateFile != null) {
-
+                logger.info("Generating Ozocodes using template: "+ templateFile.getCanonicalPath());
                 //generate Ozocodes
                 OzocodeGenerator generator = new OzocodeGenerator();
-                generator.generateOzocodes(agents,templateFile);
+                generator.generateOzocodes(agents, templateFile);
             }
-
-
+        }catch (MissingDeclarationException e){
+            logger.error("Ozocodes not generated", e);
+            showError("Selected template does not contain required procedure "+e.getMissingProcedureName() + ".");
         } catch (JDOMException e) {
             logger.error("Ozocodes not generated.", e);
             showError("Error while generating ozocodes.");
