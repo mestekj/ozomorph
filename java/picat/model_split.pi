@@ -3,7 +3,6 @@ import sat.
 % Split+robustness
 find_plans(Problem) = Plans =>
     AgentsNumber = Problem.agents_count(),
-    % TODO MAX_LEN = horni odhad na delku planu
     MAX_LEN = Problem.vertices_count() * Problem.agents_count(),
     member(Makespan, 1..MAX_LEN),
 
@@ -60,7 +59,7 @@ find_plans(Problem) = Plans =>
     Plans = output_plan(B,Problem,Makespan).
 
 
-
+% Finds plans from values of variables B
 output_plan(B,Problem, Makespan)=Plans =>
     Plans = [],
     foreach (Group in Problem.groups)
@@ -68,12 +67,14 @@ output_plan(B,Problem, Makespan)=Plans =>
             Position = Group.initialPosition(Agent),
             Plan = [],
             LastDir = 1,
-            foreach (T in 2..Makespan+1)
+            foreach (T in 2..Makespan+1) % T==1 are initial positions
                 NV = Problem.neighbour(Position,LastDir),
                 if(NV !== 0 && B[T,Agent,NV,LastDir] =:= 1) then
+                    % moving forward
                     Plan := Problem.goAhead() ++ Plan,
                     Position := Problem.neighbour(Position,LastDir)
                 else
+                    % staying in same vertex
                     [NextDirection] = [D : D in 1..4, B[T,Agent,Position,D] =:= 1],
                     Turn = NextDirection - LastDir,
                     Plan := Problem.actions(Turn) ++ Plan,

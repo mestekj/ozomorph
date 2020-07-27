@@ -76,8 +76,6 @@ vectors() = V =>
     V = {(0,-1),(1,0),(0,1),(-1,0),(0,0)}.
 
 
-% Problem.groups = seznam group(Initials,Targets,FirstAgentNumber,LastAgentNumber) - vsechny tyto "fieldy" udelat ziskatelne jako group.initials, group.targets, ...
-
 firstAgentNumber(Group) = FAN =>
     $group(FAN,_,_) = Group.
 
