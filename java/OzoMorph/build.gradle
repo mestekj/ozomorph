@@ -1,0 +1,75 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.beryx.jlink' version '2.17.9'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.3.0-alpha4'
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
+    implementation 'org.jdom:jdom2:2.0.5'
+    implementation 'jaxen:jaxen:1.2.0'
+}
+
+javafx {
+    version = "11"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+mainClassName = "$moduleName/ozomorph.app.App"
+
+//def jmodsDir = "D:/Programs/JDKs/"
+def jmodsDir = "/mnt/d/Programs/JDKs/"
+
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'OzoMorph'
+        unixScriptTemplate = file('unixStartScript.txt')
+        //jvmArgs = ['-Duser.dir={{BIN_DIR}}']
+    }
+
+    targetPlatform("linux") {
+        jdkHome = jmodsDir + "jdk/linux"
+        addExtraModulePath(jmodsDir + "javafx/linux")
+    }
+
+    targetPlatform("win") {
+        jdkHome = jmodsDir + "jdk/win"
+        addExtraModulePath(jmodsDir + "javafx/win")
+    }
+
+    targetPlatform("mac") {
+        jdkHome = jmodsDir + "jdk/mac"
+        addExtraModulePath(jmodsDir + "javafx/mac")
+    }
+
+
+}
+
+def JLINK_DIR = "$buildDir/image"
+
+tasks.jlink.doLast {
+    ["win","linux","mac"].each { platform ->
+
+    copy {
+        from("../picat") {
+            include "*.pi"
+            exclude "example_problem_instance.pi"
+            exclude "test.pi"
+        }
+        into JLINK_DIR + "/OzoMorph-" + platform + "/picat"
+    }
+    copy {
+        from("../ozocode_templates") {
+            include "*.ozocode"
+        }
+        into JLINK_DIR + "/OzoMorph-" + platform + "/ozocode_templates"
+    }
+    }
+}

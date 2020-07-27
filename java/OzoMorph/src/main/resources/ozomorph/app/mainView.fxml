@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ozomorph.app.MainController"
+      prefHeight="700.0" prefWidth="1000.0"
+      style="-fx-padding: 10 10 10 10" spacing="10"
+>
+    <children>
+        <HBox spacing="5">
+            <Label text="Width:"/>
+            <TextField fx:id="tfWidth" text="5"/>
+            <Label text="Height:"/>
+            <TextField fx:id="tfHeight" text="5"/>
+            <Button text="Create" onAction="#createMap"/>
+            <Button fx:id="btSave" text="Save" onAction="#saveMap"/>
+            <Button text="Load" onAction="#loadMap"/>
+            <Button fx:id="btPrint" text="Print" onAction="#printMap"/>
+        </HBox>
+        <Separator orientation="HORIZONTAL"/>
+        <HBox spacing="5">
+            <Label text="Duration of actions [seconds]: "/>
+            <Label text="forward: "/>
+            <TextField fx:id="tfForwardDuration"/>
+            <Label text="turn: "/>
+            <TextField fx:id="tfTurnDuration"/>
+            <Label text="wait: "/>
+            <TextField fx:id="tfWaitDuration"/>
+        </HBox>
+        <Separator orientation="HORIZONTAL" />
+        <HBox spacing="5" >
+            <Label text="Group:"/>
+            <ColorPicker fx:id="cpGroupColor" onAction="#groupColorChanged" />
+        </HBox>
+        <GridPane hgap="10" vgap="10" VBox.vgrow="ALWAYS">
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Label text="Initial positions:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Pane fx:id="pInitials" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.rowSpan="2" prefWidth="400"/>
+            <Separator GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="3" orientation="VERTICAL"/>
+            <Label text="Number of agents:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <GridPane fx:id="pDifferencies" GridPane.columnIndex="2" GridPane.rowIndex="1">
+
+            </GridPane>
+            <Button fx:id="btMorph" GridPane.halignment="CENTER" text="--->&#10;Morph" textAlignment="CENTER" onAction="#startSimulation" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <Separator GridPane.rowIndex="0" GridPane.columnIndex="3" GridPane.rowSpan="3" orientation="VERTICAL"/>
+            <Label text="Target positions:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+            <Pane fx:id="pTargets" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="2" prefWidth="400"/>
+        </GridPane>
+    </children>
+</VBox>
