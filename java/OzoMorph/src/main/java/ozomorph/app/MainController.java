@@ -284,7 +284,7 @@ public class MainController {
     }
 
     /**
-     * Informs user about error using {@code Alert} message box.
+     * Informs user about error using {@link Alert} message box.
      * @param message Message informing about the error.
      */
     private void showError(String message){

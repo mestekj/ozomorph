@@ -4,11 +4,11 @@ import org.jdom2.Element;
 import ozomorph.actions.*;
 
 /**
- * Factory that creates block of Ozocode that calls Ozocode procedure corresponding to given {@code Action}.
+ * Factory that creates block of Ozocode that calls Ozocode procedure corresponding to given {@link Action}.
  */
 public class ProcedureCallFactory {
     /**
-     * Creates block of Ozocode that calls Ozocode procedure corresponding to given {@code Action}.
+     * Creates block of Ozocode that calls Ozocode procedure corresponding to given {@link Action}.
      * @param action Action to call.
      * @return Ozocode call of corresponding procedure.
      */
