@@ -15,13 +15,22 @@ import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import ozomorph.nodes.AgentMapNode;
 
+/**
+ * Mode of Simulation window.
+ */
 public enum Mode {
+    /**
+     * Only simulation of virtual agents (to visualise their plans).
+     */
     SIMULATION ("Simulation") {
         @Override
         public Timeline getActivationSequence(Pane pane, SimulationController sc) {
             return new Timeline();
         }
     },
+    /**
+     * Ozobots rides on display. Map has to in 1:1 scale.
+     */
     ONSCREEN ("OnScreen"){
         @Override
         public Timeline getActivationSequence(Pane pane, SimulationController sc) {
@@ -35,6 +44,9 @@ public enum Mode {
             return activationSequence;
         }
     },
+    /**
+     * Ozobots rides on printed map.
+     */
     ONBOARD ("OnBoard"){
         @Override
         public Timeline getActivationSequence(Pane pane, SimulationController sc) {
@@ -86,10 +98,20 @@ public enum Mode {
         }
     };
 
+    /**
+     * Name of the mode that is shown to user.
+     */
     private String label;
     Mode(String label){
         this.label = label;
     }
+
+    /**
+     * Animation that has to be played on screen before agents starts.
+     * @param pane Pane to show animation on.
+     * @param sc Controller of simulation window.
+     * @return Animation that has to be played on screen before agents starts.
+     */
     public abstract Timeline getActivationSequence(Pane pane, SimulationController sc);
 
     @Override

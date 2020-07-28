@@ -7,6 +7,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 
+/**
+ * Slider (GUI element) customized to show logaritmic axis.
+ */
 public class FunctionalSlider extends Slider {
     private ReadOnlyDoubleWrapper functionValue = new ReadOnlyDoubleWrapper();
 

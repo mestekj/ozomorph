@@ -16,11 +16,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller for GUI element that shows map with agents.
+ */
 public class SimulationMapController extends MapControllerBase {
     private Map<AgentMapNode, Node> agentsGuiNodes;
     private double agentRadius;
     private final double onScreenOpacityFactor = 0.2;
 
+    /**
+     * Creates new SimulationMapController to simulate given agents on map of given size.
+     * @param width Width of map (number of nodes).
+     * @param height Height of map (number of nodes).
+     * @param pane Pane to draw map to.
+     * @param agents List of agents to be simulated.
+     * @param gridTick Spacing between grid lines in pixels.
+     * @param agentRadius Radius of agents in pixels.
+     * @param gridLineWidth Width of grid lines in pixels.
+     * @param onScreenMode If is window in OnScreen mode.
+     */
     public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth, boolean onScreenMode) {
         super(width, height, pane, gridTick, gridLineWidth);
         this.agentRadius = agentRadius;
@@ -29,10 +43,25 @@ public class SimulationMapController extends MapControllerBase {
         updateGuiNodesPositions();
     }
 
+    /**
+     * Creates new SimulationMapController to simulate given agents on map of given size in other than OnScreen mode.
+     * @param width Width of map (number of nodes).
+     * @param height Height of map (number of nodes).
+     * @param pane Pane to draw map to.
+     * @param agents List of agents to be simulated.
+     * @param gridTick Spacing between grid lines in pixels.
+     * @param agentRadius Radius of agents in pixels.
+     * @param gridLineWidth Width of grid lines in pixels.
+     */
     public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth) {
         this(width,height,pane,agents,gridTick,agentRadius,gridLineWidth,false);
     }
 
+    /**
+     * Initializes GUI elements representing agents.
+     * @param agents Agents to draw on map.
+     * @param onScreenMode If is in OnScreen mode.
+     */
     private void generateAgentsGuiNodes(List<AgentMapNode> agents, boolean onScreenMode){
         agentsGuiNodes = new HashMap<>();
         for (var agent : agents) {
@@ -50,6 +79,9 @@ public class SimulationMapController extends MapControllerBase {
         }
     }
 
+    /**
+     * Updates position of GUI elements representing agents according to position of each agent.
+     */
     public void updateGuiNodesPositions(){
         for(var entry : agentsGuiNodes.entrySet()){
             AgentMapNode agent = entry.getKey();
@@ -60,6 +92,11 @@ public class SimulationMapController extends MapControllerBase {
         }
     }
 
+    /**
+     * Gets position (in window) of GUI node representing given agent.
+     * @param agent Agent whose position is returned.
+     * @return Position of GUI node (as transform from (0,0) to actual position).
+     */
     Transform getGuiNodePosition(AgentMapNode agent){
         return agentsGuiNodes.get(agent).getTransforms().get(0);
     }

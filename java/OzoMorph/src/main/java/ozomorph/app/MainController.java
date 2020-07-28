@@ -29,9 +29,10 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.function.UnaryOperator;
 
+/**
+ * Controller for main window.
+ */
 public class MainController {
-
-
     Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @FXML
@@ -59,6 +60,9 @@ public class MainController {
         isMapNotLoaded = new SimpleBooleanProperty(true);
     }
 
+    /**
+     * Initialization and setting of GUI elements that cannot be done in FXML.
+     */
     @FXML
     public void initialize(){
         //text fields allows only numbers
@@ -86,7 +90,7 @@ public class MainController {
         };
 
         tfForwardDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
-        //tfWaitDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
+        tfWaitDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
         tfTurnDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
 
         //set initial durations
@@ -105,6 +109,10 @@ public class MainController {
         logger.info("MainView inited.");
     }
 
+    /**
+     * Handler for Create map button.
+     * @param actionEvent
+     */
     public void createMap(ActionEvent actionEvent) {
         if(!isMapNotLoaded.getValue() && !confirmMapReload())
             return;
@@ -121,6 +129,11 @@ public class MainController {
         }
     }
 
+    /**
+     * Creates new blank map (grid) to set agents configurations of specified dimensions.
+     * @param width Width of grid (number of nodes)
+     * @param height Height of grid (number of nodes)
+     */
     private void createMap(int width, int height){
         this.width = width;
         this.height = height;
@@ -144,6 +157,10 @@ public class MainController {
             targetsMapController.setSelectedGroup(group);
     }
 
+    /**
+     * Handler for ColorPicker.
+     * @param actionEvent
+     */
     public void groupColorChanged(ActionEvent actionEvent)
     {
         Color color = cpGroupColor.getValue();
@@ -151,6 +168,9 @@ public class MainController {
         setSelectedGroup(selectedGroup);
     }
 
+    /**
+     * Finds plans for current configuration and opens Simulation window.
+     */
     public void  startSimulation(){
         try {
             logger.info("Simulation window opening...");
@@ -212,6 +232,11 @@ public class MainController {
         }
     }
 
+    /**
+     * Asks user to input path to Picat runtime executable.
+     * Must be called from UIThread.
+     * @return Path to Picat runtime executable
+     */
     private String askForPicatExecFromUIThread(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -230,6 +255,11 @@ public class MainController {
         return picatExecPath;
     }
 
+    /**
+     * Asks user to input path to Picat runtime executable.
+     * Can be called from any thread.
+     * @return Path to Picat runtime executable
+     */
     private String askForPicatExec(){
         final FutureTask<String> query = new FutureTask<>(new Callable<String>() {
             @Override
@@ -253,6 +283,10 @@ public class MainController {
         alert.showAndWait();
     }
 
+    /**
+     * Informs user about error using {@code Alert} message box.
+     * @param message Message informing about the error.
+     */
     private void showError(String message){
         if(Platform.isFxApplicationThread())
             showErrorUIThread(message);
@@ -296,11 +330,21 @@ public class MainController {
         return stage;
     }
 
+    /**
+     * Prints current map (grid) on printer.
+     * Handler for Print button.
+     * @param actionEvent
+     */
     public void printMap(ActionEvent actionEvent) {
-        PrintController pc = new PrintController(pInitials.getScene().getWindow(), MapSettings.getSettings(), width,height);
-        pc.print();
+        PrintController pc = new PrintController(MapSettings.getSettings(), width,height);
+        pc.print(pInitials.getScene().getWindow());
     }
 
+    /**
+     * Loads saved configurations.
+     * Handler for Load button.
+     * @param actionEvent
+     */
     public void loadMap(ActionEvent actionEvent) {
         if(!isMapNotLoaded.getValue() && !confirmMapReload())
             return;
@@ -329,6 +373,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Initializes window according to data loaded from file.
+     * @param problemInstance Previously saved map with configurations.
+     */
     private void loadSavedMap(ProblemInstance problemInstance) {
         for (Group group : problemInstance.getInitialPositions().keySet()) {
             groupsColors.put(group.getColor(),group);
@@ -343,10 +391,19 @@ public class MainController {
         groupColorChanged(null);
     }
 
+    /**
+     * Saves current configuration to a file.
+     * Handler for saved button.
+     * @param actionEvent
+     */
     public void saveMap(ActionEvent actionEvent) {
         saveMap();
     }
 
+    /**
+     * Saves current configuration.
+     * @return Whether saving was succesful (not aborted by user).
+     */
     private boolean saveMap(){
         ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
         FileChooser fileChooser = createMapFileChooser();
@@ -370,6 +427,10 @@ public class MainController {
         return false;
     }
 
+    /**
+     * Creates FileChooser instantiated for OzoMorph map file type.
+     * @return
+     */
     private FileChooser createMapFileChooser(){
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("OzoMorph map (*.ommap)", "*.ommap");
@@ -377,6 +438,11 @@ public class MainController {
         return fileChooser;
     }
 
+    /**
+     * Asks user to confirm to load/crate map (current will be lost).
+     * Gives option to save current map.
+     * @return If it is save to delete current map (it was saved or user does not mind).
+     */
     private boolean confirmMapReload(){
         ButtonType saveBtn = new ButtonType("Save");
         Alert alert = new Alert(Alert.AlertType.WARNING,"Current map will be lost.",ButtonType.OK,saveBtn,ButtonType.CANCEL);

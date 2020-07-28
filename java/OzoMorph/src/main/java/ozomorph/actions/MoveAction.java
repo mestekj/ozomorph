@@ -2,6 +2,9 @@ package ozomorph.actions;
 
 import ozomorph.nodes.AgentMapNode;
 
+/**
+ * Action of agent that moves it to next map node in its direction.
+ */
 public class MoveAction extends ActionBase {
 
     final double[] dX = {0,1,0,-1};

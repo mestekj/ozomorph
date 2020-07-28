@@ -3,7 +3,15 @@ package ozomorph.ozocodegenerator;
 import org.jdom2.Element;
 import ozomorph.actions.*;
 
+/**
+ * Factory that creates block of Ozocode that calls Ozocode procedure corresponding to given {@code Action}.
+ */
 public class ProcedureCallFactory {
+    /**
+     * Creates block of Ozocode that calls Ozocode procedure corresponding to given {@code Action}.
+     * @param action Action to call.
+     * @return Ozocode call of corresponding procedure.
+     */
     public Element createCall(Action action) {
         if (action instanceof TurnLeftAction)
             return createCallNoArg("turnLeft");
@@ -17,6 +25,11 @@ public class ProcedureCallFactory {
             throw new UnsupportedOperationException("Unknown Action type: " + action.getClass().getTypeName());
     }
 
+    /**
+     * Creates XML element corresponding to call of parameter-less Ozocode procedure.
+     * @param procedureName Name of the Ozocode procedure.
+     * @return XML element corresponding to call of the procedure.
+     */
     private Element createCallNoArg(String procedureName) {
         Element block = new Element("block")
                 .setAttribute("type", "procedures_callnoreturn")
@@ -27,6 +40,13 @@ public class ProcedureCallFactory {
         return block;
     }
 
+    /**
+     * Creates XML element corresponding to call of Ozocode procedure with one integer argument.
+     * @param procedureName Name of the Ozocode procedure.
+     * @param argumentName Name of the argument (as in Declaration of the procedure in Ozocode).
+     * @param argumentValue Value of the argument.
+     * @return XML element corresponding to call of the procedure with given value of argument.
+     */
     private Element createCallOneIntArg(String procedureName, String argumentName, byte argumentValue) {
         Element block = new Element("block")
                 .setAttribute("type", "procedures_callnoreturn")

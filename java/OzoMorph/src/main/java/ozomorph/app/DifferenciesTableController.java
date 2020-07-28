@@ -13,6 +13,10 @@ import ozomorph.nodes.Group;
 
 import java.util.*;
 
+/**
+ * Controller for GUI element that shows
+ * numbers of positions assigned to each group in initial and target configuration.
+ */
 public class DifferenciesTableController {
     private GridPane gridPane;
     private MapController initials;
@@ -21,8 +25,18 @@ public class DifferenciesTableController {
 
     private List<ColumnConstraints> innerCols;
 
+    /**
+     * Indicates if there are groups with difierent number of positions in intial and target configuration.
+     */
     public BooleanProperty areDifferenciesProperty;
 
+    /**
+     * Creates new DifferenciesTableController.
+     * @param gridPane GridPane where the table will be shown.
+     * @param initials Initial configuration.
+     * @param targets Target configuration.
+     * @param setGroup Delegate to request change of selected group.
+     */
     public DifferenciesTableController(GridPane gridPane, MapController initials, MapController targets, SetGroup setGroup) {
         this.gridPane = gridPane;
         this.initials = initials;
@@ -50,6 +64,9 @@ public class DifferenciesTableController {
         updateTable();
     }
 
+    /**
+     * Updates table according to current configurations.
+     */
     public void updateTable(){
         gridPane.getChildren().clear();
         Set<Group> usedGroups = new HashSet<>(initials.groups.keySet());

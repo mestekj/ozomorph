@@ -6,40 +6,55 @@ import javafx.stage.Window;
 
 import java.util.Collections;
 
+/**
+ * Controller that prints map on printer.
+ */
 public class PrintController {
-    private Window window;
     private MapSettings settings;
     private int width;
     private int height;
     private double dpi = 72;
 
-    public PrintController(Window window, MapSettings settings, int width, int height) {
-        this.window = window;
+    /**
+     * Intializes new PrintController to print given map (complete grid).
+     * @param settings Required properties of real map.
+     * @param width Width of map (number of nodes).
+     * @param height Height of map (number of nodes).
+     */
+    public PrintController(MapSettings settings, int width, int height) {
         this.settings = settings;
         this.width = width;
         this.height = height;
     }
 
-    public Pane getMapToPrint() {
+    /**
+     * Draw map on pane.
+     * @return Pane with drown map.
+     */
+    protected Pane getMapToPrint() {
         Pane pane = new Pane();
         pane.setPrefSize(getGridTickPx() * (width + 1), getGridTickPx() * (height + 1));
         SimulationMapController smc = new SimulationMapController(width, height, pane, Collections.emptyList(), getGridTickPx(), 0, getGridLineWidthPx());
         return pane;
     }
 
-    private double getGridLineWidthPx() {
+    protected double getGridLineWidthPx() {
         return getPx(settings.getGridLineWidthCm());
     }
 
-    private double getGridTickPx() {
+    protected double getGridTickPx() {
         return getPx(settings.getGridTickCm());
     }
 
-    private double getPx(double cm) {
+    protected double getPx(double cm) {
         return cm / 2.54 * dpi;
     }
 
-    public void print() {
+    /**
+     * Print map on printer.
+     * @param window Window where to show print dialogs.
+     */
+    public void print(Window window) {
         Pane pane = getMapToPrint();
 
         PrinterJob job = PrinterJob.createPrinterJob();

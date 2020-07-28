@@ -15,6 +15,9 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Solves given {@link ProblemInstance}.
+ */
 public class PathFinder {
     private static final Logger logger = LoggerFactory.getLogger(PathFinder.class);
     private ActionFactory actionFactory;
@@ -22,12 +25,26 @@ public class PathFinder {
     private boolean isPicatRunning;
     private Process picatProcess;
 
+    /**
+     * Creates new PathFinder.
+     * @param settings Duration of actions.
+     * @param getPicatExec Callback to get path to executable of Picat runtime. Used when not found in system PATH.
+     */
     public PathFinder(ActionSettings settings, GetPathCallback getPicatExec) {
         actionFactory = new ActionFactory(settings);
         this.getPicatExec = getPicatExec;
     }
 
-    public List<AgentMapNode> findPaths(ProblemInstance problemInstance) throws IOException, InterruptedException {
+    /**
+     * Returns solution to given problemInstance in form of list agents having the found plans.
+     * @param problemInstance Problem (initial and target configuration) to solve.
+     * @return Agents with already set plans.
+     * @throws IOException IO error.
+     * @throws InterruptedException Picat runtime interupted.
+     * @throws NoPlansFoundException Given problem was not solved (maybe solver terminated?).
+     * @throws PicatNotFoundException Executable of Picat runtime not found.
+     */
+    public List<AgentMapNode> findPaths(ProblemInstance problemInstance) throws IOException, InterruptedException, NoPlansFoundException {
         List<PositionMapNode> agentsLinearOrdering = new ArrayList<>();
         String picatInput = translateToPicatInput(problemInstance, agentsLinearOrdering);
         logger.info("Instance of problem (Picat): " + picatInput);
@@ -49,6 +66,12 @@ public class PathFinder {
         return parsePlans(picatOutput,agentsLinearOrdering);
     }
 
+    /**
+     * Creates Picat source file containing the instance of problem as input to solver.
+     * @param problemInstance Instance of problem, in Picat language.
+     * @return File containing the instance of problem as input to solver.
+     * @throws IOException Error while creating the file / writing to it.
+     */
     private File createProblemInstanceFile(String problemInstance) throws IOException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
@@ -64,7 +87,16 @@ public class PathFinder {
         return file;
     }
 
-    private String runPicat(File problemInstanceFile, String picatExecPath) throws IOException, InterruptedException {
+    /**
+     * Runs solver in Picat.
+     * @param problemInstanceFile Picat source file containing the problem instance (input for solver).
+     * @param picatExecPath Path to executable of Picat runtime.
+     * @return Plans returned by solver, in Picat language.
+     * @throws PicatNotFoundException Executable of Picat runtime not found.
+     * @throws IOException IO error.
+     * @throws InterruptedException Picat runtime interupted.
+     */
+    private String runPicat(File problemInstanceFile, String picatExecPath) throws IOException, InterruptedException, NoPlansFoundException {
         String picatMain = "../picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
 
         ProcessBuilder builder = new ProcessBuilder(picatExecPath, picatMain, problemInstanceFile.getCanonicalPath());
@@ -115,6 +147,12 @@ public class PathFinder {
             throw new NoPlansFoundException();
     }
 
+    /**
+     * Translates {@link ProblemInstance} to corresponding Picat predicate.
+     * @param problemInstance Instance of problem to translate.
+     * @param agentsLinOrdering Output argument, linear ordering of occupied positions in initial configuration (= starting positions of agets).
+     * @return Picat predicate corresponding to given {@link ProblemInstance}.
+     */
     private String translateToPicatInput(ProblemInstance problemInstance, List<PositionMapNode> agentsLinOrdering){
         agentsLinOrdering.clear();
         StringBuilder input = new StringBuilder();
@@ -130,6 +168,12 @@ public class PathFinder {
         return input.toString();
     }
 
+    /**
+     * Translates groups used in ProblemInstance to sequence of corresponding Picat predicates.
+     * @param problemInstance ProblemInstance to translate.
+     * @param agentsLinOrdering Output argument, linear ordering of occupied positions in initial configuration (= starting positions of agets).
+     * @return Groups used in ProblemInstance to sequence of corresponding Picat predicates.
+     */
     private String translateGroups(ProblemInstance problemInstance, List<PositionMapNode> agentsLinOrdering){
         StringBuilder groupsList = new StringBuilder();
         int firstAgentNumber = 1; //number of first agent in the group
@@ -154,6 +198,12 @@ public class PathFinder {
         return groupsList.toString();
     }
 
+    /**
+     * Translates collection of map nodes (vertices) to corresponding Picat predicate.
+     * @param problemInstance Instance of problem.
+     * @param nodes Collection of nodes to translate.
+     * @return Picat predicate corresponding to the map nodes.
+     */
     private String translateNodeCollection(ProblemInstance problemInstance, Collection<PositionMapNode> nodes){
         StringBuilder collection = new StringBuilder();
         collection.append("[");
@@ -167,10 +217,22 @@ public class PathFinder {
         return collection.toString();
     }
 
+    /**
+     * Computes linear index of given map node (vertex of grid).
+     * @param problemInstance Instance of problem.
+     * @param node Map node.
+     * @return Linear index of the map node
+     */
     private int getVertexLinIdx(ProblemInstance problemInstance, PositionMapNode node){
         return node.getGridY()*problemInstance.getWidth() + node.getGridX()+1;
     }
 
+    /**
+     * Parses plans from Picat output.
+     * @param picatOutput Output of solver, in Picat language.
+     * @param agentsLinOrdering Linear ordering of occupied positions in initial configuration (= starting positions of agets).
+     * @return
+     */
     private List<AgentMapNode> parsePlans(String picatOutput, List<PositionMapNode> agentsLinOrdering){
         List<AgentMapNode> agents = new ArrayList<>();
         String[] plans = removeParentheses(picatOutput).split(",(?![^\\[\\]]*\\])"); //split on comma not inside brackets
@@ -181,6 +243,11 @@ public class PathFinder {
         return agents;
     }
 
+    /**
+     * Remove brackets ("[]") from both sides of given string.
+     * @param s String surrounded by brackets.
+     * @return String without the brackets.
+     */
     private String removeParentheses(String s){
         if(s.charAt(0) == '[' && s.charAt(s.length()-1) == ']')
             return s.substring(1,s.length()-1);
@@ -188,6 +255,11 @@ public class PathFinder {
         throw new IllegalArgumentException(String.format("String %s does not start with [ or end with ].", s));
     }
 
+    /**
+     * Parse plan to list of {@link Action}s.
+     * @param plan Plan for one agent, list of actions in Picat language.
+     * @return List of {@link Action}s
+     */
     private List<Action> parsePlan(String plan){
         List<Action> parsedPlan = new ArrayList<>();
 
@@ -198,6 +270,9 @@ public class PathFinder {
         return parsedPlan;
     }
 
+    /**
+     * Terminates solver (if running).
+     */
     public void stop() {
         if(isPicatRunning)
             picatProcess.destroy();

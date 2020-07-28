@@ -22,11 +22,26 @@ import java.util.stream.Collectors;
 
 import org.jdom2.*;
 
+/**
+ * Generator of programs for Ozobots.
+ * Programs are written in Ozocode language which is a XML.
+ */
 public class OzocodeGenerator {
     private static final Logger logger = LoggerFactory.getLogger(OzocodeGenerator.class);
 
+    /**
+     * Directory where create programs will be saved.
+     */
     private String ozocodesDir = "../ozocodes";
 
+    /**
+     * Generates programs for Ozobots according to plans of given agents.
+     * @param agents Agents containing plans.
+     * @param templateFile Ozocode template of generated programs.
+     * @throws JDOMException Error while reading template or writing generated programs.
+     * @throws IOException Error while reading template or writing generated programs.
+     * @throws MissingDeclarationException Required Ozocode procedure is not declared in given template.
+     */
     public void generateOzocodes(List<AgentMapNode> agents, File templateFile) throws JDOMException, IOException, MissingDeclarationException {
         try {
             //load and parse template
@@ -73,14 +88,26 @@ public class OzocodeGenerator {
         }
     }
 
+    /**
+     * Parse Ozocode template (which is internally a XML file).
+     * @param templateFile Template to parse.
+     * @return Parsed template.
+     * @throws JDOMException Error while parsing the template.
+     * @throws IOException Error while reading the template.
+     */
     private Document loadTemplate(File templateFile) throws JDOMException, IOException {
         SAXBuilder saxBuilder = JdomHelper.getSAXBuilder(); //SAXBuilder that ignores namespaces
         Document template = saxBuilder.build(templateFile);
         return template;
     }
 
-    //returns element "<statement name="STACK">
-    //returns definition, not declaration! i.e. the element whose value is the actual sequence of function calls
+    /**
+     * Returns XML element ("<statement name="STACK">) representing definition of Ozocode procedure (declared in the template).
+     * @param template Parsed Ozocode template.
+     * @param procedureName Name of the procedure
+     * @return Definition of the procedure (not declaration! i.e. the element whose value is the actual sequence of function calls).
+     * @throws MissingDeclarationException The procedure is not declared in given template.
+     */
     private Element getProcedureDefinition(Document template, String procedureName) throws MissingDeclarationException {
         String query = "/xml/block[@type='procedures_defnoreturn' and field[@name='NAME']='" + procedureName +"']";
         XPathExpression<Element> xpe = XPathFactory.instance().compile(query, Filters.element());
@@ -101,6 +128,11 @@ public class OzocodeGenerator {
         return statement_stack;
     }
 
+    /**
+     * Generates XML element representing sequence of procedure calls according to given list of actions.
+     * @param actions List of actions whose corresponding procedures will be called.
+     * @return XML element representing sequence of procedure calls.
+     */
     private Element generateCalls(List<Action> actions) {
         if(actions.isEmpty())
             throw new IllegalArgumentException("No actions to generate calls.");
@@ -111,6 +143,16 @@ public class OzocodeGenerator {
         return root;
     }
 
+    /**
+     * Generates XML elements representing Ozocode that sets Ozocode variables "r","g","b","id", "agentsCount".
+     * Components of color will be converted to range used by Ozobots (which is integer 0...127).
+     * @param red Red component of agents color, in [0,1].
+     * @param green Green component of agents color, in [0,1].
+     * @param blue Blue component of agents color, in [0,1].
+     * @param id ID of agent.
+     * @param agentsCount Total number of agents.
+     * @return XML elements representing Ozocode that sets the Ozocode variables
+     */
     private Element generateSetVariables(double red, double green, double blue, int id, int agentsCount) {
         List<Element> varsSets = new ArrayList<>();
         varsSets.add(generateSetVariable("r",(byte)Math.round(red*127)));
@@ -123,6 +165,12 @@ public class OzocodeGenerator {
         return sequenceRoot;
     }
 
+    /**
+     * Generates XML element representing sequence of Ozocode commands.
+     * @param blocks XML elements representing the commands.
+     * @return XML element representing sequence of Ozocode commands
+     * @throws IllegalArgumentException No commands to generate.
+     */
     private Element generateSequence(List<Element> blocks){
         if(blocks.isEmpty())
             throw new IllegalArgumentException("No blocks to generate sequence.");
@@ -140,6 +188,12 @@ public class OzocodeGenerator {
         return root;
     }
 
+    /**
+     * Generates XML element representing seter of an Ozocode variable.
+     * @param variableName Name of the variable.
+     * @param value Value of the variable.
+     * @return XML element representing seter of the Ozocode variable.
+     */
     private Element generateSetVariable(String variableName, byte value) {
         Element block = new Element("block")
                 .setAttribute("type", "variables_set")

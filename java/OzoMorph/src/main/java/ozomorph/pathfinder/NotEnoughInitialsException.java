@@ -4,7 +4,10 @@ import ozomorph.nodes.Group;
 
 import java.util.Map;
 
-public class NotEnoughInitialsException extends IllegalArgumentException {
+/**
+ *
+ */
+public class NotEnoughInitialsException extends Exception {
     public Map<Group, Integer> getNumberOfMissings() {
         return numberOfMissings;
     }

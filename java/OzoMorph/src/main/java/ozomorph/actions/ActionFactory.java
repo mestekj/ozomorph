@@ -1,12 +1,24 @@
 package ozomorph.actions;
 
+/**
+ * Creates {@link Action} instance corresponding to name of the action as is used in solver.
+ */
 public class ActionFactory {
     private ActionSettings settings;
 
+    /**
+     * Creates new ActionFactory.
+     * @param settings Duration of actions.
+     */
     public ActionFactory(ActionSettings settings) {
         this.settings = settings;
     }
 
+    /**
+     * Creates new {@link Action} corresponding to Picat name of an action
+     * @param picatAction Name of the action as is used in solver.
+     * @return Action of the name.
+     */
     public Action createAction(String picatAction){
         switch (picatAction){
             case "goAhead":
