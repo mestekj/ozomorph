@@ -102,7 +102,7 @@ public class OzocodeGenerator {
     }
 
     /**
-     * Returns XML element ("<statement name="STACK">) representing definition of Ozocode procedure (declared in the template).
+     * Returns XML element {@code <statement name="STACK">} representing definition of Ozocode procedure (declared in the template).
      * @param template Parsed Ozocode template.
      * @param procedureName Name of the procedure
      * @return Definition of the procedure (not declaration! i.e. the element whose value is the actual sequence of function calls).

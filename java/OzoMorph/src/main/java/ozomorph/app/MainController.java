@@ -55,6 +55,9 @@ public class MainController {
 
     BooleanProperty isMapNotLoaded;
 
+    /**
+     * Creates new MainController.
+     */
     public MainController() {
         groupsColors = new HashMap<>();
         isMapNotLoaded = new SimpleBooleanProperty(true);
@@ -150,14 +153,8 @@ public class MainController {
         logger.info("New blank map loaded.");
     }
 
-    private void setSelectedGroup(Group group){
-        if(initialsMapController != null)
-            initialsMapController.setSelectedGroup(group);
-        if(targetsMapController != null)
-            targetsMapController.setSelectedGroup(group);
-    }
-
     /**
+     * Informs that user has selected another group.
      * Handler for ColorPicker.
      * @param actionEvent
      */
@@ -165,7 +162,11 @@ public class MainController {
     {
         Color color = cpGroupColor.getValue();
         Group selectedGroup =  groupsColors.computeIfAbsent(color, c-> new Group(color));
-        setSelectedGroup(selectedGroup);
+
+        if(initialsMapController != null)
+            initialsMapController.setSelectedGroup(selectedGroup);
+        if(targetsMapController != null)
+            targetsMapController.setSelectedGroup(selectedGroup);
     }
 
     /**
@@ -210,6 +211,7 @@ public class MainController {
                     logger.error("Plan finding failed.",e);
                     showError("No plans found due to an error, check logs for details.");
                 } finally {
+                    logger.info("Closing picatRuning dialog.");
                     Platform.runLater(()-> picatRuning.close());
                 }
             });
@@ -275,6 +277,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Informs user about error using {@link Alert} message box. Must be called from UI thread.
+     * @param message Message informing about the error.
+     */
     private void showErrorUIThread(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -294,6 +300,10 @@ public class MainController {
             Platform.runLater(()->{showErrorUIThread(message);});
     }
 
+    /**
+     * Informs user that numbers of agents are different in initial and target configuration using custom {@link Alert} message box.
+     * @param differences Differences in numbers of agents.
+     */
     private void showDifferentAgentNumbersError(Map<Group, Integer> differences){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("Numbers of agents in groups are different.");
@@ -302,6 +312,11 @@ public class MainController {
         alert.showAndWait();
     }
 
+    /**
+     * Creates graphical table that visualise differencies in numbers of agents.
+     * @param differences Differences in numbers of agents.
+     * @return Table visualising differences.
+     */
     private GridPane createAgentNumberDifferencesGrid(Map<Group, Integer> differences){
         GridPane pane = new GridPane();
         pane.add(new Label("Group: "),0,0);
@@ -317,6 +332,12 @@ public class MainController {
         return pane;
     }
 
+    /**
+     * Opens new Simulation window.
+     * @param agents Agents that will be simulated in the window.
+     * @return New Simulation window.
+     * @throws IOException IO error while reading FXML describing the window.
+     */
     private Stage openSimulationWindow(List<AgentMapNode> agents) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("simulationView.fxml"));
         Stage stage = new Stage();

@@ -95,6 +95,7 @@ public class PathFinder {
      * @throws PicatNotFoundException Executable of Picat runtime not found.
      * @throws IOException IO error.
      * @throws InterruptedException Picat runtime interupted.
+     * @throws NoPlansFoundException No plans outputted by Picat solver.
      */
     private String runPicat(File problemInstanceFile, String picatExecPath) throws IOException, InterruptedException, NoPlansFoundException {
         String picatMain = "../picat/solve.pi"; // "C:\\Users\\jakub\\OneDrive\\02_mff\\05\\bp\\picat\\solve.pi";
@@ -231,7 +232,7 @@ public class PathFinder {
      * Parses plans from Picat output.
      * @param picatOutput Output of solver, in Picat language.
      * @param agentsLinOrdering Linear ordering of occupied positions in initial configuration (= starting positions of agets).
-     * @return
+     * @return List of agents containing parsed plans.
      */
     private List<AgentMapNode> parsePlans(String picatOutput, List<PositionMapNode> agentsLinOrdering){
         List<AgentMapNode> agents = new ArrayList<>();

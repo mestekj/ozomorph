@@ -30,7 +30,7 @@ public class Group implements Serializable {
     /**
      * Custom serialization (because javafx.scene.Color is not serializable). Group is exactly specified by the color.
      * @param stream Stream where to print the object.
-     * @throws IOException
+     * @throws IOException IO error while writing serialized input.
      */
     private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
         stream.writeDouble(color.getRed());
@@ -42,7 +42,7 @@ public class Group implements Serializable {
     /**
      * Custom deserialization (because javafx.scene.Color is not serializable). Group is exactly specified by the color.
      * @param stream Stream where to print the object.
-     * @throws IOException
+     * @throws IOException IO error while reading serialized input.
      */
     private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
         double r = stream.readDouble();
