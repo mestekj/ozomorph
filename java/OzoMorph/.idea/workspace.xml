@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bb276ec1-87ca-4026-88f9-178520ae43e8" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="OzoMorph" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="OzoMorph" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="OzoMorph" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="OzoMorph" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="OzoMorph" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="experimentsVisual" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="delegateBuildToMaven" value="true" />
+  </component>
+  <component name="ProjectId" id="1YWWzUcNp0Jfcd9P1EHr5BVCXBn" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/org/example" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.3448276" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
+    <property name="show.unlinked.gradle.project.popup" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jakub\OneDrive\02_mff\05\bp\java\OzobotsCPF\src\main\resources" />
+      <recent name="C:\Users\jakub\OneDrive\02_mff\05\bp\java\OzobotsCPF\src\main\resources\org\example" />
+      <recent name="C:\Users\jakub\OneDrive\02_mff\05\bp\java\OzobotsCPF\src\main\java\org\example" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ozobotscpf.app" />
+      <recent name="ozobotscpf.pathfinder" />
+      <recent name="ozobotscpf.ozocodegenerator" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle jlink" />
+      <command value="gradle jlinkZip" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.OzoMorph [run]">
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ozomorph.app.Launcher" />
+      <module name="OzoMorph.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ozomorph.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OzoMorph  [jlinkZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jlinkZip" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="OzoMorph  [jlink]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jlink" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="OzoMorph [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="OzobotsCPF [deploy:help]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="deploy:help" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Unnamed" type="Remote" nameIsGenerated="true">
+      <module name="OzoMorph" />
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <option name="AUTO_RESTART" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Launcher" />
+      <item itemvalue="Gradle.OzoMorph  [jlink]" />
+      <item itemvalue="Gradle.OzoMorph  [jlinkZip]" />
+      <item itemvalue="Gradle.OzoMorph [run]" />
+      <item itemvalue="Maven.OzobotsCPF [deploy:help]" />
+      <item itemvalue="Remote.Unnamed" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.OzoMorph [run]" />
+        <item itemvalue="Application.Launcher" />
+        <item itemvalue="Maven.OzobotsCPF [deploy:help]" />
+        <item itemvalue="Gradle.OzoMorph  [jlinkZip]" />
+        <item itemvalue="Gradle.OzoMorph  [jlink]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bb276ec1-87ca-4026-88f9-178520ae43e8" name="Default Changelist" comment="" />
+      <created>1583059092752</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583059092752</updated>
+      <workItem from="1583059094145" duration="9944000" />
+      <workItem from="1583085794575" duration="779000" />
+      <workItem from="1583086725596" duration="4714000" />
+      <workItem from="1583157666220" duration="3911000" />
+      <workItem from="1583171626451" duration="604000" />
+      <workItem from="1583181843322" duration="1975000" />
+      <workItem from="1583238644443" duration="1745000" />
+      <workItem from="1583242997922" duration="746000" />
+      <workItem from="1583346309188" duration="1995000" />
+      <workItem from="1583353701309" duration="1668000" />
+      <workItem from="1583356225830" duration="50000" />
+      <workItem from="1583518369955" duration="4499000" />
+      <workItem from="1583577582431" duration="12198000" />
+      <workItem from="1583660859218" duration="1389000" />
+      <workItem from="1583752649981" duration="2124000" />
+      <workItem from="1583756071933" duration="25000" />
+      <workItem from="1583776795314" duration="5583000" />
+      <workItem from="1584455981012" duration="3255000" />
+      <workItem from="1584549506935" duration="685000" />
+      <workItem from="1584551494154" duration="4000" />
+      <workItem from="1584552848221" duration="4502000" />
+      <workItem from="1584788466533" duration="47000" />
+      <workItem from="1584788540746" duration="2086000" />
+      <workItem from="1585580143831" duration="4919000" />
+      <workItem from="1585752747967" duration="6143000" />
+      <workItem from="1586078612621" duration="14000" />
+      <workItem from="1586189176468" duration="2451000" />
+      <workItem from="1586282338858" duration="2252000" />
+      <workItem from="1586621062330" duration="296000" />
+      <workItem from="1586621496995" duration="1643000" />
+      <workItem from="1586784427760" duration="9369000" />
+      <workItem from="1587044231945" duration="6707000" />
+      <workItem from="1587051119806" duration="3003000" />
+      <workItem from="1587133744730" duration="265000" />
+      <workItem from="1587297913814" duration="11771000" />
+      <workItem from="1587403775392" duration="8747000" />
+      <workItem from="1588347564786" duration="1042000" />
+      <workItem from="1588352505747" duration="2084000" />
+      <workItem from="1588419394632" duration="4343000" />
+      <workItem from="1588435210626" duration="9986000" />
+      <workItem from="1588499629511" duration="20425000" />
+      <workItem from="1588535042852" duration="5690000" />
+      <workItem from="1588598653643" duration="10688000" />
+      <workItem from="1588671846192" duration="385000" />
+      <workItem from="1588685114052" duration="3880000" />
+      <workItem from="1588700497879" duration="6997000" />
+      <workItem from="1588785165468" duration="12962000" />
+      <workItem from="1589464881049" duration="6584000" />
+      <workItem from="1589480918128" duration="208000" />
+      <workItem from="1589481139623" duration="2847000" />
+      <workItem from="1589541193378" duration="3591000" />
+      <workItem from="1590677186350" duration="1131000" />
+      <workItem from="1590772552996" duration="560000" />
+      <workItem from="1592656913137" duration="853000" />
+      <workItem from="1593106889426" duration="1563000" />
+      <workItem from="1593110129724" duration="299000" />
+      <workItem from="1593970231836" duration="1303000" />
+      <workItem from="1594040702621" duration="1360000" />
+      <workItem from="1594042745321" duration="2226000" />
+      <workItem from="1594052327728" duration="952000" />
+      <workItem from="1594061398126" duration="154000" />
+      <workItem from="1594570160615" duration="774000" />
+      <workItem from="1594823348353" duration="722000" />
+      <workItem from="1594837768758" duration="1900000" />
+      <workItem from="1594903631403" duration="38000" />
+      <workItem from="1594909445485" duration="703000" />
+      <workItem from="1594910266473" duration="15132000" />
+      <workItem from="1595068356881" duration="10352000" />
+      <workItem from="1595153408119" duration="7639000" />
+      <workItem from="1595178323113" duration="3660000" />
+      <workItem from="1595182173667" duration="1952000" />
+      <workItem from="1595236273297" duration="4205000" />
+      <workItem from="1595254684004" duration="3161000" />
+      <workItem from="1595446280130" duration="773000" />
+      <workItem from="1595531203433" duration="1253000" />
+      <workItem from="1595584888281" duration="6413000" />
+      <workItem from="1595669726450" duration="8573000" />
+      <workItem from="1595749499679" duration="2414000" />
+      <workItem from="1595767740162" duration="5130000" />
+      <workItem from="1595793064595" duration="619000" />
+      <workItem from="1595877105050" duration="881000" />
+      <workItem from="1595878007203" duration="6000" />
+      <workItem from="1595878092774" duration="467000" />
+      <workItem from="1595878581163" duration="154000" />
+      <workItem from="1595878947224" duration="457000" />
+      <workItem from="1595879839393" duration="1735000" />
+      <workItem from="1595881889084" duration="601000" />
+      <workItem from="1595928103619" duration="901000" />
+      <workItem from="1595931506899" duration="22521000" />
+      <workItem from="1595969537549" duration="151000" />
+      <workItem from="1596017065380" duration="561000" />
+      <workItem from="1596017692360" duration="1547000" />
+      <workItem from="1596019310086" duration="1074000" />
+      <workItem from="1596020448302" duration="182000" />
+      <workItem from="1596027277878" duration="3716000" />
+    </task>
+    <task id="LOCAL-00027" summary="running Ozobots on screen">
+      <created>1587403892932</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1587403892932</updated>
+    </task>
+    <task id="LOCAL-00028" summary="When Simulation window shows up, grid is scaled so that is visible whole.">
+      <created>1587407853495</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1587407853495</updated>
+    </task>
+    <task id="LOCAL-00029" summary="code reformat">
+      <created>1587409515022</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1587409515022</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Ozocode update - top light is set to color of agent's group">
+      <created>1587413137574</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1587413137574</updated>
+    </task>
+    <task id="LOCAL-00031" summary="OzocodeGenerator - wrong computation and encoding of procedure call argument">
+      <created>1588354599489</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1588354599489</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Showing error when no agents in initials,&#10;some typo corected">
+      <created>1588421931366</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1588421931367</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Actions duration set to 1s.">
+      <created>1588422590358</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1588422590358</updated>
+    </task>
+    <task id="LOCAL-00034" summary="IntelliJ Idea update">
+      <created>1588435709383</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1588435709383</updated>
+    </task>
+    <task id="LOCAL-00035" summary="IntelliJ Idea update">
+      <created>1588435865161</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1588435865161</updated>
+    </task>
+    <task id="LOCAL-00036" summary="relative paths update (according to previous change of file-tree structure)">
+      <created>1588453205472</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1588453205472</updated>
+    </task>
+    <task id="LOCAL-00037" summary="gitignore update (according to previous change of file-tree structure)">
+      <created>1588503088603</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1588503088603</updated>
+    </task>
+    <task id="LOCAL-00038" summary="gitignore update (according to previous change of file-tree structure)">
+      <created>1588503153612</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1588503153612</updated>
+    </task>
+    <task id="LOCAL-00039" summary="logging to file">
+      <created>1588503174717</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1588503174717</updated>
+    </task>
+    <task id="LOCAL-00040" summary="OnBoard mode">
+      <created>1588601525855</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1588601525855</updated>
+    </task>
+    <task id="LOCAL-00041" summary="OzocodeGenerator sets also agent id and total number of agents.">
+      <created>1588602649233</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1588602649233</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Map printing.">
+      <created>1588616413619</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1588616413619</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Thesis TeX files added.">
+      <created>1588616472604</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1588616472604</updated>
+    </task>
+    <task id="LOCAL-00044" summary="OnBoard template added.">
+      <created>1588616493768</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1588616493768</updated>
+    </task>
+    <task id="LOCAL-00045" summary="bugfixes">
+      <created>1588701350032</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1588701350032</updated>
+    </task>
+    <task id="LOCAL-00046" summary="paths updates">
+      <created>1588789857616</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1588789857617</updated>
+    </task>
+    <task id="LOCAL-00047" summary="logback configuration file">
+      <created>1589541416008</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1589541416008</updated>
+    </task>
+    <task id="LOCAL-00048" summary="picat model bugfix">
+      <created>1589541447959</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1589541447959</updated>
+    </task>
+    <task id="LOCAL-00049" summary="user can set duration of actions">
+      <created>1589541510825</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1589541510825</updated>
+    </task>
+    <task id="LOCAL-00050" summary="added jlink platforms">
+      <created>1589541562983</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1589541562984</updated>
+    </task>
+    <task id="LOCAL-00051" summary="logging picat command which is executed">
+      <created>1589545511371</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1589545511372</updated>
+    </task>
+    <task id="LOCAL-00052" summary="added PicatNotFoundException, asking for picat path">
+      <created>1595013782197</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1595013782199</updated>
+    </task>
+    <task id="LOCAL-00053" summary="several new parts">
+      <created>1595013829089</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1595013829090</updated>
+    </task>
+    <task id="LOCAL-00054" summary="map saving and loading&#10;diferencies table">
+      <created>1595088194481</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1595088194481</updated>
+    </task>
+    <task id="LOCAL-00055" summary="map reload confirmation dialog">
+      <created>1595104610627</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1595104610627</updated>
+    </task>
+    <task id="LOCAL-00056" summary="ChoiceBox for choosing simulation mode instead of buttons">
+      <created>1595160706644</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1595160706644</updated>
+    </task>
+    <task id="LOCAL-00057" summary="user can abort PathFinder">
+      <created>1595167879823</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1595167879824</updated>
+    </task>
+    <task id="LOCAL-00058" summary="working on MacOS">
+      <created>1595257257700</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1595257257701</updated>
+    </task>
+    <task id="LOCAL-00059" summary="documentation">
+      <created>1595749602331</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1595749602331</updated>
+    </task>
+    <task id="LOCAL-00060" summary="visual rename of application, grid table fix (switched sides)">
+      <created>1595754031539</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1595754031539</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Diferencies table fix, map loading fix">
+      <created>1595768607240</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1595768607240</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Version for screenshoting - white background, no gray positions">
+      <created>1595772524066</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1595772524066</updated>
+    </task>
+    <task id="LOCAL-00063" summary="model ve verzi prilohy">
+      <created>1595877149561</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1595877149562</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Unsuported template (missing required procedure) handled.">
+      <created>1595881327520</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1595881327521</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Unsuported template (missing required procedure) handled.">
+      <created>1595881609084</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1595881609084</updated>
+    </task>
+    <task id="LOCAL-00066" summary="uprava nazvu skriptu">
+      <created>1595928144442</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1595928144442</updated>
+    </task>
+    <task id="LOCAL-00067" summary="Javadoc comments">
+      <created>1595968008221</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1595968008222</updated>
+    </task>
+    <task id="LOCAL-00068" summary="Javadoc comments">
+      <created>1595968335191</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1595968335191</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Javadoc comments">
+      <created>1595968594449</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1595968594449</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Generated JavaDoc">
+      <created>1595969446763</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1595969446763</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Generated JavaDoc">
+      <created>1595969488935</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1595969488935</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Generated JavaDoc">
+      <created>1596028356661</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1596028356661</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Release version of templates.">
+      <created>1596028401320</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1596028401320</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Finalní verze prace">
+      <created>1596037036198</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1596037036198</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Update Javadoc">
+      <created>1596037074874</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1596037074874</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="logback configuration file" />
+    <MESSAGE value="picat model bugfix" />
+    <MESSAGE value="user can set duration of actions" />
+    <MESSAGE value="added jlink platforms" />
+    <MESSAGE value="logging picat command which is executed" />
+    <MESSAGE value="added PicatNotFoundException, asking for picat path" />
+    <MESSAGE value="several new parts" />
+    <MESSAGE value="map saving and loading&#10;diferencies table" />
+    <MESSAGE value="map reload confirmation dialog" />
+    <MESSAGE value="ChoiceBox for choosing simulation mode instead of buttons" />
+    <MESSAGE value="user can abort PathFinder" />
+    <MESSAGE value="working on MacOS" />
+    <MESSAGE value="documentation" />
+    <MESSAGE value="visual rename of application, grid table fix (switched sides)" />
+    <MESSAGE value="Diferencies table fix, map loading fix" />
+    <MESSAGE value="Version for screenshoting - white background, no gray positions" />
+    <MESSAGE value="model ve verzi prilohy" />
+    <MESSAGE value="Unsuported template (missing required procedure) handled." />
+    <MESSAGE value="uprava nazvu skriptu" />
+    <MESSAGE value="Javadoc comments" />
+    <MESSAGE value="Generated JavaDoc" />
+    <MESSAGE value="linefeed" />
+    <MESSAGE value="Release version of templates." />
+    <MESSAGE value="Finalní verze prace" />
+    <MESSAGE value="Update Javadoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Javadoc" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="484" y="28" key="#OzobotsCPF_[jlink]" timestamp="1595256239612">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="484" y="28" key="#OzobotsCPF_[jlink]/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595256239612" />
+    <state x="484" y="28" key="#OzobotsCPF_[run]" timestamp="1595878654889">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="484" y="28" key="#OzobotsCPF_[run]/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595878654889" />
+    <state x="249" y="0" width="1272" height="824" key="#Project_Structure" timestamp="1596017277127">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="#Project_Structure/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595877957540" />
+    <state x="249" y="0" width="1272" height="824" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1596017277127" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1596017944235">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595878711726" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1596017944235" />
+    <state x="574" y="131" width="414" height="568" key="#com.intellij.ide.util.MemberChooser" timestamp="1595880775510">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="131" width="414" height="568" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595880775510" />
+    <state x="449" y="148" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1593109765080">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="148" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1593109765080" />
+    <state x="466" y="88" key="#com.intellij.refactoring.encapsulateFields.EncalpsulateFieldsDialog" timestamp="1587405685588">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="466" y="88" key="#com.intellij.refactoring.encapsulateFields.EncalpsulateFieldsDialog/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1587405685588" />
+    <state x="515" y="131" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1596030445408">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="515" y="131" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596030445408" />
+    <state x="306" y="0" key="CommitChangelistDialog2" timestamp="1596037072184">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="306" y="0" key="CommitChangelistDialog2/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037072184" />
+    <state x="589" y="-900" key="CommitChangelistDialog2/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1595772523472" />
+    <state x="93" y="93" width="1350" height="639" key="DiffContextDialog" timestamp="1595013765918">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="639" key="DiffContextDialog/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595013765918" />
+    <state x="548" y="166" key="FileChooserDialogImpl" timestamp="1595968701120">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="548" y="166" key="FileChooserDialogImpl/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595968701120" />
+    <state width="1493" height="198" key="GridCell.Tab.0.bottom" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.0.bottom/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state width="1397" height="164" key="GridCell.Tab.0.bottom/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1595788036348" />
+    <state width="1493" height="154" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
+    <state width="1493" height="198" key="GridCell.Tab.0.center" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.0.center/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state width="1397" height="164" key="GridCell.Tab.0.center/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1595788036348" />
+    <state width="1493" height="154" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
+    <state width="1493" height="198" key="GridCell.Tab.0.left" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.0.left/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state width="1397" height="164" key="GridCell.Tab.0.left/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1595788036348" />
+    <state width="1493" height="154" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
+    <state width="1493" height="198" key="GridCell.Tab.0.right" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.0.right/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state width="1397" height="164" key="GridCell.Tab.0.right/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1595788036348" />
+    <state width="1493" height="154" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
+    <state width="1493" height="198" key="GridCell.Tab.1.bottom" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.1.bottom/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state width="1493" height="198" key="GridCell.Tab.1.center" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.1.center/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state width="1493" height="198" key="GridCell.Tab.1.left" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.1.left/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state width="1493" height="198" key="GridCell.Tab.1.right" timestamp="1596037085142">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="198" key="GridCell.Tab.1.right/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
+    <state x="505" y="126" key="RollbackChangesDialog" timestamp="1596020080266">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="505" y="126" key="RollbackChangesDialog/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1589541360557" />
+    <state x="505" y="126" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1596020080266" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1595877686810">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595877686810" />
+    <state x="93" y="93" width="1350" height="638" key="ShowDiffWithBranchDialog" timestamp="1588708646352">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="ShowDiffWithBranchDialog/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1588708646352" />
+    <state x="477" y="239" key="com.intellij.ide.util.TipDialog" timestamp="1588419466737">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="477" y="239" key="com.intellij.ide.util.TipDialog/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1588419466737" />
+    <state x="477" y="0" width="581" height="824" key="find.popup" timestamp="1596036960853">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="477" y="0" width="581" height="824" key="find.popup/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596036960853" />
+    <state x="425" y="187" width="672" height="677" key="run.anything.popup" timestamp="1588694372182">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" width="672" height="677" key="run.anything.popup/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1588694372182" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/ozomorph/app/SetGroup.java</url>
+          <line>9</line>
+          <properties class="ozomorph.app.SetGroup" method="setGroup">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/OzobotsCPF$OzobotsCPF__run_.ic" NAME="OzobotsCPF [run] Coverage Results" MODIFIED="1587047115563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
