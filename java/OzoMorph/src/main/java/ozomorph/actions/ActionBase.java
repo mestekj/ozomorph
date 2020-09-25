@@ -1,9 +1,12 @@
 package ozomorph.actions;
 
+import java.io.Serializable;
+
 /**
  * Implementation of {@link Action} using own duration for each instance.
  */
-public abstract class ActionBase implements Action {
+public abstract class ActionBase implements Action, Serializable {
+    private static final long serialVersionUID = 30000001L;
     private double duration;
 
     /**

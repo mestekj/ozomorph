@@ -6,6 +6,7 @@ import ozomorph.nodes.AgentMapNode;
  * Action of agent that turns it on place.
  */
 public abstract class TurnActionBase extends ActionBase{
+    private static final long serialVersionUID = 32000001L;
 
     public TurnActionBase(double duration) {
         super(duration);

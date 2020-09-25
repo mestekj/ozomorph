@@ -2,12 +2,15 @@ package ozomorph.nodes;
 
 import ozomorph.actions.Action;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Representation of agent with already found plan.
  */
-public class AgentMapNode implements MapNode {
+public class AgentMapNode implements MapNode, Serializable {
+    private static final long serialVersionUID = 40000001L;
+
     private int id;
     private List<Action> plan;
     private Group group;

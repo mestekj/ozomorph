@@ -6,6 +6,8 @@ import java.io.Serializable;
  * Position on map where an agent can be placed.
  */
 public class PositionMapNode implements MapNode, Serializable {
+    private static final long serialVersionUID = 30000001L;
+
     /**
      * X coordinate of position on grid map, in 0 to (width of map - 1).
      * @return X coordinate of position.

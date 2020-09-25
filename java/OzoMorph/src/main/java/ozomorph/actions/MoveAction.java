@@ -6,6 +6,7 @@ import ozomorph.nodes.AgentMapNode;
  * Action of agent that moves it to next map node in its direction.
  */
 public class MoveAction extends ActionBase {
+    private static final long serialVersionUID = 31000001L;
 
     final double[] dX = {0,1,0,-1};
     final double[] dY = {-1,0,1,0,};

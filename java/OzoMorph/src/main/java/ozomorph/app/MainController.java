@@ -235,6 +235,31 @@ public class MainController {
     }
 
     /**
+     * Loads saved plans and opens Simulation window.
+     */
+    public void simulateSavedPlans(){
+        FileChooser fileChooser = FileChooserFactory.createPlansFileChooser();
+        File file = fileChooser.showOpenDialog(pInitials.getScene().getWindow());
+
+        if(file != null){
+            SimulationData data = null;
+            try (FileInputStream stream = new FileInputStream(file)) {
+                logger.info("Opening simulation window using plans from: " + file.getCanonicalPath());
+                try (ObjectInputStream in = new ObjectInputStream(stream)) {
+                    data = (SimulationData) in.readObject();
+
+                    //TODO check if plans match currently shown configuration.
+                    openSimulationWindow(data);
+                }
+            }
+            catch (Exception e){
+                logger.error("Error while loading plans.", e);
+                showError("Error while loading plans.");
+            }
+        }
+    }
+
+    /**
      * Asks user to input path to Picat runtime executable.
      * Must be called from UIThread.
      * @return Path to Picat runtime executable
@@ -339,6 +364,16 @@ public class MainController {
      * @throws IOException IO error while reading FXML describing the window.
      */
     private Stage openSimulationWindow(List<AgentMapNode> agents) throws IOException {
+        return openSimulationWindow(new SimulationData(agents,width, height));
+    }
+
+    /**
+     * Opens new Simulation window.
+     * @param data Data for simulation.
+     * @return New Simulation window.
+     * @throws IOException IO error while reading FXML describing the window.
+     */
+    private Stage openSimulationWindow(SimulationData data) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("simulationView.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene((Pane) loader.load()));
@@ -346,7 +381,7 @@ public class MainController {
         SimulationController controller = loader.getController();
 
         stage.show();
-        controller.init(width, height,agents, MapSettings.getSettings());
+        controller.init(data, MapSettings.getSettings());
 
         return stage;
     }
@@ -371,7 +406,7 @@ public class MainController {
             return;
         //map not loaded or reload confirmed
         //Show open file dialog
-        FileChooser fileChooser = createMapFileChooser();
+        FileChooser fileChooser = FileChooserFactory.createMapFileChooser();
         File file = fileChooser.showOpenDialog(pInitials.getScene().getWindow());
 
         if(file != null){
@@ -427,7 +462,7 @@ public class MainController {
      */
     private boolean saveMap(){
         ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
-        FileChooser fileChooser = createMapFileChooser();
+        FileChooser fileChooser = FileChooserFactory.createMapFileChooser();
 
         //Show save file dialog
         File file = fileChooser.showSaveDialog(pInitials.getScene().getWindow());
@@ -448,16 +483,7 @@ public class MainController {
         return false;
     }
 
-    /**
-     * Creates FileChooser instantiated for OzoMorph map file type.
-     * @return
-     */
-    private FileChooser createMapFileChooser(){
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("OzoMorph map (*.ommap)", "*.ommap");
-        fileChooser.getExtensionFilters().add(extFilter);
-        return fileChooser;
-    }
+
 
     /**
      * Asks user to confirm to load/crate map (current will be lost).
@@ -479,4 +505,6 @@ public class MainController {
         }
         return false;
     }
+
+
 }

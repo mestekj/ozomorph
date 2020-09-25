@@ -20,9 +20,12 @@ import org.slf4j.LoggerFactory;
 import ozomorph.nodes.AgentMapNode;
 import ozomorph.ozocodegenerator.MissingDeclarationException;
 import ozomorph.ozocodegenerator.OzocodeGenerator;
+import ozomorph.pathfinder.ProblemInstance;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 /**
@@ -39,6 +42,7 @@ public class SimulationController {
 
 
     SimulationMapController simulationMapController;
+    private SimulationData simulationData;
     private List<AgentMapNode> agents;
     private MapSettings settings;
     private int width;
@@ -55,15 +59,14 @@ public class SimulationController {
 
     /**
      * Initialization, to allow parameter-less constructor needed for FXML.
-     * @param width Width of map (number of nodes).
-     * @param height Width of map (number of nodes).
-     * @param agents List of agents to simulate.
+     * @param data Data for simulation.
      * @param settings Properties of real map.
      */
-    public void init(int width, int height, List<AgentMapNode> agents, MapSettings settings) {
-        this.agents = agents;
-        this.width = width;
-        this.height = height;
+    public void init(SimulationData data, MapSettings settings) {
+        this.agents = data.agents;
+        this.width = data.width;
+        this.height = data.height;
+        this.simulationData = data;
         this.settings = settings;
         this.setScale(getScaleToFit());
         initMap();
@@ -327,5 +330,31 @@ public class SimulationController {
      */
     List<AgentMapNode> getAgents() {
         return agents;
+    }
+
+
+    protected void savePlans(){
+        FileChooser fileChooser = FileChooserFactory.createPlansFileChooser();
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(pMap.getScene().getWindow());
+        if(file != null){
+            //save problemInstance
+            try (FileOutputStream stream = new FileOutputStream(file)) {
+                try (ObjectOutputStream out = new ObjectOutputStream(stream)) {
+                    out.writeObject(simulationData);
+                    logger.info("Plans saved to " + file.getCanonicalPath());
+                }
+            }
+            catch (IOException e){
+                logger.error("Error while saving plans.", e);
+                showError("Error while saving the plans.");
+            }
+        }
+    }
+
+
+    public void handleSavePlans(ActionEvent actionEvent) {
+        savePlans();
     }
 }

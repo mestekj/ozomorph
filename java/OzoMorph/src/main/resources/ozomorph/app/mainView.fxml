@@ -50,6 +50,7 @@
 
             </GridPane>
             <Button fx:id="btMorph" GridPane.halignment="CENTER" text="--->&#10;Morph" textAlignment="CENTER" onAction="#startSimulation" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <Button text="Simulate&#10;saved plans" onAction="#simulateSavedPlans" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
             <Separator GridPane.rowIndex="0" GridPane.columnIndex="3" GridPane.rowSpan="3" orientation="VERTICAL"/>
             <Label text="Target positions:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
             <Pane fx:id="pTargets" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="2" prefWidth="400"/>
