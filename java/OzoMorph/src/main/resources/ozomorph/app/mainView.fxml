@@ -49,8 +49,10 @@
             <GridPane fx:id="pDifferencies" GridPane.columnIndex="2" GridPane.rowIndex="1">
 
             </GridPane>
-            <Button fx:id="btMorph" GridPane.halignment="CENTER" text="--->&#10;Morph" textAlignment="CENTER" onAction="#startSimulation" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-            <Button text="Simulate&#10;saved plans" onAction="#simulateSavedPlans" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+            <VBox GridPane.columnIndex="2" spacing="5" GridPane.rowIndex="2" fillWidth="TRUE" GridPane.hgrow="NEVER">
+                <Button fx:id="btMorph" text="--->&#10;Morph" maxWidth="Infinity" textAlignment="CENTER" onAction="#startSimulation" />
+                <Button text="Simulate&#10;saved plans" style="-fx-font-size: 0.9em" maxWidth="Infinity" textAlignment="CENTER" onAction="#simulateSavedPlans"/>
+            </VBox>
             <Separator GridPane.rowIndex="0" GridPane.columnIndex="3" GridPane.rowSpan="3" orientation="VERTICAL"/>
             <Label text="Target positions:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
             <Pane fx:id="pTargets" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="2" prefWidth="400"/>
