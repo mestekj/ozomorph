@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb276ec1-87ca-4026-88f9-178520ae43e8" name="Default Changelist" comment="" />
+    <list default="true" id="bb276ec1-87ca-4026-88f9-178520ae43e8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ozomorph/app/PrintController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ozomorph/app/PrintController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +55,7 @@
         <entry key="$PROJECT_DIR$/../.." value="experimentsVisual" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -64,7 +68,7 @@
     <option name="delegateBuildToMaven" value="true" />
   </component>
   <component name="ProjectId" id="1YWWzUcNp0Jfcd9P1EHr5BVCXBn" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -349,6 +353,7 @@
       <workItem from="1600940739415" duration="794000" />
       <workItem from="1601040945056" duration="11740000" />
       <workItem from="1601145941188" duration="1106000" />
+      <workItem from="1603645963846" duration="1644000" />
     </task>
     <task id="LOCAL-00030" summary="Ozocode update - top light is set to color of agent's group">
       <created>1587413137574</created>
@@ -797,48 +802,56 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="166" key="FileChooserDialogImpl/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595968701120" />
-    <state width="1397" height="209" key="GridCell.Tab.0.bottom" timestamp="1601147051229">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="145" key="GridCell.Tab.0.bottom" timestamp="1603647470952">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="145" key="GridCell.Tab.0.bottom/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647470952" />
     <state width="1493" height="154" key="GridCell.Tab.0.bottom/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1601044460107" />
     <state width="1397" height="209" key="GridCell.Tab.0.bottom/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051229" />
     <state width="1493" height="154" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
-    <state width="1397" height="209" key="GridCell.Tab.0.center" timestamp="1601147051228">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="145" key="GridCell.Tab.0.center" timestamp="1603647470952">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="145" key="GridCell.Tab.0.center/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647470952" />
     <state width="1493" height="154" key="GridCell.Tab.0.center/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1601044460107" />
     <state width="1397" height="209" key="GridCell.Tab.0.center/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051228" />
     <state width="1493" height="154" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
-    <state width="1397" height="209" key="GridCell.Tab.0.left" timestamp="1601147051228">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="145" key="GridCell.Tab.0.left" timestamp="1603647470952">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="145" key="GridCell.Tab.0.left/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647470952" />
     <state width="1493" height="154" key="GridCell.Tab.0.left/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1601044460107" />
     <state width="1397" height="209" key="GridCell.Tab.0.left/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051228" />
     <state width="1493" height="154" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
-    <state width="1397" height="209" key="GridCell.Tab.0.right" timestamp="1601147051228">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="145" key="GridCell.Tab.0.right" timestamp="1603647470952">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="145" key="GridCell.Tab.0.right/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647470952" />
     <state width="1493" height="154" key="GridCell.Tab.0.right/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1601044460107" />
     <state width="1397" height="209" key="GridCell.Tab.0.right/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051228" />
     <state width="1493" height="154" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596020631225" />
-    <state width="1397" height="209" key="GridCell.Tab.1.bottom" timestamp="1601147051229">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="197" key="GridCell.Tab.1.bottom" timestamp="1603647413601">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="197" key="GridCell.Tab.1.bottom/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647413601" />
     <state width="1493" height="198" key="GridCell.Tab.1.bottom/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
     <state width="1397" height="209" key="GridCell.Tab.1.bottom/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051229" />
-    <state width="1397" height="209" key="GridCell.Tab.1.center" timestamp="1601147051229">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="197" key="GridCell.Tab.1.center" timestamp="1603647413601">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="197" key="GridCell.Tab.1.center/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647413601" />
     <state width="1493" height="198" key="GridCell.Tab.1.center/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
     <state width="1397" height="209" key="GridCell.Tab.1.center/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051229" />
-    <state width="1397" height="209" key="GridCell.Tab.1.left" timestamp="1601147051229">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="197" key="GridCell.Tab.1.left" timestamp="1603647413601">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="197" key="GridCell.Tab.1.left/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647413601" />
     <state width="1493" height="198" key="GridCell.Tab.1.left/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
     <state width="1397" height="209" key="GridCell.Tab.1.left/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051229" />
-    <state width="1397" height="209" key="GridCell.Tab.1.right" timestamp="1601147051229">
-      <screen x="302" y="-900" width="1440" height="860" />
+    <state width="1493" height="197" key="GridCell.Tab.1.right" timestamp="1603647413601">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="197" key="GridCell.Tab.1.right/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647413601" />
     <state width="1493" height="198" key="GridCell.Tab.1.right/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1596037085142" />
     <state width="1397" height="209" key="GridCell.Tab.1.right/0.0.1536.824/302.-900.1440.860@302.-900.1440.860" timestamp="1601147051229" />
     <state x="602" y="-736" key="IDE.errors.dialog" timestamp="1601056647847">
@@ -855,6 +868,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="249" y="0" key="SettingsEditor/0.0.1536.824/302.-900.1440.860@0.0.1536.824" timestamp="1595877686810" />
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603647612107">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1603647612107" />
     <state x="560" y="-735" width="923" height="630" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1601057886363">
       <screen x="302" y="-900" width="1440" height="860" />
     </state>
@@ -879,8 +896,20 @@
           <properties class="java.io.NotSerializableException" package="java.io" />
           <option name="timeStamp" value="2" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ozomorph/app/PrintController.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Remote">
+        <watch expression="pageLayout.getPrintableHeight()" />
+        <watch expression="pane.getPrefHeight()" />
+        <watch expression="pageLayout.getPrintableWidth()" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/OzobotsCPF$OzobotsCPF__run_.ic" NAME="OzobotsCPF [run] Coverage Results" MODIFIED="1587047115563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

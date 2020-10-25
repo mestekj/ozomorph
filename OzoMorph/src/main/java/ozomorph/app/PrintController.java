@@ -1,6 +1,8 @@
 package ozomorph.app;
 
+import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 
@@ -29,11 +31,11 @@ public class PrintController {
 
     /**
      * Draw map on pane.
-     * @return Pane with drown map.
+     * @return Pane with drawn map.
      */
     protected Pane getMapToPrint() {
         Pane pane = new Pane();
-        pane.setPrefSize(getGridTickPx() * (width + 1), getGridTickPx() * (height + 1));
+        pane.setPrefSize(getGridTickPx() * (width), getGridTickPx() * (height));
         SimulationMapController smc = new SimulationMapController(width, height, pane, Collections.emptyList(), getGridTickPx(), 0, getGridLineWidthPx());
         return pane;
     }
@@ -60,8 +62,21 @@ public class PrintController {
         PrinterJob job = PrinterJob.createPrinterJob();
 
         if (job != null && job.showPrintDialog(window) && job.showPageSetupDialog(window)) {
+            PageLayout pageLayout = job.getJobSettings().getPageLayout();
 
-            boolean success = job.printPage(pane);
+            int columnsCount = (int) Math.ceil(pane.getPrefWidth() / pageLayout.getPrintableWidth());
+            int rowsCount = (int) Math.ceil(pane.getPrefHeight() / pageLayout.getPrintableHeight());
+
+            boolean success = true;
+            for (int row = 0; row < rowsCount; row++) {
+                for (int column = 0; column < columnsCount; column++) {
+                    pane.setTranslateX(-pageLayout.getPrintableWidth()*column);
+                    pane.setTranslateY(-pageLayout.getPrintableHeight()*row);
+
+                    success = success & job.printPage(pane);
+                }
+            }
+
             if (success)
                 job.endJob();
         }
