@@ -45,6 +45,22 @@ public enum Mode {
         }
     },
     /**
+     * Ozobots rides on display following path. Map has to in 1:1 scale.
+     */
+    FOLLOWME ("FollowMe"){
+        @Override
+        public Timeline getActivationSequence(Pane pane, SimulationController sc) {
+            // red for 300 ms
+            Rectangle cover = new Rectangle(pane.getWidth(), pane.getHeight(), Color.RED);
+            Timeline activationSequence = new Timeline(
+                    new KeyFrame(Duration.millis(0), ae -> pane.getChildren().add(cover)),
+                    new KeyFrame(Duration.millis(300), ae -> pane.getChildren().remove(cover))
+            );
+            activationSequence.setCycleCount(1);
+            return activationSequence;
+        }
+    },
+    /**
      * Ozobots rides on printed map.
      */
     ONBOARD ("OnBoard"){

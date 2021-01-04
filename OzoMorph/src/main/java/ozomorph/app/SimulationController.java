@@ -76,7 +76,10 @@ public class SimulationController {
      * Redraw map using current simulation speed and scale.
      */
     private void initMap() {
-        simulationMapController = new SimulationMapController(width, height, pMap, agents, getGridTickPx(), getAgentRadiusPx(), getGridLineWidthPx(), mode == Mode.ONSCREEN);
+        if(mode == Mode.FOLLOWME)
+            simulationMapController = new FollowMeMapController(width, height, pMap, agents, getGridTickPx(), getAgentRadiusPx(), getGridLineWidthPx());
+        else
+            simulationMapController = new SimulationMapController(width, height, pMap, agents, getGridTickPx(), getAgentRadiusPx(), getGridLineWidthPx(), mode == Mode.ONSCREEN);
         logger.info("Simulation map controller inited.");
     }
 
@@ -269,6 +272,9 @@ public class SimulationController {
                 setScale(getScaleToFit());
                 break;
             case ONSCREEN:
+                setScale(1);
+                break;
+            case FOLLOWME:
                 setScale(1);
                 break;
             default:break;

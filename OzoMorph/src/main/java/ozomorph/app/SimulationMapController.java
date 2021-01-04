@@ -62,7 +62,7 @@ public class SimulationMapController extends MapControllerBase {
      * @param agents Agents to draw on map.
      * @param onScreenMode If is in OnScreen mode.
      */
-    private void generateAgentsGuiNodes(List<AgentMapNode> agents, boolean onScreenMode){
+    protected void generateAgentsGuiNodes(List<AgentMapNode> agents, boolean onScreenMode){
         agentsGuiNodes = new HashMap<>();
         for (var agent : agents) {
             Arc arc = new Arc(0,0,agentRadius, agentRadius, 105, 330); //arc should point towards negative Y
