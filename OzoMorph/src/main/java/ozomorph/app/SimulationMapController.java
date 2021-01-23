@@ -35,8 +35,8 @@ public class SimulationMapController extends MapControllerBase {
      * @param gridLineWidth Width of grid lines in pixels.
      * @param onScreenMode If is window in OnScreen mode.
      */
-    public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth, boolean onScreenMode) {
-        super(width, height, pane, gridTick, gridLineWidth);
+    public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth, boolean onScreenMode, Color gridLineColor) {
+        super(width, height, pane, gridTick, gridLineWidth, gridLineColor);
         this.agentRadius = agentRadius;
 
         generateAgentsGuiNodes(agents, onScreenMode);
@@ -55,6 +55,21 @@ public class SimulationMapController extends MapControllerBase {
      */
     public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth) {
         this(width,height,pane,agents,gridTick,agentRadius,gridLineWidth,false);
+    }
+
+    /**
+     * Creates new SimulationMapController to simulate given agents on map of given size in other than OnScreen mode.
+     * @param width Width of map (number of nodes).
+     * @param height Height of map (number of nodes).
+     * @param pane Pane to draw map to.
+     * @param agents List of agents to be simulated.
+     * @param gridTick Spacing between grid lines in pixels.
+     * @param agentRadius Radius of agents in pixels.
+     * @param gridLineWidth Width of grid lines in pixels.
+     * @param onScreenMode If is window in OnScreen mode.
+     */
+    public SimulationMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth, boolean onScreenMode) {
+        this(width,height,pane,agents,gridTick,agentRadius,gridLineWidth, onScreenMode, Color.BLACK);
     }
 
     /**

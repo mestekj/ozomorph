@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb276ec1-87ca-4026-88f9-178520ae43e8" name="Default Changelist" comment="large maps are printed over multiple pages">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ozomorph/app/FollowMeMapController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ozomorph/app/Mode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ozomorph/app/Mode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ozomorph/app/SimulationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ozomorph/app/SimulationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ozomorph/app/FollowMeMapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ozomorph/app/FollowMeMapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ozomorph/app/MapControllerBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ozomorph/app/MapControllerBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ozomorph/app/SimulationMapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ozomorph/app/SimulationMapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../picat/model_split.pi" beforeDir="false" afterPath="$PROJECT_DIR$/../picat/model_split.pi" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,6 +361,8 @@
       <workItem from="1609696403123" duration="2360000" />
       <workItem from="1609788417076" duration="7757000" />
       <workItem from="1609798642870" duration="44000" />
+      <workItem from="1611435136419" duration="1397000" />
+      <workItem from="1611438553441" duration="4280000" />
     </task>
     <task id="LOCAL-00031" summary="OzocodeGenerator - wrong computation and encoding of procedure call argument">
       <created>1588354599489</created>
@@ -784,22 +784,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="153" key="FileChooserDialogImpl/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1609797035141" />
-    <state width="1493" height="197" key="GridCell.Tab.0.bottom" timestamp="1609798610555">
+    <state width="1493" height="145" key="GridCell.Tab.0.bottom" timestamp="1611443917371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="197" key="GridCell.Tab.0.bottom/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1609798610555" />
-    <state width="1493" height="197" key="GridCell.Tab.0.center" timestamp="1609798610555">
+    <state width="1493" height="145" key="GridCell.Tab.0.bottom/0.0.1536.824/5.-1080.1920.1040/-1435.-938.1440.860@0.0.1536.824" timestamp="1611443917371" />
+    <state width="1493" height="145" key="GridCell.Tab.0.center" timestamp="1611443917371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="197" key="GridCell.Tab.0.center/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1609798610555" />
-    <state width="1493" height="197" key="GridCell.Tab.0.left" timestamp="1609798610555">
+    <state width="1493" height="145" key="GridCell.Tab.0.center/0.0.1536.824/5.-1080.1920.1040/-1435.-938.1440.860@0.0.1536.824" timestamp="1611443917371" />
+    <state width="1493" height="145" key="GridCell.Tab.0.left" timestamp="1611443917371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="197" key="GridCell.Tab.0.left/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1609798610555" />
-    <state width="1493" height="197" key="GridCell.Tab.0.right" timestamp="1609798610555">
+    <state width="1493" height="145" key="GridCell.Tab.0.left/0.0.1536.824/5.-1080.1920.1040/-1435.-938.1440.860@0.0.1536.824" timestamp="1611443917371" />
+    <state width="1493" height="145" key="GridCell.Tab.0.right" timestamp="1611443917371">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="197" key="GridCell.Tab.0.right/0.0.1536.824/-1435.-938.1440.860/5.-1080.1920.1040@0.0.1536.824" timestamp="1609798610555" />
+    <state width="1493" height="145" key="GridCell.Tab.0.right/0.0.1536.824/5.-1080.1920.1040/-1435.-938.1440.860@0.0.1536.824" timestamp="1611443917371" />
     <state width="1493" height="197" key="GridCell.Tab.1.bottom" timestamp="1609798610555">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

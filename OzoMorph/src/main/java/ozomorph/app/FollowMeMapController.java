@@ -16,8 +16,7 @@ public class FollowMeMapController extends SimulationMapController {
     private int pathLength = 60*2;
 
     public FollowMeMapController(int width, int height, Pane pane, List<AgentMapNode> agents, double gridTick, double agentRadius, double gridLineWidth) {
-        super(width, height, pane, agents, gridTick, agentRadius, gridLineWidth,true);
-
+        super(width, height, pane, agents, gridTick, agentRadius, gridLineWidth,true, Color.LIGHTGRAY);
     }
 
     protected void generateAgentsGuiNodes(List<AgentMapNode> agents, boolean onScreenMode){
@@ -30,7 +29,8 @@ public class FollowMeMapController extends SimulationMapController {
         for (var agent : agents){
             var path = new Path();
             paths.put(agent,path);
-            path.setFill(Color.BLUE);
+            path.setStroke(Color.BLUE);
+            path.setStrokeWidth(this.gridLineWidth*1.1);
             pane.getChildren().add(path);
 
             MoveTo moveTo = new MoveTo();
@@ -49,8 +49,8 @@ public class FollowMeMapController extends SimulationMapController {
             var agent = entry.getKey();
 
             LineTo lineTo = new LineTo();
-            lineTo.setX(agent.getX());
-            lineTo.setY(agent.getY());
+            lineTo.setX(computeGuiCoordinate(agent.getX()));
+            lineTo.setY(computeGuiCoordinate(agent.getY()));
 
             path.getElements().add(lineTo);
             if(path.getElements().size() > pathLength+1){
