@@ -1,8 +1,8 @@
 import problem.
-import model_split.
 
-main([ProblemInstanceFile]) =>
+main([ProblemInstanceFile, ModelFile]) =>
     load(ProblemInstanceFile),
+    load(ModelFile),
     ProblemInstance =  getProblemInstance(),
     Plans = find_plans(ProblemInstance),
     print(Plans).

@@ -50,6 +50,7 @@
 
             </GridPane>
             <VBox GridPane.columnIndex="2" spacing="5" GridPane.rowIndex="2" fillWidth="TRUE" GridPane.hgrow="NEVER">
+                <ComboBox fx:id="cbSolver" maxWidth="Infinity" />
                 <Button fx:id="btMorph" text="--->&#10;Morph" maxWidth="Infinity" textAlignment="CENTER" onAction="#startSimulation" />
                 <Button text="Simulate&#10;saved plans" style="-fx-font-size: 0.9em" maxWidth="Infinity" textAlignment="CENTER" onAction="#simulateSavedPlans"/>
             </VBox>

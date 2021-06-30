@@ -3,6 +3,8 @@ package ozomorph.app;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ozomorph.actions.ActionSettings;
@@ -22,9 +25,14 @@ import ozomorph.nodes.Group;
 import ozomorph.pathfinder.*;
 
 import java.io.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 import java.util.function.UnaryOperator;
@@ -34,6 +42,7 @@ import java.util.function.UnaryOperator;
  */
 public class MainController {
     Logger logger = LoggerFactory.getLogger(MainController.class);
+    Properties appProperties;
 
     @FXML
     ColorPicker cpGroupColor;
@@ -45,6 +54,8 @@ public class MainController {
     GridPane pDifferencies;
     @FXML
     Button btMorph, btSave, btPrint;
+    @FXML
+    ComboBox cbSolver;
 
     MapController initialsMapController;
     MapController targetsMapController;
@@ -55,12 +66,42 @@ public class MainController {
 
     BooleanProperty isMapNotLoaded;
 
+    ObservableList<PathFinder> solvers;
+    ActionSettings actionSetting;
+
     /**
      * Creates new MainController.
      */
     public MainController() {
         groupsColors = new HashMap<>();
         isMapNotLoaded = new SimpleBooleanProperty(true);
+
+        loadProperties();
+    }
+
+    private void loadProperties(){
+        appProperties = new Properties();
+        try {
+            FileInputStream in = new FileInputStream("ozomorph.properties");
+            appProperties.load(in);
+            in.close();
+
+            logger.info("Properties loaded.");
+        } catch (Exception e){
+            logger.warn("Properties not loaded.", e);
+        }
+    }
+
+    private void saveProperties(){
+        try {
+            FileOutputStream out = new FileOutputStream("ozomorph.properties");
+            appProperties.store(out, "Properties");
+            out.close();
+
+            logger.info("Properties saved.");
+        } catch (Exception e){
+            logger.warn("Properties not saved.", e);
+        }
     }
 
     /**
@@ -97,10 +138,37 @@ public class MainController {
         tfTurnDuration.setTextFormatter(new TextFormatter<>(positiveFloatFilter));
 
         //set initial durations
-        ActionSettings defaultDurations = new ActionSettings();
-        tfForwardDuration.setText(String.valueOf(defaultDurations.getForwardDuration()));
-        tfWaitDuration.setText(String.valueOf(defaultDurations.getWaitDuration()));
-        tfTurnDuration.setText(String.valueOf(defaultDurations.getTurnDuration()));
+        //TODO: load from properties
+        actionSetting = new ActionSettings();
+        tfForwardDuration.setText(String.valueOf(actionSetting.getForwardDuration()));
+        tfWaitDuration.setText(String.valueOf(actionSetting.getWaitDuration()));
+        tfTurnDuration.setText(String.valueOf(actionSetting.getTurnDuration()));
+
+        //load solvers and populate combobox
+        loadSolvers();
+        cbSolver.setItems(solvers);
+        cbSolver.getSelectionModel().selectFirst(); //select the first element
+
+        Callback<ListView<PathFinder>, ListCell<PathFinder>> cellFactory = new Callback<>() {
+            @Override
+            public ListCell<PathFinder> call(ListView<PathFinder> p) {
+                final ListCell<PathFinder> cell = new ListCell<PathFinder>() {
+                    @Override
+                    protected void updateItem(PathFinder t, boolean bln) {
+                        super.updateItem(t, bln);
+
+                        if (t != null) {
+                            setText(t.getName());
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        cbSolver.setCellFactory(cellFactory);
+        cbSolver.setButtonCell(cellFactory.call(null));
 
         //other things
         cpGroupColor.setValue(Color.RED);
@@ -109,7 +177,26 @@ public class MainController {
         btSave.disableProperty().bindBidirectional(isMapNotLoaded);
         btPrint.disableProperty().bindBidirectional(isMapNotLoaded);
 
-        logger.info("MainView inited.");
+        logger.info("MainView initialized.");
+    }
+
+    private void loadSolvers(){
+        solvers = FXCollections.observableArrayList();
+        String[] dirs = appProperties.getProperty("picatModels","").split(",");
+        String picatRuntimePath = appProperties.getProperty("picatRuntime",null);
+
+
+        for(String dir: dirs){
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir), "model*.pi")) {
+                for (Path entry: stream) {
+                    PathFinder picatSolver = new PicatPathFinder(picatRuntimePath, entry.toFile(), ()->askForPicatExec());
+                    solvers.add(picatSolver);
+                }
+            } catch (IOException e) {
+                logger.warn("Error while trying to load solvers from: " + dir, e);
+                showError("Error while trying to load solvers from: " + dir);
+            }
+        }
     }
 
     /**
@@ -175,12 +262,15 @@ public class MainController {
     public void  startSimulation(){
         try {
             logger.info("Simulation window opening...");
-            ActionSettings actionDurations = new ActionSettings(
+            actionSetting = new ActionSettings(
                     Double.parseDouble(tfForwardDuration.getCharacters().toString()),
                     Double.parseDouble(tfTurnDuration.getCharacters().toString()),
                     Double.parseDouble(tfWaitDuration.getCharacters().toString())
             );
-            PathFinder pathFinder = new PathFinder(actionDurations, ()->askForPicatExec());
+            // TODO: save actionSetting to appProperties and save appProperties on app close
+            saveProperties();
+            // DONE: use selected PathFinder
+            PathFinder pathFinder = (PathFinder) cbSolver.getSelectionModel().getSelectedItem();
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             problemInstance.validate();
 
@@ -188,7 +278,7 @@ public class MainController {
 
             Thread t = new Thread(()->{
                 try {
-                    List<AgentMapNode> agents = pathFinder.findPaths(problemInstance);
+                    List<AgentMapNode> agents = pathFinder.findPaths(problemInstance, actionSetting);
                     Platform.runLater(() -> {
                         //picatRuning.close();
                         try {
@@ -505,6 +595,5 @@ public class MainController {
         }
         return false;
     }
-
 
 }
