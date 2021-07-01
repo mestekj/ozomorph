@@ -65,19 +65,25 @@ def JLINK_DIR = "$buildDir/image"
 tasks.jlink.doLast {
     ["win","linux","mac"].each { platform ->
 
-    copy {
-        from("../picat") {
-            include "*.pi"
-            exclude "example_problem_instance.pi"
-            exclude "test.pi"
+        copy {
+            from("../picat") {
+                include "*.pi"
+                exclude "example_problem_instance.pi"
+                exclude "test.pi"
+            }
+            into JLINK_DIR + "/OzoMorph-" + platform + "/picat"
         }
-        into JLINK_DIR + "/OzoMorph-" + platform + "/picat"
-    }
-    copy {
-        from("../ozocode_templates") {
-            include "*.ozocode"
+        copy {
+            from("../ozocode_templates") {
+                include "*.ozocode"
+            }
+            into JLINK_DIR + "/OzoMorph-" + platform + "/ozocode_templates"
         }
-        into JLINK_DIR + "/OzoMorph-" + platform + "/ozocode_templates"
-    }
+        copy {
+            from("../conf") {
+                include "*"
+            }
+            into JLINK_DIR + "/OzoMorph-" + platform + "/conf"
+        }
     }
 }

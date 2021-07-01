@@ -41,6 +41,8 @@ import java.util.function.UnaryOperator;
  * Controller for main window.
  */
 public class MainController {
+    static final String propertiesPath = "../conf/ozomorph.properties";
+
     Logger logger = LoggerFactory.getLogger(MainController.class);
     Properties appProperties;
 
@@ -82,7 +84,7 @@ public class MainController {
     private void loadProperties(){
         appProperties = new Properties();
         try {
-            FileInputStream in = new FileInputStream("ozomorph.properties");
+            FileInputStream in = new FileInputStream(propertiesPath);
             appProperties.load(in);
             in.close();
 
@@ -94,7 +96,7 @@ public class MainController {
 
     private void saveProperties(){
         try {
-            FileOutputStream out = new FileOutputStream("ozomorph.properties");
+            FileOutputStream out = new FileOutputStream(propertiesPath);
             appProperties.store(out, "Properties");
             out.close();
 
