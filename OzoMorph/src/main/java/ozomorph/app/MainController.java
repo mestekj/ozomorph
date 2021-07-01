@@ -145,6 +145,7 @@ public class MainController {
         tfTurnDuration.setText(String.valueOf(actionSetting.getTurnDuration()));
 
         //load solvers and populate combobox
+        solvers = FXCollections.observableArrayList();
         loadSolvers();
         cbSolver.setItems(solvers);
         cbSolver.getSelectionModel().selectFirst(); //select the first element
@@ -181,7 +182,7 @@ public class MainController {
     }
 
     private void loadSolvers(){
-        solvers = FXCollections.observableArrayList();
+        solvers.clear();
         String[] dirs = appProperties.getProperty("picatModels","").split(",");
         String picatRuntimePath = appProperties.getProperty("picatRuntime",null);
 
@@ -368,6 +369,11 @@ public class MainController {
                 picatExecPath =  picatExec.getCanonicalPath();
             }
             catch(IOException e){}
+        }
+        if (!picatExecPath.isEmpty()) {
+            appProperties.setProperty("picatRuntime", picatExecPath);
+            saveProperties();
+            loadSolvers(); //reload solvers so that they use selected picatRuntime
         }
         return picatExecPath;
     }
