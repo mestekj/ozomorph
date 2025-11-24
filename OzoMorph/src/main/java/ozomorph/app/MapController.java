@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -63,6 +64,7 @@ public class MapController extends MapControllerBase implements Observable {
 
         //initialize computed/hard-coded fields
         noGroupColor = Paint.valueOf("gray");
+        noGroupColor = Color.TRANSPARENT;
         selectedGroup=null;
         groups = new HashMap<>();
 

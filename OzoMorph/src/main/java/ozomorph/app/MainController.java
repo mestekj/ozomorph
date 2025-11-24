@@ -57,7 +57,7 @@ public class MainController {
     @FXML
     Button btMorph, btSave, btPrint;
     @FXML
-    ComboBox cbSolver;
+    ComboBox<PathFinder> cbSolver;
 
     MapController initialsMapController;
     MapController targetsMapController;
