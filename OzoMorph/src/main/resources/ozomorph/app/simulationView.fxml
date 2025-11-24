@@ -25,6 +25,7 @@
             <Label text="Speed:" />
             <FunctionalSlider fx:id="slSpeed" min="-2" max="4" value="0" majorTickUnit="1" minorTickCount="1" showTickMarks="true" showTickLabels="true" snapToTicks="true" />
             <Button text="Generate" onAction="#handleGenerateOzocodes" />
+            <Button text="GeneratePy" onAction="#handleGeneratePython" />
             <Button text="Save plans" onAction="#handleSavePlans"/>
         </HBox>
     </bottom>

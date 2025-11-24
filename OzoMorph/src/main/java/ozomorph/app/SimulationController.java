@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import ozomorph.nodes.AgentMapNode;
 import ozomorph.ozocodegenerator.MissingDeclarationException;
 import ozomorph.ozocodegenerator.OzocodeGenerator;
+import ozomorph.ozocodegenerator.PythonGenerator;
 import ozomorph.pathfinder.ProblemInstance;
 
 import java.io.File;
@@ -256,6 +257,36 @@ public class SimulationController {
         } catch (IOException e) {
             logger.error("Ozocodes not generated.", e);
             showError("Error while generating ozocodes.");
+        }
+    }
+
+
+    /**
+     * Generates Python code (mutli-bot program for Ozobots Evo) for Ozobot Editor.
+     * Handler for GeneratePy button.
+     * @param actionEvent
+     */
+    public void handleGeneratePython(ActionEvent actionEvent) {
+        try {
+            //select python template file
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select Python code template");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Python script", "*.py")
+            );
+            File templateFile = fileChooser.showOpenDialog(pMap.getScene().getWindow());
+            if (templateFile != null) {
+                logger.info("Generating Python code using template: "+ templateFile.getCanonicalPath());
+                //generate Ozocodes
+                PythonGenerator generator = new PythonGenerator(); // TODO PythonGenerator? or just new method
+                generator.generateOzocodes(agents, templateFile);
+            }
+        }catch (MissingDeclarationException e){ // TODO update
+            logger.error("Ozo Python not generated", e);
+            showError("Selected template does not contain required procedure "+e.getMissingProcedureName() + ".");
+        } catch (IOException e) {
+            logger.error("Ozo Python not generated.", e);
+            showError("Error while generating Ozobots' code.");
         }
     }
 
