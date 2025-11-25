@@ -85,6 +85,14 @@ public class AgentMapNode implements MapNode, Serializable {
     }
 
     /**
+     * Sets plan of this agent.
+     * @param plan New plan.
+     */
+    public void setPlan(List<Action> plan) {
+        this.plan = plan;
+    }
+
+    /**
      * Gets group to which is this agent assigned.
      * @return Group to which is this agent assigned.
      */

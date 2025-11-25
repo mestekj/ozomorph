@@ -58,6 +58,8 @@ public class MainController {
     Button btMorph, btSave, btPrint;
     @FXML
     ComboBox<PathFinder> cbSolver;
+    @FXML
+    CheckBox cbCircularPlans;
 
     MapController initialsMapController;
     MapController targetsMapController;
@@ -273,7 +275,11 @@ public class MainController {
             // TODO: save actionSetting to appProperties and save appProperties on app close
             saveProperties();
             // DONE: use selected PathFinder
-            PathFinder pathFinder = (PathFinder) cbSolver.getSelectionModel().getSelectedItem();
+            PathFinder selectedPathFinder = (PathFinder) cbSolver.getSelectionModel().getSelectedItem();
+            // Wrap with CircularPathFinder decorator if circular plans are requested
+            final PathFinder pathFinder = cbCircularPlans.isSelected() 
+                ? new CircularPathFinder(selectedPathFinder, actionSetting)
+                : selectedPathFinder;
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             problemInstance.validate();
 
