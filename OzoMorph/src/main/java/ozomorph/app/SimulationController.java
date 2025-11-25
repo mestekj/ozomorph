@@ -9,6 +9,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
@@ -277,9 +279,15 @@ public class SimulationController {
             File templateFile = fileChooser.showOpenDialog(pMap.getScene().getWindow());
             if (templateFile != null) {
                 logger.info("Generating Python code using template: "+ templateFile.getCanonicalPath());
-                //generate Ozocodes
-                PythonGenerator generator = new PythonGenerator(); // TODO PythonGenerator? or just new method
-                generator.generateOzocodes(agents, templateFile);
+                //generate Python code
+                PythonGenerator generator = new PythonGenerator();
+                String pythonProgram = generator.generateOzocodes(agents, templateFile);
+                
+                // Copy content to clipboard
+                ClipboardContent clipboardContent = new ClipboardContent();
+                clipboardContent.putString(pythonProgram);
+                Clipboard.getSystemClipboard().setContent(clipboardContent);
+                logger.info("Python code copied to clipboard");
             }
         }catch (MissingDeclarationException e){ // TODO update
             logger.error("Ozo Python not generated", e);

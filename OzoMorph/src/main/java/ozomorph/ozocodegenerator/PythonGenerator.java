@@ -25,10 +25,11 @@ public class PythonGenerator {
      * Generates programs for Ozobots according to plans of given agents.
      * @param agents Agents containing plans.
      * @param templateFile Python template file.
+     * @return The generated Python code as a string.
      * @throws IOException Error while reading template or writing generated programs.
      * @throws MissingDeclarationException Required agents declaration is not found in given template.
      */
-    public void generateOzocodes(List<AgentMapNode> agents, File templateFile) throws IOException, MissingDeclarationException {
+    public String generateOzocodes(List<AgentMapNode> agents, File templateFile) throws IOException, MissingDeclarationException {
         // Read the Python template file
         List<String> lines = Files.readAllLines(templateFile.toPath(), StandardCharsets.UTF_8);
         
@@ -88,16 +89,22 @@ public class PythonGenerator {
         File ozoDir = new File(ozocodesDir);
         ozoDir.mkdirs();
         
-        // Write the updated Python program
+        // Build the content string
+        StringBuilder fileContent = new StringBuilder();
+        for (String line : lines) {
+            fileContent.append(line).append(System.lineSeparator());
+        }
+        String content = fileContent.toString();
+        
+        // Write the updated Python program to file
         File outputFile = new File(ozocodesDir + "/robot_program.py");
         try (FileWriter writer = new FileWriter(outputFile, StandardCharsets.UTF_8)) {
-            for (String line : lines) {
-                writer.write(line);
-                writer.write(System.lineSeparator());
-            }
+            writer.write(content);
         }
         
         logger.info("Generated Python program for {} agents at {}", agents.size(), outputFile.getAbsolutePath());
+        
+        return content;
     }
     
     /**
