@@ -68,9 +68,8 @@ public class CircularPathFinder implements PathFinder {
         circularPlan.add(new WaitAction(actionSettings.getWaitDuration()));
         circularPlan.add(new WaitAction(actionSettings.getWaitDuration()));
         
-        // Add U-turn (180 degrees = two 90-degree turns)
-        circularPlan.add(new TurnRightAction(actionSettings.getTurnDuration()));
-        circularPlan.add(new TurnRightAction(actionSettings.getTurnDuration()));
+        // Add optimized middle U-turn (combines with trailing turns from original plan)
+        addOptimizedUTurn(circularPlan, 2);
         
         // Add reversed actions in reverse order
         for (int i = originalPlan.size() - 1; i >= 0; i--) {
@@ -78,11 +77,68 @@ public class CircularPathFinder implements PathFinder {
             circularPlan.add(reversedAction);
         }
         
-        // Add another U-turn to face original direction
-        circularPlan.add(new TurnRightAction(actionSettings.getTurnDuration()));
-        circularPlan.add(new TurnRightAction(actionSettings.getTurnDuration()));
+        // Add optimized final U-turn (combines with any trailing turns)
+        addOptimizedUTurn(circularPlan, 0);
         
         return circularPlan;
+    }
+    
+    /**
+     * Adds optimized U-turn to the plan by combining it with any trailing turn actions.
+     * If the plan ends with turns that combine with the U-turn to make a simpler rotation,
+     * replaces them with waits to preserve synchronization.
+     * 
+     * @param plan The circular plan to optimize
+     * @param skipFromEnd Number of actions to skip from the end when searching for trailing turns
+     */
+    private void addOptimizedUTurn(List<Action> plan, int skipFromEnd) {
+        // Calculate net rotation from trailing turn actions (in quarter turns, where 4 = 360°)
+        int trailingTurns = 0;
+        int turnCount = 0;
+        
+        // Count trailing turn actions from the end (skipping specified actions)
+        for (int i = plan.size() - 1 - skipFromEnd; i >= 0; i--) {
+            Action action = plan.get(i);
+            if (action instanceof TurnLeftAction) {
+                trailingTurns -= 1; // -90°
+                turnCount++;
+            } else if (action instanceof TurnRightAction) {
+                trailingTurns += 1; // +90°
+                turnCount++;
+            } else {
+                break; // Stop at first non-turn action
+            }
+        }
+        
+        // We need to add +2 quarter turns (U-turn) to the net rotation
+        int targetRotation = trailingTurns + 2;
+        
+        // Normalize to [0, 4) range
+        targetRotation = ((targetRotation % 4) + 4) % 4;
+        
+        // Remove trailing turns (accounting for skipped actions)
+        for (int i = 0; i < turnCount; i++) {
+            plan.remove(plan.size() - 1 - skipFromEnd);
+        }
+        
+        // Add optimized turns to achieve target rotation
+        // If target is 3 (270° right = 90° left), use one TurnLeft instead
+        int actualTurns;
+        if (targetRotation == 3) {
+            plan.add(new TurnLeftAction(actionSettings.getTurnDuration()));
+            actualTurns = 1;
+        } else {
+            for (int i = 0; i < targetRotation; i++) {
+                plan.add(new TurnRightAction(actionSettings.getTurnDuration()));
+            }
+            actualTurns = targetRotation;
+        }
+        
+        // Add wait actions to maintain desired plan length (turnCount + 2 total actions)
+        int waitsNeeded = turnCount + 2 - actualTurns;
+        for (int i = 0; i < waitsNeeded; i++) {
+            plan.add(new WaitAction(actionSettings.getTurnDuration()));
+        }
     }
     
     /**
