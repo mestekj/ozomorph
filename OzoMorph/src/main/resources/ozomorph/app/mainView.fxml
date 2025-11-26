@@ -13,7 +13,7 @@
     <children>
         <HBox spacing="5">
             <Label text="Width:"/>
-            <TextField fx:id="tfWidth" text="5"/>
+            <TextField fx:id="tfWidth" text="4"/>
             <Label text="Height:"/>
             <TextField fx:id="tfHeight" text="5"/>
             <Button text="Create" onAction="#createMap"/>

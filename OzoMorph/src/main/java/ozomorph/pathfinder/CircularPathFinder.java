@@ -64,12 +64,18 @@ public class CircularPathFinder implements PathFinder {
     private List<Action> createCircularPlan(List<Action> originalPlan) {
         List<Action> circularPlan = new ArrayList<>(originalPlan);
         
-        // Wait at target before turning around
+        // Signalize reaching target
         circularPlan.add(new WaitAction(actionSettings.getWaitDuration()));
         circularPlan.add(new WaitAction(actionSettings.getWaitDuration()));
+        circularPlan.add(new WaitAction(actionSettings.getWaitDuration()));
+
+        // Alternative signalization - 360 turn
+//        for (int i = 0; i < 4; i++) {
+//            circularPlan.add(new TurnRightAction(actionSettings.getTurnDuration()));
+//        }
         
         // Add optimized middle U-turn (combines with trailing turns from original plan)
-        addOptimizedUTurn(circularPlan, 2);
+        addOptimizedUTurn(circularPlan, 3);
         
         // Add reversed actions in reverse order
         for (int i = originalPlan.size() - 1; i >= 0; i--) {

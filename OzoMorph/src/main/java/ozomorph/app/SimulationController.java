@@ -240,6 +240,11 @@ public class SimulationController {
             //select Ozocode template file
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select Ozocode template");
+            // Open chooser in ozocode_templates directory if available
+            File initialDir = new File("../ozocode_templates");
+            if (initialDir.exists() && initialDir.isDirectory()) {
+                fileChooser.setInitialDirectory(initialDir);
+            }
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Ozocode", "*.ozocode")
             );
@@ -273,6 +278,11 @@ public class SimulationController {
             //select python template file
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select Python code template");
+            // Open chooser in ozocode_templates directory if available
+            File initialDir = new File("../ozocode_templates");
+            if (initialDir.exists() && initialDir.isDirectory()) {
+                fileChooser.setInitialDirectory(initialDir);
+            }
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Python script", "*.py")
             );
