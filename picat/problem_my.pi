@@ -27,7 +27,7 @@ neighboursDir(Problem,Vertex) = Neighbours =>
             CI = I, % local copy
             N = (NY-1) * Width + (NX-1) +1,
             Neighbours := [(N,CI) | Neighbours]
-        end
+        end,
     end.
 
 neighbour(Problem,Vertex,Direction) = Neighbour =>
@@ -44,75 +44,19 @@ neighbour(Problem,Vertex,Direction) = Neighbour =>
         Neighbour = 0
     end.
 
-neighboursIDS(Problem,Vertex) = Neighbours =>
-    V = vectors(),
-    Neighbours = [],
-    $problem(_,_,Width,Height) = Problem,
-    X = ((Vertex-1) mod Width) + 1, %+-1 because array indices are 1-based
-    Y = ((Vertex-1) div Width) + 1,
-    foreach (I in 1..len(V))
-        (DX,DY) = V[I],
-        NX = X + DX, 
-        NY = Y + DY,
-        if(between(1, Width, NX) && between(1, Height, NY)) then 
-            CI = I, % local copy
-            N = (NY-1) * Width + (NX-1) +1,
-            Neighbours := [N | Neighbours]
-        end
-    end.
-
-create_edges(Problem) = E =>
-    Ed1 = [],
-    Ed2 = [],
-    EID = 1,
-    foreach(V in 1..Problem.vertices_count)
-        Neibs = Problem.neighboursIDS(V),
-        L = len(Neibs),
-        foreach(I in 1..L)
-            Ed1 := [$edge(EID, V, Neibs[I])|Ed1],
-            Ed2 := [$edgeid(EID, V, Neibs[I])|Ed2],
-            EID := EID + 1
-        end
-    end,
-
-    cl_facts(Ed1,[$edge(-,+,+)]),
-    cl_facts(Ed2,[$edgeid(+,-,-)]),
-    E = len(Ed1).
-
-in_edges(Problem, V) = InE =>
-    ETMP = [],
-    Neibs = Problem.neighboursIDS(V),
-    L = len(Neibs),
-    foreach(I in 1..L)
-        edge(EID,Neibs[I],V),
-        ETMP := [EID] ++ ETMP
-    end,
-    InE = ETMP.
-
-    
-out_edges(Problem, V) = OutE =>
-    ETMP = [],
-    Neibs = Problem.neighboursIDS(V),
-    L = len(Neibs),
-    foreach(I in 1..L)
-        edge(EID,V,Neibs[I]),
-        ETMP := [EID] ++ ETMP
-    end,
-    OutE = ETMP.
-
 actions(Problem,AgentVertex,AgentDirection,NextVertex,DirectionOfNextVertex) = Actions =>
     if (AgentVertex != NextVertex) then
         Turn = (DirectionOfNextVertex - AgentDirection) mod 4,
-        Actions := [goAhead|turnAction(Turn)]
+        Actions := [goAhead|turnAction(Turn)],
     else
         Actions := [wait]
     end.
 
 actions(Problem,Turn) = Actions =>
     if(Turn =:= 0) then
-        Actions = [wait]
+        Actions = [wait],
     else
-        Actions = turnAction(Turn)
+        Actions = turnAction(Turn),
     end.
     
 goAhead(Problem) = [goAhead].
@@ -155,8 +99,3 @@ initials(Group) = Is =>
 targets(Group) = Ts =>
     $group(_,_,Ts) = Group.
 
-lower_bound(Problem) = LB =>
-    LB = 1.
-
-lower_bound_turning(Problem) = LB =>
-    LB = 1.

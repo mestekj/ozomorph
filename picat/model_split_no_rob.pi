@@ -1,0 +1,94 @@
+import sat.
+
+% Split+robustness
+find_plans(Problem) = Plans =>
+    AgentsNumber = Problem.agents_count(),
+    MAX_LEN = Problem.vertices_count() * Problem.agents_count(),
+    member(Makespan, 1..MAX_LEN),
+
+    VerticesNumber = Problem.vertices_count(),
+    B = new_array(Makespan+1,AgentsNumber,VerticesNumber,4), % each vertex is splited into 4
+    B::0..1,
+
+    foreach (Group in Problem.groups)
+        % Initial positions
+        Initials = Group.initials,
+        foreach (Agent in Group.agents)
+            V = Group.initialPosition(Agent),
+            B[1,Agent,V,1] = 1
+        end,
+
+        % Target positions - each target position is occupied by an agent
+        foreach (V in Group.targets)
+            sum([B[Makespan+1,Agent,V,D] : Agent in Group.agents, D in 1..4]) #= 1
+        end,
+    end,
+
+    % Each agent occupies exactly one vertex at each time
+    foreach (Agent in 1..AgentsNumber, Time in 1..Makespan+1)
+        sum([B[Time,Agent,V,D] : V in 1..Problem.vertices_count(), D in 1..4]) #= 1
+    end,
+
+    % No two agents occupy same vertex
+    foreach (Time in 1..Makespan+1, V in 1..Problem.vertices_count())
+        sum([B[Time,Agent,V,D] : Agent in 1..AgentsNumber, D in 1..4]) #<= 1
+    end,
+
+    % Only transitions to adjacent free vertices are allowed
+    foreach (Time in 1..Makespan, Agent in 1..AgentsNumber, V in 1..Problem.vertices_count(), D in 1..4)
+        % Agent can move only to adjacent vertex in its direction, change direction or do nothing
+        NV = Problem.neighbour(V,D),
+        if(NV !== 0) then
+            B[Time,Agent,V,D] #=>
+                (B[Time+1,Agent,NV,D] + sum([B[Time+1,Agent,V,((D-1+R) mod 4)+1] : R in -1..1])) #= 1,
+            % forbid swap:
+            ND = ((D-1+2) mod 4)+1,
+            B[Time,Agent,V,D] #/\ B[Time+1,Agent,NV,D] #=> sum([B[Time,Ag,NV,ND] #/\ B[Time+1,Ag,V,ND] : Ag in 1..AgentsNumber, Ag != Agent]) #= 0
+        else
+            B[Time,Agent,V,D] #=>
+                sum([B[Time+1,Agent,V,((D-1+R) mod 4)+1] : R in -1..1]) #= 1
+        end,
+        
+    end,
+    
+    % no swap
+    
+    
+    % ROBUSTNESS: For each position of each agent at each time, there was not another agent in time-1
+    K = 0, %robustness constant
+    foreach (Time in (1+K)..Makespan+1, Agent in 1..AgentsNumber, V in 1..Problem.vertices_count(), D in 1..4)
+        B[Time,Agent,V,D] #=>
+                sum([B[Time-I,A,V,DN] : I in 1..K, A in 1..AgentsNumber, A != Agent, DN in 1..4]) #= 0,
+    end,
+    
+    solve(B),
+    Plans = output_plan(B,Problem,Makespan).
+
+
+% Finds plans from values of variables B
+output_plan(B,Problem, Makespan)=Plans =>
+    Plans = [],
+    foreach (Group in Problem.groups)
+        foreach (Agent in Group.agents)
+            Position = Group.initialPosition(Agent),
+            Plan = [],
+            LastDir = 1,
+            foreach (T in 2..Makespan+1) % T==1 are initial positions
+                NV = Problem.neighbour(Position,LastDir),
+                if(NV !== 0 && B[T,Agent,NV,LastDir] =:= 1) then
+                    % moving forward
+                    Plan := Problem.goAhead() ++ Plan,
+                    Position := Problem.neighbour(Position,LastDir)
+                else
+                    % staying in same vertex
+                    [NextDirection] = [D : D in 1..4, B[T,Agent,Position,D] =:= 1],
+                    Turn = NextDirection - LastDir,
+                    Plan := Problem.actions(Turn) ++ Plan,
+                    LastDir := NextDirection,
+                end,
+            end,
+            Plans := Plans ++ [reverse(Plan)],
+        end,
+    end.
+
+

@@ -41,6 +41,11 @@ async def main():
             with dm.use_device(device_name):
                 await execute_action(action)
 
+        async def _coroutine_finish(agent):
+            device_name = f"Evo_{agent}"
+            with dm.use_device(device_name):
+                await set_light_color(0, 0, 0)
+
         init_tasks = tuple(_tg.create_task(_coroutine_init(agent)) for agent in agents)
         await asyncio.gather(*init_tasks)
 
@@ -56,5 +61,7 @@ async def main():
             tasks = tuple(_tg.create_task(_execute_action(agent, action)) for agent, action in step_actions)
             await asyncio.gather(*tasks)
 
+        finish_tasks = tuple(_tg.create_task(_coroutine_finish(agent)) for agent in agents)
+        await asyncio.gather(*finish_tasks) 
 
 asyncio.run(main())

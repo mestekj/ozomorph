@@ -39,6 +39,7 @@ async def main():
                 await dm.navigation.aset_line_following_speed(50 / 1000.0)
                 for action in plan:
                     await execute_action(action)
+                await set_light_color(0, 0, 0)
 
         tasks = tuple(_tg.create_task(_coroutine_folow_plan(agent)) for agent in agents)
         await asyncio.gather(*tasks)
