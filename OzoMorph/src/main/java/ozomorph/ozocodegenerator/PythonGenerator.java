@@ -10,9 +10,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PythonGenerator {
+    private static final String INCLUDE_PREFIX = "# ozomorph: include";
 
     private static final Logger logger = LoggerFactory.getLogger(OzocodeGenerator.class);
 
@@ -39,7 +44,7 @@ public class PythonGenerator {
      */
     public String generateOzocodes(List<AgentMapNode> agents, File templateFile) throws IOException, MissingDeclarationException {
         // Read the Python template file
-        List<String> lines = Files.readAllLines(templateFile.toPath(), StandardCharsets.UTF_8);
+        List<String> lines = expandIncludes(templateFile.toPath());
         
         // Find the line with "agents = ..."
         int agentsLineIndex = -1;
@@ -113,6 +118,37 @@ public class PythonGenerator {
         logger.info("Generated Python program for {} agents at {}", agents.size(), outputFile.getAbsolutePath());
         
         return content;
+    }
+
+    private List<String> expandIncludes(Path template) throws IOException {
+        List<String> result = new ArrayList<>();
+        Set<String> included = new HashSet<>();
+        Path directory = template.toAbsolutePath().getParent();
+        for (String line : Files.readAllLines(template, StandardCharsets.UTF_8)) {
+            if (!line.trim().startsWith(INCLUDE_PREFIX)) {
+                result.add(line);
+                continue;
+            }
+            String filename = line.trim().substring(INCLUDE_PREFIX.length()).trim();
+            if (!line.equals(line.trim()) || !filename.matches("[^\\\\/:*?\"<>|\\p{Cntrl}]+\\.py")) {
+                throw new IOException("Invalid Python include directive: " + line);
+            }
+            if (!included.add(filename)) {
+                throw new IOException("Duplicate Python include: " + filename);
+            }
+            Path fragment = directory.resolve(filename);
+            List<String> fragmentLines;
+            try {
+                fragmentLines = Files.readAllLines(fragment, StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                throw new IOException("Cannot read Python include " + fragment, e);
+            }
+            if (fragmentLines.stream().anyMatch(value -> value.trim().startsWith(INCLUDE_PREFIX))) {
+                throw new IOException("Nested Python includes are not supported: " + filename);
+            }
+            result.addAll(fragmentLines);
+        }
+        return result;
     }
     
     /**

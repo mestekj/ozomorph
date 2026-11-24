@@ -77,6 +77,7 @@ tasks.jlink.doLast {
         copy {
             from("../ozocode_templates") {
                 include "*.ozocode"
+                include "*.py"
             }
             into JLINK_DIR + "/OzoMorph-" + platform + "/ozocode_templates"
         }

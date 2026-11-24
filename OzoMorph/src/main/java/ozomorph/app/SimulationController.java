@@ -307,7 +307,7 @@ public class SimulationController {
             showError("Selected template does not contain required procedure "+e.getMissingProcedureName() + ".");
         } catch (IOException e) {
             logger.error("Ozo Python not generated.", e);
-            showError("Error while generating Ozobots' code.");
+            showError("Error while generating Ozobots' code: " + e.getMessage());
         }
     }
 
