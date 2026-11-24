@@ -22,12 +22,20 @@ To run OzoMorph, it is _not_ required to have Java runtime installed.
 ### Compiling from source code
 The actual Java application is a standard Gradle project (located in the `OzoMorph` folder), therefore it can be easily compiled and run from command-line or IDE using the `gradlew run` command.
 
+#### Portable JDK option
+Download the Windows x64 JDK 11 ZIP,  e.g., from [Eclipse Temurin](https://adoptium.net/temurin/releases/?arch=x64&os=windows&package=jdk&version=11), and extract it anywhere convenient. No installer is needed. Then run in PowerShell:
+```powershell
+$env:JAVA_HOME = "D:\ProgramsPortable\jdk-11.0.33+10\"
+Set-Location D:\Data\dev\ozomorph\OzoMorph
+.\gradlew.bat -PmoduleName=ozomorph run
+```
+
 ## Usage
 1. Enter the desired size of a map (number of nodes) and press **Create**.
 2. Allocate robots on their initial and target positions. Each color represents a different group of robots.
 3. Press **Morph**. The software finds plans for the robots and opens a new window.
 4. There, you can  **Run** the simulation to visualize the plans.
-5. Or, you can generate programs for Ozobots by pressing the **Generate** button. OzoMorph asks you for a template of the Ozobot program. Prepared templates are in `ozocode_template` folder. Generated programs are stored in the `ozocodes` folder.
-6. Upload programs to [ozoblockly.com](https://ozoblockly.com/editor?robot=evo&mode=5) and run them on your Ozobots Evo.
+5. Or, you can generate programs for Ozobots by pressing the **Generate** button. OzoMorph asks you for a template of the Ozobot program. Prepared templates are in the `ozocode_templates` folder. `python_template.py` runs each robot's plan independently; `python_template_sync.py` waits for all robots to finish each step before starting the next. Generated programs are stored in the `ozocodes` folder.
+6. Run the generated program in the [Ozobot Editor](https://editor.ozobot.com) with your Ozobots Evo connected. The templates use the current Ozobot Python API and refer to robots by names such as `Evo_0` and `Evo_1`.
 7. In the simulation window of OzoMorph, switch the mode from **Simulation** to **OnScreen** (for running Ozobots on your display ) or **OnBoard** (for running on printed map).
 8. Place Ozobots on their initial positions and press the  **Run** button.
