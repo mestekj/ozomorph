@@ -59,7 +59,7 @@ public class MainController {
     @FXML
     ComboBox<PathFinder> cbSolver;
     @FXML
-    CheckBox cbCircularPlans;
+    CheckBox cbCircularPlans, cbDepotMode;
 
     MapController initialsMapController;
     MapController targetsMapController;
@@ -178,6 +178,12 @@ public class MainController {
         //other things
         cpGroupColor.setValue(Color.RED);
         btMorph.setDisable(true);
+        cbCircularPlans.selectedProperty().addListener((observable, oldValue, selected) -> {
+            if (selected) cbDepotMode.setSelected(false);
+        });
+        cbDepotMode.selectedProperty().addListener((observable, oldValue, selected) -> {
+            if (selected) cbCircularPlans.setSelected(false);
+        });
 
         btSave.disableProperty().bindBidirectional(isMapNotLoaded);
         btPrint.disableProperty().bindBidirectional(isMapNotLoaded);
@@ -276,12 +282,18 @@ public class MainController {
             saveProperties();
             // DONE: use selected PathFinder
             PathFinder selectedPathFinder = (PathFinder) cbSolver.getSelectionModel().getSelectedItem();
-            // Wrap with CircularPathFinder decorator if circular plans are requested
-            final PathFinder pathFinder = cbCircularPlans.isSelected() 
-                ? new CircularPathFinder(selectedPathFinder, actionSetting)
-                : selectedPathFinder;
+            // Wrap the selected solver for the requested plan mode.
+            final PathFinder pathFinder = cbDepotMode.isSelected()
+                ? new DepotPathFinder(selectedPathFinder)
+                : cbCircularPlans.isSelected()
+                    ? new CircularPathFinder(selectedPathFinder, actionSetting)
+                    : selectedPathFinder;
             ProblemInstance problemInstance = new ProblemInstance(width, height, initialsMapController.getGroups(), targetsMapController.getGroups());
             problemInstance.validate();
+            if (cbDepotMode.isSelected() && problemInstance.getAgentsCount() > (long) width * height) {
+                showError("There are more agents than depot positions on the grid.");
+                return;
+            }
 
             Alert picatRuning = new Alert(Alert.AlertType.INFORMATION,"Finding plans... \nClick Cancel to abort.", ButtonType.CANCEL);
 

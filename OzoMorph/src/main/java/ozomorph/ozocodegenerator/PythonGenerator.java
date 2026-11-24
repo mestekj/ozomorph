@@ -19,7 +19,15 @@ public class PythonGenerator {
     /**
      * Directory where create programs will be saved.
      */
-    private String ozocodesDir = "../ozocodes";
+    private final File ozocodesDir;
+
+    public PythonGenerator() {
+        this(new File("../ozocodes"));
+    }
+
+    PythonGenerator(File ozocodesDir) {
+        this.ozocodesDir = ozocodesDir;
+    }
 
     /**
      * Generates programs for Ozobots according to plans of given agents.
@@ -86,7 +94,7 @@ public class PythonGenerator {
         lines.set(agentsLineIndex, agentsDict.toString());
         
         // Create output directory
-        File ozoDir = new File(ozocodesDir);
+        File ozoDir = ozocodesDir;
         ozoDir.mkdirs();
         
         // Build the content string
@@ -97,7 +105,7 @@ public class PythonGenerator {
         String content = fileContent.toString();
         
         // Write the updated Python program to file
-        File outputFile = new File(ozocodesDir + "/robot_program.py");
+        File outputFile = new File(ozocodesDir, "robot_program.py");
         try (FileWriter writer = new FileWriter(outputFile, StandardCharsets.UTF_8)) {
             writer.write(content);
         }
@@ -125,6 +133,10 @@ public class PythonGenerator {
                 return "turnRight";
             case "WaitAction":
                 return "wait";
+            case "StartAction":
+                return "atStart";
+            case "AtGoalAction":
+                return "atGoal";
             default:
                 return className.replace("Action", "").toLowerCase();
         }

@@ -255,7 +255,10 @@ public class SimulationController {
                 OzocodeGenerator generator = new OzocodeGenerator();
                 generator.generateOzocodes(agents, templateFile);
             }
-        }catch (MissingDeclarationException e){
+        } catch (UnsupportedOperationException e) {
+            logger.error("Ozocodes not generated.", e);
+            showError(e.getMessage());
+        } catch (MissingDeclarationException e){
             logger.error("Ozocodes not generated", e);
             showError("Selected template does not contain required procedure "+e.getMissingProcedureName() + ".");
         } catch (JDOMException e) {

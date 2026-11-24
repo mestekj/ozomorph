@@ -10,6 +10,8 @@ import org.jdom2.xpath.XPathFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ozomorph.actions.Action;
+import ozomorph.actions.AtGoalAction;
+import ozomorph.actions.StartAction;
 import ozomorph.nodes.AgentMapNode;
 
 import java.io.File;
@@ -43,6 +45,11 @@ public class OzocodeGenerator {
      * @throws MissingDeclarationException Required Ozocode procedure is not declared in given template.
      */
     public void generateOzocodes(List<AgentMapNode> agents, File templateFile) throws JDOMException, IOException, MissingDeclarationException {
+        for (AgentMapNode agent : agents) {
+            if (agent.getPlan().stream().anyMatch(action -> action instanceof StartAction || action instanceof AtGoalAction)) {
+                throw new UnsupportedOperationException("Depot stage actions are not supported in Ozocode.");
+            }
+        }
         try {
             //load and parse template
             Document template = loadTemplate(templateFile);

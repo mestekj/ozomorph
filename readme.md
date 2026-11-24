@@ -39,3 +39,8 @@ Set-Location D:\Data\dev\ozomorph\OzoMorph
 6. Run the generated program in the [Ozobot Editor](https://editor.ozobot.com) with your Ozobots Evo connected. The templates use the current Ozobot Python API and refer to robots by names such as `Evo_0` and `Evo_1`.
 7. In the simulation window of OzoMorph, switch the mode from **Simulation** to **OnScreen** (for running Ozobots on your display ) or **OnBoard** (for running on printed map).
 8. Place Ozobots on their initial positions and press the  **Run** button.
+
+### Depot mode
+Select **Depot mode** to start agents in ID order from the bottom-left grid position, filling each row left to right and then moving upward. Agents travel to the selected initial positions, then to target positions of their group, and finally return to their own depot positions. Depot mode and circular plans cannot be selected together.
+
+The generated plans contain `atStart` and `atGoal` actions at the stage boundaries. In simulation each pauses for one second. Use `python_template_depot.py` for independent execution or `python_template_depot_sync.py` for step-synchronized execution. These templates use the agent's group color: only its front-center LED is lit initially, all LEDs light at the start, and only the front-center LED remains lit after reaching the goal. XML Ozocode generation does not support depot plans. Stage actions are aligned by action index, but existing execution modes do not guarantee simultaneous arrival when action durations differ.
