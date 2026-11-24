@@ -79,6 +79,7 @@ public class DepotGenerationTest {
             assertFalse(name, program.contains("# ozomorph: include"));
             assertFalse(name, program.contains("import actions"));
             assertTrue(name, program.contains("agents = {0:"));
+            assertTrue(name, program.contains("await data.line_following_speed.write(LINE_FOLLOWING_SPEED)"));
             assertTrue(name, program.contains(name.contains("depot") ? "DEPOT_MODE = True" : "DEPOT_MODE = False"));
             assertTrue(name, program.contains(name.contains("depot")
                     ? "await set_front_center_color(r, g, b)"

@@ -31,7 +31,7 @@ async def main():
                 r, g, b = agents[agent][0]
                 with dispatcher.actor(device_name):
                     await set_light_color(r, g, b)
-                    await data.line_following_speed.write(50)
+                    await data.line_following_speed.write(LINE_FOLLOWING_SPEED)
 
             async def _execute_action(agent, action):
                 device_name = f"Evo_{agent}"

@@ -1,12 +1,15 @@
+ACTION_DURATION = 1.5  # seconds
+LINE_FOLLOWING_SPEED = 50/ACTION_DURATION  # mm/s
+
 async def execute_action(action, color):
     if action == 'goAhead':
         await follow_line(Direction.STRAIGHT)
     elif action == 'turnLeft':
-        await rotate(90, 90)
+        await rotate(90, 90/ACTION_DURATION)
     elif action == 'turnRight':
-        await rotate(-90, 90)
+        await rotate(-90, 90/ACTION_DURATION)
     elif action == 'wait':
-        await asyncio.sleep(1)
+        await asyncio.sleep(ACTION_DURATION)
     elif action == 'atStart' and DEPOT_MODE:
         await set_light_color(*color)
     elif action == 'atGoal' and DEPOT_MODE:

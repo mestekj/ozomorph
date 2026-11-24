@@ -33,7 +33,7 @@ async def main():
 
                 with dispatcher.actor(device_name):
                     await set_light_color(r, g, b)
-                    await data.line_following_speed.write(50)
+                    await data.line_following_speed.write(LINE_FOLLOWING_SPEED)
                     for action in plan:
                         await execute_action(action, (r, g, b))
                     await set_light_color(0, 0, 0)
