@@ -12,7 +12,9 @@ async def execute_action(action, color):
         await asyncio.sleep(ACTION_DURATION)
     elif action == 'atStart' and DEPOT_MODE:
         await set_light_color(*color)
+        await asyncio.sleep(1)
     elif action == 'atGoal' and DEPOT_MODE:
+        await asyncio.sleep(1)
         await set_front_center_color(*color)
     else:
         raise ValueError(f"Unknown action: {action}")
