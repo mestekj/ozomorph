@@ -13,9 +13,9 @@
     <children>
         <HBox spacing="5">
             <Label text="Width:"/>
-            <TextField fx:id="tfWidth" text="4"/>
+            <TextField fx:id="tfWidth" text="6"/>
             <Label text="Height:"/>
-            <TextField fx:id="tfHeight" text="5"/>
+            <TextField fx:id="tfHeight" text="3"/>
             <Button text="Create" onAction="#createMap"/>
             <Button fx:id="btSave" text="Save" onAction="#saveMap"/>
             <Button text="Load" onAction="#loadMap"/>
