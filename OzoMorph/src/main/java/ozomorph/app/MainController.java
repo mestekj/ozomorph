@@ -55,7 +55,7 @@ public class MainController {
     @FXML
     GridPane pDifferencies;
     @FXML
-    Button btMorph, btSave, btPrint;
+    Button btMorph, btMorphGeneratePython, btSave, btPrint;
     @FXML
     ComboBox<PathFinder> cbSolver;
     @FXML
@@ -178,6 +178,7 @@ public class MainController {
         //other things
         cpGroupColor.setValue(Color.RED);
         btMorph.setDisable(true);
+        btMorphGeneratePython.disableProperty().bind(btMorph.disableProperty());
         cbCircularPlans.selectedProperty().addListener((observable, oldValue, selected) -> {
             if (selected) cbDepotMode.setSelected(false);
         });
@@ -271,6 +272,22 @@ public class MainController {
      * Finds plans for current configuration and opens Simulation window.
      */
     public void  startSimulation(){
+        startSimulation(false);
+    }
+
+    /**
+     * Finds plans, opens Simulation window, and generates Python code using the configured template.
+     * Handler for Morph & Generate Ozo python button.
+     */
+    public void startSimulationAndGeneratePython() {
+        startSimulation(true);
+    }
+
+    /**
+     * Finds plans for current configuration and opens Simulation window.
+     * @param generatePython Whether to generate Python code using the configured template.
+     */
+    private void startSimulation(boolean generatePython){
         try {
             logger.info("Simulation window opening...");
             actionSetting = new ActionSettings(
@@ -294,6 +311,7 @@ public class MainController {
                 showError("There are more agents than depot positions on the grid.");
                 return;
             }
+            String pythonTemplate = generatePython ? appProperties.getProperty("pythonTemplate", "") : null;
 
             Alert picatRuning = new Alert(Alert.AlertType.INFORMATION,"Finding plans... \nClick Cancel to abort.", ButtonType.CANCEL);
 
@@ -303,7 +321,7 @@ public class MainController {
                     Platform.runLater(() -> {
                         //picatRuning.close();
                         try {
-                            openSimulationWindow(agents);
+                            openSimulationWindow(agents, pythonTemplate);
                         } catch (IOException e) {
                             logger.error("Showing of simulation window failed.", e);
                             showError("Simulation window cannot be shown due to an error, check logs for details.");
@@ -476,11 +494,12 @@ public class MainController {
     /**
      * Opens new Simulation window.
      * @param agents Agents that will be simulated in the window.
+     * @param pythonTemplate Path to the Python template, or null to skip generation.
      * @return New Simulation window.
      * @throws IOException IO error while reading FXML describing the window.
      */
-    private Stage openSimulationWindow(List<AgentMapNode> agents) throws IOException {
-        return openSimulationWindow(new SimulationData(agents,width, height));
+    private Stage openSimulationWindow(List<AgentMapNode> agents, String pythonTemplate) throws IOException {
+        return openSimulationWindow(new SimulationData(agents,width, height), pythonTemplate);
     }
 
     /**
@@ -490,6 +509,17 @@ public class MainController {
      * @throws IOException IO error while reading FXML describing the window.
      */
     private Stage openSimulationWindow(SimulationData data) throws IOException {
+        return openSimulationWindow(data, null);
+    }
+
+    /**
+     * Opens new Simulation window and optionally generates Python code.
+     * @param data Data for simulation.
+     * @param pythonTemplate Path to the Python template, or null to skip generation.
+     * @return New Simulation window.
+     * @throws IOException IO error while reading FXML describing the window.
+     */
+    private Stage openSimulationWindow(SimulationData data, String pythonTemplate) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("simulationView.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene((Pane) loader.load()));
@@ -498,6 +528,9 @@ public class MainController {
 
         stage.show();
         controller.init(data, MapSettings.getSettings());
+        if (pythonTemplate != null) {
+            controller.generatePythonFromConfiguredTemplate(pythonTemplate);
+        }
 
         return stage;
     }

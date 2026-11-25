@@ -55,6 +55,7 @@
                 <CheckBox fx:id="cbDepotMode" text="Depot mode" />
                 <Button fx:id="btMorph" text="--->&#10;Morph" maxWidth="Infinity" textAlignment="CENTER" onAction="#startSimulation" />
                 <Button text="Simulate&#10;saved plans" style="-fx-font-size: 0.9em" maxWidth="Infinity" textAlignment="CENTER" onAction="#simulateSavedPlans"/>
+                <Button fx:id="btMorphGeneratePython" text="Morph &amp; Generate&#10;Ozo python" style="-fx-font-size: 0.8em" maxWidth="Infinity" textAlignment="CENTER" onAction="#startSimulationAndGeneratePython"/>
             </VBox>
             <Separator GridPane.rowIndex="0" GridPane.columnIndex="3" GridPane.rowSpan="3" orientation="VERTICAL"/>
             <Label text="Target positions:" GridPane.columnIndex="4" GridPane.rowIndex="0"/>

@@ -277,31 +277,53 @@ public class SimulationController {
      * @param actionEvent
      */
     public void handleGeneratePython(ActionEvent actionEvent) {
+        //select python template file
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Python code template");
+        File initialDir = new File("../ozocode_templates");
+        if (initialDir.exists() && initialDir.isDirectory()) {
+            fileChooser.setInitialDirectory(initialDir);
+        }
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Python script", "*.py")
+        );
+        File templateFile = fileChooser.showOpenDialog(pMap.getScene().getWindow());
+        if (templateFile != null) {
+            generatePython(templateFile);
+        }
+    }
+
+    /**
+     * Generates Python code using the configured template.
+     * @param templatePath Path to the Python template.
+     */
+    void generatePythonFromConfiguredTemplate(String templatePath) {
+        if (templatePath.trim().isEmpty()) {
+            logger.error("Python template is not configured.");
+            showError("Set pythonTemplate in conf/ozomorph.properties before using this shortcut.");
+            return;
+        }
+        generatePython(new File(templatePath.trim()));
+    }
+
+    /**
+     * Generates Python code for Ozobots and copies it to the clipboard.
+     * @param templateFile Python template file.
+     */
+    private void generatePython(File templateFile) {
         try {
-            //select python template file
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Select Python code template");
-            // Open chooser in ozocode_templates directory if available
-            File initialDir = new File("../ozocode_templates");
-            if (initialDir.exists() && initialDir.isDirectory()) {
-                fileChooser.setInitialDirectory(initialDir);
+            logger.info("Generating Python code using template: "+ templateFile.getCanonicalPath());
+            PythonGenerator generator = new PythonGenerator();
+            String pythonProgram = generator.generateOzocodes(agents, templateFile);
+
+            ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.putString(pythonProgram);
+            if (!Clipboard.getSystemClipboard().setContent(clipboardContent)) {
+                logger.error("Python code generated but could not be copied to clipboard.");
+                showError("Python code was generated, but could not be copied to the clipboard.");
+                return;
             }
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Python script", "*.py")
-            );
-            File templateFile = fileChooser.showOpenDialog(pMap.getScene().getWindow());
-            if (templateFile != null) {
-                logger.info("Generating Python code using template: "+ templateFile.getCanonicalPath());
-                //generate Python code
-                PythonGenerator generator = new PythonGenerator();
-                String pythonProgram = generator.generateOzocodes(agents, templateFile);
-                
-                // Copy content to clipboard
-                ClipboardContent clipboardContent = new ClipboardContent();
-                clipboardContent.putString(pythonProgram);
-                Clipboard.getSystemClipboard().setContent(clipboardContent);
-                logger.info("Python code copied to clipboard");
-            }
+            logger.info("Python code copied to clipboard");
         }catch (MissingDeclarationException e){ // TODO update
             logger.error("Ozo Python not generated", e);
             showError("Selected template does not contain required procedure "+e.getMissingProcedureName() + ".");
