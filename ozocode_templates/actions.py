@@ -21,13 +21,13 @@ async def execute_action(action, color):
 
 async def set_light_color(r, g, b):
     await set_led(
-        LEDMask.TOP | LEDMask.FRONT_LEFT | LEDMask.FRONT_CENTER | LEDMask.FRONT_RIGHT,
+        LEDMask.TOP | LEDMask.FRONT_LEFT | LEDMask.FRONT_LEFT_CENTER | LEDMask.FRONT_CENTER | LEDMask.FRONT_RIGHT_CENTER | LEDMask.FRONT_RIGHT,
         RawColor(r / 255, g / 255, b / 255),
     )
 
 async def set_front_center_color(r, g, b):
     await set_led(
-        LEDMask.TOP | LEDMask.FRONT_LEFT | LEDMask.FRONT_RIGHT,
+        LEDMask.TOP | LEDMask.FRONT_LEFT | LEDMask.FRONT_LEFT_CENTER | LEDMask.FRONT_CENTER | LEDMask.FRONT_RIGHT_CENTER | LEDMask.FRONT_RIGHT,
         RawColor(0, 0, 0),
     )
     await set_led(
